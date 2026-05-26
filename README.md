@@ -76,6 +76,8 @@ Review the output for encoding issues, headers/footers, and table formatting. Th
 
 Built-in `.txt` files are **bundled with the deployment** (included in the repo / Vercel project). Uploaded documents remain **temporary** in the browser and are never written to disk on the server.
 
+On Vercel, `next.config.ts` uses `outputFileTracingIncludes` so `data/documents/**` is copied into the `/api/chat` serverless bundle. Without this, `readFile` at runtime fails with “Built-in document file is missing” even when the files exist in Git.
+
 ## Project structure
 
 ```
