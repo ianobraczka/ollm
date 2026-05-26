@@ -1,3 +1,5 @@
+import { File } from "node:buffer";
+
 import { NextResponse } from "next/server";
 
 import { MAX_UPLOAD_BYTES } from "@/lib/constants";
@@ -31,6 +33,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ fileName: file.name, text });
   } catch (error) {
+    console.error("[api/parse]", error);
     const message = error instanceof Error ? error.message : "Failed to parse file.";
     return NextResponse.json({ error: message }, { status: 500 });
   }
