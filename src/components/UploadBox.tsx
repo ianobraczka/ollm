@@ -5,26 +5,34 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { MAX_DOCUMENTS } from "@/lib/constants";
+import type { ParsedDocument } from "@/types/chat";
+
 type UploadBoxProps = {
-  fileName: string | null;
+  documents: ParsedDocument[];
   isUploading: boolean;
   error: string | null;
-  onUpload: (file: File) => Promise<void>;
+  onUpload: (files: File[]) => Promise<void>;
 };
 
-export function UploadBox({ fileName, isUploading, error, onUpload }: UploadBoxProps) {
+export function UploadBox({ documents, isUploading, error, onUpload }: UploadBoxProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const slotsLeft = MAX_DOCUMENTS - documents.length;
+  const canAddMore = slotsLeft > 0;
 
-  async function handleFile(file: File) {
-    await onUpload(file);
+  async function handleFiles(fileList: FileList | File[]) {
+    const files = Array.from(fileList);
+    if (files.length === 0) return;
+    await onUpload(files);
   }
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Upload curriculum document</CardTitle>
+        <CardTitle>Upload curriculum documents</CardTitle>
         <CardDescription>
-          PDF, DOCX, or TXT · max 10MB · parsed in this session only
+          Optional session upload · PDF, DOCX, or TXT · max 10MB each · up to {MAX_DOCUMENTS}{" "}
+          files
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -33,19 +41,23 @@ export function UploadBox({ fileName, isUploading, error, onUpload }: UploadBoxP
           onDragOver={(e) => e.preventDefault()}
           onDrop={async (e) => {
             e.preventDefault();
-            const file = e.dataTransfer.files?.[0];
-            if (file) await handleFile(file);
+            if (!canAddMore || isUploading) return;
+            await handleFiles(e.dataTransfer.files);
           }}
         >
           <FileUp className="h-8 w-8 text-muted-foreground" />
           <div className="space-y-1">
-            <p className="text-sm font-medium">Drag and drop a file here</p>
-            <p className="text-xs text-muted-foreground">or choose a file from your computer</p>
+            <p className="text-sm font-medium">Drag and drop files here</p>
+            <p className="text-xs text-muted-foreground">
+              {canAddMore
+                ? `${slotsLeft} slot${slotsLeft === 1 ? "" : "s"} remaining`
+                : "Document limit reached"}
+            </p>
           </div>
           <Button
             type="button"
             variant="secondary"
-            disabled={isUploading}
+            disabled={isUploading || !canAddMore}
             onClick={() => inputRef.current?.click()}
           >
             {isUploading ? (
@@ -54,29 +66,38 @@ export function UploadBox({ fileName, isUploading, error, onUpload }: UploadBoxP
                 Parsing…
               </>
             ) : (
-              "Choose file"
+              "Choose files"
             )}
           </Button>
           <input
             ref={inputRef}
             type="file"
+            multiple
             className="hidden"
             accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
             onChange={async (e) => {
-              const file = e.target.files?.[0];
-              if (file) await handleFile(file);
+              if (e.target.files) await handleFiles(e.target.files);
               e.target.value = "";
             }}
           />
         </div>
 
-        {fileName && !error && (
-          <div className="flex items-start gap-2 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-100">
-            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
-            <div>
-              <p className="font-medium">Upload successful</p>
-              <p className="break-all text-xs opacity-90">{fileName}</p>
-            </div>
+        {documents.length > 0 && !error && (
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-emerald-900 dark:text-emerald-100">
+              {documents.length} document{documents.length === 1 ? "" : "s"} ready
+            </p>
+            <ul className="space-y-2">
+              {documents.map((doc) => (
+                <li
+                  key={doc.id}
+                  className="flex items-start gap-2 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-900 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-100"
+                >
+                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
+                  <span className="break-all text-xs opacity-90">{doc.fileName}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
 

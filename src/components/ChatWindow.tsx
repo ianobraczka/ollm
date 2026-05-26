@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import type { ChatMessage } from "@/types/chat";
 
 type ChatWindowProps = {
-  hasDocument: boolean;
+  canChat: boolean;
   messages: ChatMessage[];
   isLoading: boolean;
   error: string | null;
@@ -20,7 +20,7 @@ type ChatWindowProps = {
 };
 
 export function ChatWindow({
-  hasDocument,
+  canChat,
   messages,
   isLoading,
   error,
@@ -40,7 +40,7 @@ export function ChatWindow({
 
   async function submit() {
     const trimmed = input.trim();
-    if (!trimmed || isLoading || !hasDocument) return;
+    if (!trimmed || isLoading || !canChat) return;
     setInput("");
     await onSend(trimmed);
     textareaRef.current?.focus();
@@ -62,12 +62,12 @@ export function ChatWindow({
   const lastAssistant = [...messages].reverse().find((m) => m.role === "assistant");
 
   return (
-    <Card className="flex min-h-[32rem] flex-1 flex-col">
+    <Card className="flex min-h-[40rem] flex-1 flex-col">
       <CardHeader className="flex flex-row items-start justify-between gap-4 space-y-0 pb-4">
         <div>
           <CardTitle>Chat</CardTitle>
           <CardDescription>
-            Ask about lesson plans, activities, rubrics, and ideas grounded in your document.
+            Ask about lesson plans, activities, rubrics, and ideas grounded in your selected sources.
           </CardDescription>
         </div>
         {lastAssistant?.content && (
@@ -89,9 +89,9 @@ export function ChatWindow({
           <div className="flex flex-col gap-4">
             {messages.length === 0 ? (
               <p className="text-center text-sm text-muted-foreground">
-                {hasDocument
+                {canChat
                   ? "Use a quick action below or type a question to get started."
-                  : "Upload a document to enable the chat."}
+                  : "Select at least one reference document to enable the chat."}
               </p>
             ) : (
               messages.map((message) => (
@@ -119,7 +119,7 @@ export function ChatWindow({
         )}
 
         <QuickActions
-          disabled={!hasDocument || isLoading}
+          disabled={!canChat || isLoading}
           onSelect={(prompt) => {
             setInput(prompt);
             textareaRef.current?.focus();
@@ -138,11 +138,11 @@ export function ChatWindow({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={
-              hasDocument
+              canChat
                 ? "Ask about lesson plans, activities, or assessments… (Ctrl+Enter to send)"
-                : "Upload a document first…"
+                : "Select at least one reference document first…"
             }
-            disabled={!hasDocument || isLoading}
+            disabled={!canChat || isLoading}
             rows={3}
             className="resize-none"
             onKeyDown={(e) => {
@@ -153,7 +153,7 @@ export function ChatWindow({
             }}
           />
           <div className="flex justify-end">
-            <Button type="submit" disabled={!hasDocument || isLoading || !input.trim()}>
+            <Button type="submit" disabled={!canChat || isLoading || !input.trim()}>
               {isLoading ? (
                 <>
                   <Loader2 className="animate-spin" />

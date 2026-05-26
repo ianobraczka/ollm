@@ -6,57 +6,125 @@ import { ChatWindow } from "@/components/ChatWindow";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Sidebar } from "@/components/Sidebar";
 import { UploadBox } from "@/components/UploadBox";
-import { APP_NAME, APP_TAGLINE, MAX_UPLOAD_BYTES } from "@/lib/constants";
+import { getErrorMessage, readJsonResponse } from "@/lib/apiClient";
+import { BUILT_IN_DOCUMENTS } from "@/lib/builtInDocuments";
+import {
+  APP_NAME,
+  MAX_DOCUMENTS,
+  MAX_UPLOAD_BYTES,
+  NO_DOCUMENT_SELECTED_ERROR,
+} from "@/lib/constants";
+import { combineUploadedDocumentText } from "@/lib/documents";
 import type { ChatMessage, ParsedDocument } from "@/types/chat";
 
 function createId() {
   return crypto.randomUUID();
 }
 
+async function parseFile(file: File): Promise<ParsedDocument> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const res = await fetch("/api/parse", { method: "POST", body: formData });
+
+  if (!res.ok) {
+    throw new Error(await getErrorMessage(res, `Failed to parse ${file.name}.`));
+  }
+
+  const data = await readJsonResponse<{
+    fileName?: string;
+    text?: string;
+    error?: string;
+  }>(res);
+
+  return {
+    id: createId(),
+    fileName: data.fileName ?? file.name,
+    text: data.text ?? "",
+  };
+}
+
 export function AppShell() {
-  const [document, setDocument] = React.useState<ParsedDocument | null>(null);
+  const [documents, setDocuments] = React.useState<ParsedDocument[]>([]);
+  const [selectedBuiltInIds, setSelectedBuiltInIds] = React.useState<string[]>(() =>
+    BUILT_IN_DOCUMENTS.map((d) => d.id),
+  );
+  const [useUploadedDocument, setUseUploadedDocument] = React.useState(false);
   const [messages, setMessages] = React.useState<ChatMessage[]>([]);
   const [uploading, setUploading] = React.useState(false);
   const [uploadError, setUploadError] = React.useState<string | null>(null);
   const [chatError, setChatError] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  async function handleUpload(file: File) {
+  const hasUploadedText = documents.some((doc) => doc.text.trim());
+  const uploadedFileNames = documents.map((d) => d.fileName);
+
+  const hasSelectedSources =
+    selectedBuiltInIds.length > 0 || (useUploadedDocument && hasUploadedText);
+
+  async function handleUpload(files: File[]) {
     setUploadError(null);
-    if (file.size > MAX_UPLOAD_BYTES) {
-      setUploadError("File is too large. Maximum size is 10MB.");
+
+    const slotsLeft = MAX_DOCUMENTS - documents.length;
+    if (slotsLeft <= 0) {
+      setUploadError(`You can upload at most ${MAX_DOCUMENTS} documents per session.`);
       return;
     }
+
+    if (files.length > slotsLeft) {
+      setUploadError(
+        `Only ${slotsLeft} more document${slotsLeft === 1 ? "" : "s"} allowed (max ${MAX_DOCUMENTS}).`,
+      );
+      return;
+    }
+
+    for (const file of files) {
+      if (file.size > MAX_UPLOAD_BYTES) {
+        setUploadError(`"${file.name}" is too large. Maximum size is 10MB per file.`);
+        return;
+      }
+    }
+
     setUploading(true);
+    const added: ParsedDocument[] = [];
+    const errors: string[] = [];
+
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch("/api/parse", { method: "POST", body: formData });
-      const data = (await res.json()) as {
-        fileName?: string;
-        text?: string;
-        error?: string;
-      };
-
-      if (!res.ok) {
-        throw new Error(data.error ?? "Upload failed.");
+      for (const file of files) {
+        try {
+          added.push(await parseFile(file));
+        } catch (err) {
+          errors.push(err instanceof Error ? err.message : `Failed to parse ${file.name}.`);
+        }
       }
 
-      setDocument({ fileName: data.fileName ?? file.name, text: data.text ?? "" });
-      setMessages([]);
-      setChatError(null);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Upload failed.";
-      setUploadError(message);
+      if (added.length > 0) {
+        setDocuments((prev) => [...prev, ...added]);
+        setUseUploadedDocument(true);
+        setChatError(null);
+      }
+
+      if (errors.length > 0) {
+        setUploadError(errors.join(" "));
+      }
     } finally {
       setUploading(false);
     }
   }
 
+  function handleRemoveDocument(id: string) {
+    setDocuments((prev) => {
+      const next = prev.filter((doc) => doc.id !== id);
+      if (!next.some((doc) => doc.text.trim())) {
+        setUseUploadedDocument(false);
+      }
+      return next;
+    });
+  }
+
   async function handleSend(content: string) {
-    if (!document?.text) {
-      setChatError("Upload a document before chatting.");
+    if (!hasSelectedSources) {
+      setChatError(NO_DOCUMENT_SELECTED_ERROR);
       return;
     }
 
@@ -73,18 +141,30 @@ export function AppShell() {
     ]);
 
     try {
+      const uploadedDocumentText = hasUploadedText
+        ? combineUploadedDocumentText(documents)
+        : undefined;
+
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          documentText: document.text,
           messages: nextMessages,
+          selectedBuiltInDocs: selectedBuiltInIds,
+          uploadedDocumentText,
+          useUploadedDocument: useUploadedDocument && hasUploadedText,
         }),
       });
 
       if (!res.ok) {
-        const data = (await res.json()) as { error?: string };
-        throw new Error(data.error ?? "Chat request failed.");
+        throw new Error(await getErrorMessage(res, "Chat request failed."));
+      }
+
+      const contentType = res.headers.get("content-type") ?? "";
+      if (contentType.includes("text/html")) {
+        throw new Error(
+          "Server returned HTML instead of a chat stream. Restart the dev server and use http://localhost:3030.",
+        );
       }
 
       if (!res.body) {
@@ -118,27 +198,33 @@ export function AppShell() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border bg-card/50 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 lg:px-6">
-          <div>
-            <h1 className="text-2xl font-bold tracking-tight">{APP_NAME}</h1>
-            <p className="text-sm text-muted-foreground">{APP_TAGLINE}</p>
-          </div>
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 lg:px-6">
+          <h1 className="text-base font-semibold tracking-tight sm:text-lg">{APP_NAME}</h1>
           <ModeToggle />
         </div>
       </header>
 
       <div className="mx-auto flex max-w-7xl flex-col lg:flex-row">
-        <Sidebar fileName={document?.fileName ?? null} hasDocument={Boolean(document?.text)} />
+        <Sidebar
+          documents={documents}
+          selectedBuiltInIds={selectedBuiltInIds}
+          onBuiltInChange={setSelectedBuiltInIds}
+          useUploadedDocument={useUploadedDocument}
+          onUseUploadedChange={setUseUploadedDocument}
+          hasUploadedDocument={hasUploadedText}
+          uploadedFileNames={uploadedFileNames}
+          onRemove={handleRemoveDocument}
+        />
 
         <main className="flex flex-1 flex-col gap-6 p-4 lg:p-6">
           <UploadBox
-            fileName={document?.fileName ?? null}
+            documents={documents}
             isUploading={uploading}
             error={uploadError}
             onUpload={handleUpload}
           />
           <ChatWindow
-            hasDocument={Boolean(document?.text)}
+            canChat={hasSelectedSources}
             messages={messages}
             isLoading={isLoading}
             error={chatError}
