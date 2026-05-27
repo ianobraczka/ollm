@@ -3,9 +3,11 @@
 import { BookOpen } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BUILT_IN_DOCUMENTS } from "@/lib/builtInDocuments";
+import { UI_TEXT, type AppLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 type DocumentSelectorProps = {
+  language: AppLanguage;
   selectedBuiltInIds: string[];
   onBuiltInChange: (ids: string[]) => void;
   useUploadedDocument: boolean;
@@ -20,6 +22,7 @@ function toggleId(ids: string[], id: string, checked: boolean): string[] {
 }
 
 export function DocumentSelector({
+  language,
   selectedBuiltInIds,
   onBuiltInChange,
   useUploadedDocument,
@@ -27,20 +30,26 @@ export function DocumentSelector({
   hasUploadedDocument,
   uploadedFileNames,
 }: DocumentSelectorProps) {
+  const t = UI_TEXT[language];
+  const displayDescription = (id: string, description: string) =>
+    language === "pt-BR" && id === "bncc"
+      ? "Base Nacional Comum Curricular do Brasil."
+      : description;
+
   return (
     <Card className="border-0 bg-transparent shadow-none">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BookOpen className="h-5 w-5" />
-          Reference documents
+          {t.docSelectorTitle}
         </CardTitle>
         <CardDescription>
-          Choose which sources Gemini may use. Only selected documents are sent to the model.
+          {t.docSelectorDescription}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <fieldset className="space-y-3">
-          <legend className="sr-only">Built-in reference documents</legend>
+          <legend className="sr-only">{t.docSelectorBuiltInLegend}</legend>
           {BUILT_IN_DOCUMENTS.map((doc) => {
             const checked = selectedBuiltInIds.includes(doc.id);
             return (
@@ -61,7 +70,9 @@ export function DocumentSelector({
                 />
                 <span className="min-w-0 space-y-0.5">
                   <span className="block text-sm font-medium">{doc.title}</span>
-                  <span className="block text-xs text-muted-foreground">{doc.description}</span>
+                  <span className="block text-xs text-muted-foreground">
+                    {displayDescription(doc.id, doc.description)}
+                  </span>
                 </span>
               </label>
             );
@@ -90,7 +101,7 @@ export function DocumentSelector({
                   : "Uploaded document"}
               </span>
               <span className="block text-xs text-muted-foreground">
-                Uploaded document · Session-only
+                {t.docSelectorUploadSession}
               </span>
             </span>
           </label>
@@ -98,7 +109,7 @@ export function DocumentSelector({
 
         {!hasUploadedDocument && (
           <p className="text-xs text-muted-foreground">
-            Upload a PDF, DOCX, or TXT below to include your own document as an optional source.
+            {t.docSelectorUploadHint}
           </p>
         )}
       </CardContent>

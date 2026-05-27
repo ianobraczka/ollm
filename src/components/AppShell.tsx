@@ -12,6 +12,7 @@ import {
   NO_DOCUMENT_SELECTED_ERROR,
 } from "@/lib/constants";
 import { combineUploadedDocumentText } from "@/lib/documents";
+import { LANGUAGE_STORAGE_KEY, normalizeLanguage, type AppLanguage } from "@/lib/i18n";
 import type { ChatMessage, ParsedDocument } from "@/types/chat";
 
 function createId() {
@@ -42,6 +43,7 @@ async function parseFile(file: File): Promise<ParsedDocument> {
 }
 
 export function AppShell() {
+  const [language, setLanguage] = React.useState<AppLanguage>("en");
   const [documents, setDocuments] = React.useState<ParsedDocument[]>([]);
   const [selectedBuiltInIds, setSelectedBuiltInIds] = React.useState<string[]>(() =>
     BUILT_IN_DOCUMENTS.map((d) => d.id),
@@ -58,6 +60,17 @@ export function AppShell() {
 
   const hasSelectedSources =
     selectedBuiltInIds.length > 0 || (useUploadedDocument && hasUploadedText);
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    const saved = normalizeLanguage(window.localStorage.getItem(LANGUAGE_STORAGE_KEY));
+    setLanguage(saved);
+  }, []);
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return;
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+  }, [language]);
 
   async function handleUpload(files: File[]) {
     setUploadError(null);
@@ -140,6 +153,7 @@ export function AppShell() {
           selectedBuiltInDocs: selectedBuiltInIds,
           uploadedDocumentText,
           useUploadedDocument: useUploadedDocument && hasUploadedText,
+          responseLanguage: language,
         }),
       });
 
@@ -185,6 +199,8 @@ export function AppShell() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Sidebar
+        language={language}
+        onLanguageChange={setLanguage}
         documents={documents}
         selectedBuiltInIds={selectedBuiltInIds}
         onBuiltInChange={setSelectedBuiltInIds}
@@ -198,6 +214,7 @@ export function AppShell() {
 
       <main className="min-h-screen min-w-0 lg:ml-[calc(var(--spacing)*100)]">
         <ChatWindow
+          language={language}
           canChat={hasSelectedSources}
           messages={messages}
           isLoading={isLoading}

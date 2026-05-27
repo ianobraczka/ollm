@@ -4,14 +4,18 @@ import * as React from "react";
 import { CheckCircle2, Sparkles, Upload } from "lucide-react";
 
 import { DocumentSelector } from "@/components/DocumentSelector";
+import { LanguageSelect } from "@/components/LanguageSelect";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BUILT_IN_DOCUMENTS } from "@/lib/builtInDocuments";
+import { UI_TEXT, type AppLanguage } from "@/lib/i18n";
 import { APP_NAME } from "@/lib/constants";
 import type { ParsedDocument } from "@/types/chat";
 
 type SidebarProps = {
+  language: AppLanguage;
+  onLanguageChange: (language: AppLanguage) => void;
   documents: ParsedDocument[];
   selectedBuiltInIds: string[];
   onBuiltInChange: (ids: string[]) => void;
@@ -24,6 +28,8 @@ type SidebarProps = {
 };
 
 export function Sidebar({
+  language,
+  onLanguageChange,
   documents,
   selectedBuiltInIds,
   onBuiltInChange,
@@ -34,6 +40,9 @@ export function Sidebar({
   isUploading,
   onUpload,
 }: SidebarProps) {
+  const t = UI_TEXT[language];
+  const displayTitle = (id: string, title: string) =>
+    language === "pt-BR" && id === "bncc" ? "Base Nacional Comum Curricular" : title;
   const hasUpload = documents.length > 0;
   const selectedBuiltIns = BUILT_IN_DOCUMENTS.filter((d) => selectedBuiltInIds.includes(d.id));
   const activeSourceCount =
@@ -57,6 +66,7 @@ export function Sidebar({
       </div>
 
       <DocumentSelector
+        language={language}
         selectedBuiltInIds={selectedBuiltInIds}
         onBuiltInChange={onBuiltInChange}
         useUploadedDocument={useUploadedDocument}
@@ -69,12 +79,12 @@ export function Sidebar({
         <CardHeader className="pb-2 pt-0">
           <CardTitle className="flex items-center gap-2 text-sm">
             <Upload className="h-4 w-4" />
-            Upload (optional)
+            {t.sidebarUploadTitle}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 pt-0">
           <p className="text-xs text-muted-foreground">
-            Temporary PDF, DOCX, or TXT (session-only).
+            {t.sidebarUploadHelp}
           </p>
           <Button
             type="button"
@@ -85,7 +95,7 @@ export function Sidebar({
             onClick={() => fileInputRef.current?.click()}
           >
             <Upload className="h-4 w-4" />
-            {isUploading ? "Uploading…" : "Choose file(s)"}
+            {isUploading ? t.sidebarUploading : t.sidebarChooseFiles}
           </Button>
           <input
             ref={fileInputRef}
@@ -102,14 +112,17 @@ export function Sidebar({
         <CardHeader className="pb-2 pt-0">
           <CardTitle className="flex items-center gap-2 text-sm">
             <CheckCircle2 className="h-4 w-4" />
-            Active sources
+            {t.sidebarActiveSources}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 pt-0">
           {activeSourceCount > 0 ? (
             <>
               <Badge variant="success">
-                {activeSourceCount} source{activeSourceCount === 1 ? "" : "s"} selected
+                {activeSourceCount}{" "}
+                {language === "pt-BR"
+                  ? `fonte${activeSourceCount === 1 ? "" : "s"} ${t.sidebarSourcesSelected}`
+                  : `source${activeSourceCount === 1 ? "" : "s"} ${t.sidebarSourcesSelected}`}
               </Badge>
               <ul className="space-y-2 text-sm">
                 {selectedBuiltIns.map((doc) => (
@@ -117,7 +130,7 @@ export function Sidebar({
                     key={doc.id}
                     className="rounded-md bg-background/40 px-2 py-1.5 text-xs font-medium"
                   >
-                    {doc.title}
+                    {displayTitle(doc.id, doc.title)}
                   </li>
                 ))}
                 {useUploadedDocument && hasUpload && (
@@ -125,19 +138,23 @@ export function Sidebar({
                     {uploadedFileNames.length > 0
                       ? uploadedFileNames.length === 1
                         ? uploadedFileNames[0]
-                        : `Uploads (${uploadedFileNames.length}): ${uploadedFileNames.join(", ")}`
-                      : "Uploaded document"}
+                        : `${t.sidebarUploads} (${uploadedFileNames.length}): ${uploadedFileNames.join(", ")}`
+                      : t.sidebarUploadedDocument}
                   </li>
                 )}
               </ul>
             </>
           ) : (
             <p className="text-sm text-muted-foreground">
-              Select at least one reference document to enable chat.
+              {t.sidebarSelectDocumentHint}
             </p>
           )}
         </CardContent>
       </Card>
+
+      <div className="mt-auto pt-2">
+        <LanguageSelect value={language} onChange={onLanguageChange} />
+      </div>
     </aside>
   );
 }

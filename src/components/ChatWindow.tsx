@@ -8,9 +8,11 @@ import { ModeToggle } from "@/components/ModeToggle";
 import { QuickActions } from "@/components/QuickActions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { UI_TEXT, type AppLanguage } from "@/lib/i18n";
 import type { ChatMessage } from "@/types/chat";
 
 type ChatWindowProps = {
+  language: AppLanguage;
   canChat: boolean;
   messages: ChatMessage[];
   isLoading: boolean;
@@ -20,6 +22,7 @@ type ChatWindowProps = {
 };
 
 export function ChatWindow({
+  language,
   canChat,
   messages,
   isLoading,
@@ -27,6 +30,7 @@ export function ChatWindow({
   uploadError,
   onSend,
 }: ChatWindowProps) {
+  const t = UI_TEXT[language];
   const [input, setInput] = React.useState("");
   const [visibleError, setVisibleError] = React.useState<string | null>(null);
   const [visibleUploadError, setVisibleUploadError] = React.useState<string | null>(null);
@@ -85,14 +89,15 @@ export function ChatWindow({
           {messages.length === 0 ? (
             <p className="text-center text-sm text-muted-foreground">
               {canChat
-                ? "Use a quick action below or type a question to get started."
-                : "Select at least one reference document to enable the chat."}
+                ? t.chatEmptyWithSources
+                : t.chatEmptyNoSources}
             </p>
           ) : (
             messages.map((message) => (
               <MessageBubble
                 key={message.id}
                 message={message}
+                language={language}
                 isStreaming={message.id === streamingId && isLoading}
               />
             ))
@@ -100,7 +105,7 @@ export function ChatWindow({
           {isLoading && messages.length > 0 && !streamingId && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Loader2 className="h-4 w-4 animate-spin" />
-              Thinking…
+              {t.chatThinking}
             </div>
           )}
           <div ref={bottomRef} aria-hidden className="h-px shrink-0" />
@@ -115,7 +120,7 @@ export function ChatWindow({
                 <button
                   type="button"
                   className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
-                  aria-label="Dismiss"
+                  aria-label={t.dismiss}
                   onClick={() => setVisibleUploadError(null)}
                 >
                   <X className="h-4 w-4" />
@@ -129,7 +134,7 @@ export function ChatWindow({
                 <button
                   type="button"
                   className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
-                  aria-label="Dismiss"
+                  aria-label={t.dismiss}
                   onClick={() => setVisibleError(null)}
                 >
                   <X className="h-4 w-4" />
@@ -140,6 +145,7 @@ export function ChatWindow({
 
             <div className="flex items-center justify-between gap-2">
               <QuickActions
+                language={language}
                 disabled={!canChat || isLoading}
                 onSelect={(prompt) => {
                   setInput(prompt);
@@ -155,7 +161,7 @@ export function ChatWindow({
                   onClick={exportLastAssistant}
                 >
                   <Download className="h-4 w-4" />
-                  Export
+                  {t.export}
                 </Button>
               )}
             </div>
@@ -173,8 +179,8 @@ export function ChatWindow({
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={
                   canChat
-                    ? "Ask about lesson plans, activities, or assessments… (Ctrl+Enter to send)"
-                    : "Select at least one reference document first…"
+                    ? t.chatPlaceholderWithSources
+                    : t.chatPlaceholderNoSources
                 }
                 disabled={!canChat || isLoading}
                 rows={3}
@@ -187,17 +193,17 @@ export function ChatWindow({
                 }}
               />
               <div className="flex items-center justify-between gap-2 pt-2">
-                <ModeToggle />
+                <ModeToggle language={language} />
                 <Button type="submit" disabled={!canChat || isLoading || !input.trim()}>
                   {isLoading ? (
                     <>
                       <Loader2 className="animate-spin" />
-                      Sending…
+                      {t.sending}
                     </>
                   ) : (
                     <>
                       <Send className="h-4 w-4" />
-                      Send
+                      {t.send}
                     </>
                   )}
                 </Button>

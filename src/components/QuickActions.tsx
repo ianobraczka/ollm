@@ -1,17 +1,21 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { QUICK_ACTIONS } from "@/lib/quickActions";
+import type { AppLanguage } from "@/lib/i18n";
+import { getQuickActions } from "@/lib/quickActions";
 
 type QuickActionsProps = {
+  language: AppLanguage;
   disabled?: boolean;
   onSelect: (prompt: string) => void;
 };
 
-export function QuickActions({ disabled, onSelect }: QuickActionsProps) {
+export function QuickActions({ language, disabled, onSelect }: QuickActionsProps) {
+  const actions = getQuickActions(language);
+
   return (
     <div className="flex flex-wrap gap-2">
-      {QUICK_ACTIONS.map((action) => (
+      {actions.map((action) => (
         <Button
           key={action.id}
           type="button"

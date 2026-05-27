@@ -6,17 +6,20 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { Button } from "@/components/ui/button";
+import { UI_TEXT, type AppLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import type { ChatMessage } from "@/types/chat";
 
 type MessageBubbleProps = {
+  language: AppLanguage;
   message: ChatMessage;
   isStreaming?: boolean;
 };
 
-export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
+export function MessageBubble({ language, message, isStreaming }: MessageBubbleProps) {
   const isUser = message.role === "user";
   const [copied, setCopied] = React.useState(false);
+  const t = UI_TEXT[language];
 
   async function copyContent() {
     await navigator.clipboard.writeText(message.content);
@@ -55,17 +58,17 @@ export function MessageBubble({ message, isStreaming }: MessageBubbleProps) {
               size="sm"
               className="h-8 gap-1 px-2"
               onClick={copyContent}
-              aria-label="Copy response"
+              aria-label={t.copyResponse}
             >
               {copied ? (
                 <>
                   <Check className="h-3.5 w-3.5" />
-                  Copied
+                  {t.copied}
                 </>
               ) : (
                 <>
                   <Copy className="h-3.5 w-3.5" />
-                  Copy
+                  {t.copy}
                 </>
               )}
             </Button>

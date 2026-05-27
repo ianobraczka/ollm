@@ -5,6 +5,7 @@ import { buildPrompt } from "@/lib/buildPrompt";
 import { NO_DOCUMENT_SELECTED_ERROR } from "@/lib/constants";
 import { buildDocumentContext, hasDocumentContext } from "@/lib/documentContext";
 import { generateContentStreamWithFallback } from "@/lib/gemini";
+import { normalizeLanguage } from "@/lib/i18n";
 import type { ChatMessage } from "@/types/chat";
 
 export const runtime = "nodejs";
@@ -15,6 +16,7 @@ export type ChatRequestBody = {
   uploadedDocumentText?: string;
   selectedBuiltInDocs: string[];
   useUploadedDocument?: boolean;
+  responseLanguage?: string;
 };
 
 export async function POST(req: Request) {
@@ -28,6 +30,7 @@ export async function POST(req: Request) {
     const useUploadedDocument = Boolean(body.useUploadedDocument);
     const uploadedDocumentText =
       typeof body.uploadedDocumentText === "string" ? body.uploadedDocumentText : undefined;
+    const responseLanguage = normalizeLanguage(body.responseLanguage);
 
     const hasSelection =
       selectedBuiltInDocs.length > 0 || (useUploadedDocument && uploadedDocumentText?.trim());
@@ -55,10 +58,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: NO_DOCUMENT_SELECTED_ERROR }, { status: 400 });
     }
 
-    const prompt = buildPrompt({
+    const basePrompt = buildPrompt({
       documentContext,
       messages: body.messages,
     });
+    const prompt =
+      responseLanguage === "pt-BR"
+        ? `${basePrompt}\n\nLanguage instruction: Always respond in Brazilian Portuguese (pt-BR).\n`
+        : `${basePrompt}\n\nLanguage instruction: Always respond in English.\n`;
 
     const { result, modelName } = await generateContentStreamWithFallback(prompt);
 

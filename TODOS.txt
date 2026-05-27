@@ -1,0 +1,18 @@
+to-do's OLLM
+
+admin page 
+
+	- gerencia de prompts
+	- escolha de modelo
+	- documentos etc
+
+cross-subject
+
+	- banco de dados (supabase?)
+	- import uma vez por ano dos planos
+
+filtros/specs
+
+	- grade
+	- diferenciacao
+	- matéria
