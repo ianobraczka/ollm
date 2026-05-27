@@ -6,7 +6,12 @@ const nextConfig: NextConfig = {
 
   // Built-in .txt files are read with fs at runtime; include them in the Vercel/serverless trace.
   outputFileTracingIncludes: {
-    "/api/chat": ["./data/documents/**/*"],
+    "/api/chat": [
+      "./data/documents/**/*",
+      "./node_modules/pdfjs-dist/legacy/build/pdf.mjs",
+      "./node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs",
+      "./node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs",
+    ],
   },
 };
 
