@@ -1,13 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { CheckCircle2, Upload } from "lucide-react";
+import { CheckCircle2, Sparkles, Upload } from "lucide-react";
 
 import { DocumentSelector } from "@/components/DocumentSelector";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BUILT_IN_DOCUMENTS } from "@/lib/builtInDocuments";
+import { APP_NAME } from "@/lib/constants";
 import type { ParsedDocument } from "@/types/chat";
 
 type SidebarProps = {
@@ -47,7 +48,14 @@ export function Sidebar({
   }
 
   return (
-    <aside className="flex h-full w-full flex-col gap-4 border-r border-border bg-muted/30 p-4 lg:w-[calc(var(--spacing)*100)] lg:shrink-0">
+    <aside className="flex h-auto max-h-[45vh] w-full shrink-0 flex-col gap-4 overflow-y-auto border-r border-border bg-background p-4 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:h-screen lg:max-h-none lg:w-[calc(var(--spacing)*100)]">
+      <div className="flex items-center gap-3 pb-1">
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+          <Sparkles className="h-4 w-4" />
+        </div>
+        <p className="text-sm font-semibold leading-tight">{APP_NAME}</p>
+      </div>
+
       <DocumentSelector
         selectedBuiltInIds={selectedBuiltInIds}
         onBuiltInChange={onBuiltInChange}
@@ -57,21 +65,22 @@ export function Sidebar({
         uploadedFileNames={uploadedFileNames}
       />
 
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-base">
+      <Card className="border-0 bg-transparent shadow-none">
+        <CardHeader className="pb-2 pt-0">
+          <CardTitle className="flex items-center gap-2 text-sm">
             <Upload className="h-4 w-4" />
             Upload (optional)
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-2">
+        <CardContent className="space-y-2 pt-0">
           <p className="text-xs text-muted-foreground">
-            Add a temporary PDF, DOCX, or TXT for this session.
+            Temporary PDF, DOCX, or TXT (session-only).
           </p>
           <Button
             type="button"
             variant="secondary"
             size="sm"
+            className="w-full justify-center"
             disabled={isUploading}
             onClick={() => fileInputRef.current?.click()}
           >
@@ -89,14 +98,14 @@ export function Sidebar({
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2 text-base">
+      <Card className="border-0 bg-transparent shadow-none">
+        <CardHeader className="pb-2 pt-0">
+          <CardTitle className="flex items-center gap-2 text-sm">
             <CheckCircle2 className="h-4 w-4" />
             Active sources
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className="space-y-3 pt-0">
           {activeSourceCount > 0 ? (
             <>
               <Badge variant="success">
@@ -106,13 +115,13 @@ export function Sidebar({
                 {selectedBuiltIns.map((doc) => (
                   <li
                     key={doc.id}
-                    className="rounded-md border border-border bg-background px-2 py-1.5 text-xs font-medium"
+                    className="rounded-md bg-background/40 px-2 py-1.5 text-xs font-medium"
                   >
                     {doc.title}
                   </li>
                 ))}
                 {useUploadedDocument && hasUpload && (
-                  <li className="rounded-md border border-border bg-background px-2 py-1.5 text-xs font-medium">
+                  <li className="rounded-md bg-background/40 px-2 py-1.5 text-xs font-medium">
                     {uploadedFileNames.length > 0
                       ? uploadedFileNames.length === 1
                         ? uploadedFileNames[0]

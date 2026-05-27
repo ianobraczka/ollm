@@ -28,7 +28,7 @@ export function DocumentSelector({
   uploadedFileNames,
 }: DocumentSelectorProps) {
   return (
-    <Card>
+    <Card className="border-0 bg-transparent shadow-none">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <BookOpen className="h-5 w-5" />
@@ -47,8 +47,8 @@ export function DocumentSelector({
               <label
                 key={doc.id}
                 className={cn(
-                  "flex cursor-pointer gap-3 rounded-lg border border-border p-3 transition-colors",
-                  checked && "border-primary/40 bg-primary/5",
+                  "flex cursor-pointer gap-3 rounded-lg bg-background/40 p-3 transition-colors hover:bg-background/60",
+                  checked && "bg-primary/10",
                 )}
               >
                 <input
@@ -71,8 +71,8 @@ export function DocumentSelector({
         {hasUploadedDocument && (
           <label
             className={cn(
-              "flex cursor-pointer gap-3 rounded-lg border border-dashed border-border p-3 transition-colors",
-              useUploadedDocument && "border-primary/40 bg-primary/5",
+              "flex cursor-pointer gap-3 rounded-lg bg-background/40 p-3 transition-colors hover:bg-background/60",
+              useUploadedDocument && "bg-primary/10",
             )}
           >
             <input

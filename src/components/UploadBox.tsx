@@ -27,7 +27,7 @@ export function UploadBox({ documents, isUploading, error, onUpload }: UploadBox
   }
 
   return (
-    <Card>
+    <Card className="w-full max-w-5xl">
       <CardHeader>
         <CardTitle>Upload curriculum documents</CardTitle>
         <CardDescription>
@@ -37,7 +37,7 @@ export function UploadBox({ documents, isUploading, error, onUpload }: UploadBox
       </CardHeader>
       <CardContent className="space-y-4">
         <div
-          className="flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-border bg-background p-6 text-center"
+          className="flex min-h-28 w-full flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-border bg-background p-5 text-center"
           onDragOver={(e) => e.preventDefault()}
           onDrop={async (e) => {
             e.preventDefault();
@@ -45,7 +45,7 @@ export function UploadBox({ documents, isUploading, error, onUpload }: UploadBox
             await handleFiles(e.dataTransfer.files);
           }}
         >
-          <FileUp className="h-8 w-8 text-muted-foreground" />
+          <FileUp className="h-7 w-7 text-muted-foreground" />
           <div className="space-y-1">
             <p className="text-sm font-medium">Drag and drop files here</p>
             <p className="text-xs text-muted-foreground">
