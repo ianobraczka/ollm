@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { APP_NAME, APP_TAGLINE } from "@/lib/constants";
+import { APP_TAGLINE, PAGE_TITLE } from "@/lib/constants";
 
 import "./globals.css";
 
@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: APP_NAME,
+  title: PAGE_TITLE,
   description: APP_TAGLINE,
-  icons: { icon: "/edtech4.webp" },
+  icons: { icon: "/new-favicon-removebg-preview.png" },
 };
 
 export default function RootLayout({

@@ -1,4 +1,5 @@
-export const APP_NAME = "OLM Teaching Assistant";
+export const APP_NAME = "OLM's Teaching Assistant";
+export const PAGE_TITLE = "Teaching Assistant";
 export const APP_TAGLINE =
   "Chat with BNCC, Massachusetts frameworks, and your own curriculum documents.";
 

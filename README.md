@@ -1,4 +1,4 @@
-# OLLM — AI Teaching Assistant (MVP)
+# OLM's Teaching Assistant (MVP)
 
 Chat with an AI assistant grounded in **built-in curriculum frameworks** and optional **session uploads** (PDF, DOCX, or TXT). Use it to draft lesson plans, activities, rubrics, and classroom ideas.
 
@@ -31,7 +31,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open [http://localhost:3030](http://localhost:3030) (OLLM uses port **3030** by default).
+Open [http://localhost:3030](http://localhost:3030) (OLM's Teaching Assistant uses port **3030** by default).
 
 ## Environment variables
 
