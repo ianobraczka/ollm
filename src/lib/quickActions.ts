@@ -17,10 +17,4 @@ export const QUICK_ACTIONS = [
     prompt:
       "Draft a clear assessment rubric aligned with the selected reference documents. Use a table with criteria and performance levels. Cite your sources. If the documents lack details, say what is missing.",
   },
-  {
-    id: "summary",
-    label: "Summarize Sources",
-    prompt:
-      "Summarize the selected reference documents for a teacher. Highlight key competencies, themes, and anything useful for planning. Clearly label which source each point comes from. If the documents lack details, say what is missing.",
-  },
 ] as const;
