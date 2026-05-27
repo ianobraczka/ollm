@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: APP_NAME,
   description: APP_TAGLINE,
-  icons: { icon: "/favicon.svg" },
+  icons: { icon: "/edtech4.webp" },
 };
 
 export default function RootLayout({
