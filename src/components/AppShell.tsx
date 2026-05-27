@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
+import { Sparkles } from "lucide-react";
 
 import { ChatWindow } from "@/components/ChatWindow";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Sidebar } from "@/components/Sidebar";
-import { UploadBox } from "@/components/UploadBox";
 import { getErrorMessage, readJsonResponse } from "@/lib/apiClient";
 import { BUILT_IN_DOCUMENTS } from "@/lib/builtInDocuments";
 import {
@@ -112,16 +112,6 @@ export function AppShell() {
     }
   }
 
-  function handleRemoveDocument(id: string) {
-    setDocuments((prev) => {
-      const next = prev.filter((doc) => doc.id !== id);
-      if (!next.some((doc) => doc.text.trim())) {
-        setUseUploadedDocument(false);
-      }
-      return next;
-    });
-  }
-
   async function handleSend(content: string) {
     if (!hasSelectedSources) {
       setChatError(NO_DOCUMENT_SELECTED_ERROR);
@@ -198,13 +188,18 @@ export function AppShell() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border bg-card/50 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-2 lg:px-6">
-          <h1 className="text-base font-semibold tracking-tight sm:text-lg">{APP_NAME}</h1>
+        <div className="mx-auto flex w-full max-w-[92rem] items-center justify-between gap-4 px-3 py-2 lg:px-4">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <Sparkles className="h-4 w-4" />
+            </div>
+            <h1 className="text-base font-semibold tracking-tight sm:text-lg">{APP_NAME}</h1>
+          </div>
           <ModeToggle />
         </div>
       </header>
 
-      <div className="mx-auto flex max-w-7xl flex-col lg:flex-row">
+      <div className="mx-auto flex w-full max-w-[92rem] flex-col lg:flex-row">
         <Sidebar
           documents={documents}
           selectedBuiltInIds={selectedBuiltInIds}
@@ -213,21 +208,19 @@ export function AppShell() {
           onUseUploadedChange={setUseUploadedDocument}
           hasUploadedDocument={hasUploadedText}
           uploadedFileNames={uploadedFileNames}
-          onRemove={handleRemoveDocument}
+          isUploading={uploading}
+          onUpload={handleUpload}
         />
 
-        <main className="flex flex-1 flex-col gap-6 p-4 lg:p-6">
-          <UploadBox
-            documents={documents}
-            isUploading={uploading}
-            error={uploadError}
-            onUpload={handleUpload}
-          />
+        <main className="flex flex-1 flex-col gap-6 p-3 lg:p-4">
           <ChatWindow
             canChat={hasSelectedSources}
             messages={messages}
             isLoading={isLoading}
             error={chatError}
+            uploadError={uploadError}
+            isUploading={uploading}
+            onUpload={handleUpload}
             onSend={handleSend}
           />
         </main>

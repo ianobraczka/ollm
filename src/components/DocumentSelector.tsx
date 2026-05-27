@@ -82,9 +82,15 @@ export function DocumentSelector({
               onChange={(e) => onUseUploadedChange(e.target.checked)}
             />
             <span className="min-w-0 space-y-0.5">
-              <span className="block text-sm font-medium">Uploaded document</span>
+              <span className="block text-sm font-medium">
+                {uploadedFileNames.length > 0
+                  ? uploadedFileNames.length === 1
+                    ? uploadedFileNames[0]
+                    : `Uploads (${uploadedFileNames.length})`
+                  : "Uploaded document"}
+              </span>
               <span className="block text-xs text-muted-foreground">
-                Session-only · {uploadedFileNames.join(", ")}
+                Uploaded document · Session-only
               </span>
             </span>
           </label>

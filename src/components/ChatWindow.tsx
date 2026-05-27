@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, Loader2, Send } from "lucide-react";
+import { Download, Loader2, Send, Upload, X } from "lucide-react";
 import * as React from "react";
 
 import { MessageBubble } from "@/components/MessageBubble";
@@ -16,6 +16,9 @@ type ChatWindowProps = {
   messages: ChatMessage[];
   isLoading: boolean;
   error: string | null;
+  uploadError: string | null;
+  isUploading: boolean;
+  onUpload: (files: File[]) => Promise<void>;
   onSend: (content: string) => Promise<void>;
 };
 
@@ -24,11 +27,17 @@ export function ChatWindow({
   messages,
   isLoading,
   error,
+  uploadError,
+  isUploading,
+  onUpload,
   onSend,
 }: ChatWindowProps) {
   const [input, setInput] = React.useState("");
+  const [visibleError, setVisibleError] = React.useState<string | null>(null);
+  const [visibleUploadError, setVisibleUploadError] = React.useState<string | null>(null);
   const bottomRef = React.useRef<HTMLDivElement>(null);
   const textareaRef = React.useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const streamingId = isLoading
     ? messages.filter((m) => m.role === "assistant").at(-1)?.id
@@ -38,12 +47,33 @@ export function ChatWindow({
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
 
+  React.useEffect(() => {
+    if (!error) return;
+    setVisibleError(error);
+    const t = window.setTimeout(() => setVisibleError(null), 5000);
+    return () => window.clearTimeout(t);
+  }, [error]);
+
+  React.useEffect(() => {
+    if (!uploadError) return;
+    setVisibleUploadError(uploadError);
+    const t = window.setTimeout(() => setVisibleUploadError(null), 5000);
+    return () => window.clearTimeout(t);
+  }, [uploadError]);
+
   async function submit() {
     const trimmed = input.trim();
     if (!trimmed || isLoading || !canChat) return;
     setInput("");
     await onSend(trimmed);
     textareaRef.current?.focus();
+  }
+
+  async function handlePickFiles(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = e.target.files ? Array.from(e.target.files) : [];
+    e.target.value = "";
+    if (files.length === 0) return;
+    await onUpload(files);
   }
 
   function exportLastAssistant() {
@@ -112,10 +142,32 @@ export function ChatWindow({
           </div>
         </ScrollArea>
 
-        {error && (
-          <p className="rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-            {error}
-          </p>
+        {visibleUploadError && (
+          <div className="relative rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+            <button
+              type="button"
+              className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
+              aria-label="Dismiss"
+              onClick={() => setVisibleUploadError(null)}
+            >
+              <X className="h-4 w-4" />
+            </button>
+            {visibleUploadError}
+          </div>
+        )}
+
+        {visibleError && (
+          <div className="relative rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+            <button
+              type="button"
+              className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
+              aria-label="Dismiss"
+              onClick={() => setVisibleError(null)}
+            >
+              <X className="h-4 w-4" />
+            </button>
+            {visibleError}
+          </div>
         )}
 
         <QuickActions
@@ -152,7 +204,36 @@ export function ChatWindow({
               }
             }}
           />
-          <div className="flex justify-end">
+          <div className="flex items-center justify-between gap-2">
+            <div>
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                disabled={isUploading}
+                onClick={() => fileInputRef.current?.click()}
+              >
+                {isUploading ? (
+                  <>
+                    <Loader2 className="animate-spin" />
+                    Uploading…
+                  </>
+                ) : (
+                  <>
+                    <Upload className="h-4 w-4" />
+                    Upload
+                  </>
+                )}
+              </Button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                multiple
+                className="hidden"
+                accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain"
+                onChange={handlePickFiles}
+              />
+            </div>
             <Button type="submit" disabled={!canChat || isLoading || !input.trim()}>
               {isLoading ? (
                 <>
