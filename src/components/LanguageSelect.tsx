@@ -10,7 +10,7 @@ type LanguageSelectProps = {
 
 export function LanguageSelect({ value, onChange }: LanguageSelectProps) {
   return (
-    <div className="flex justify-end rounded-lg bg-background/40 px-3 py-2 text-sm">
+    <div className="flex justify-start rounded-lg bg-background/40 px-3 py-2 text-sm">
       <select
         value={value}
         onChange={(e) => onChange(e.target.value as AppLanguage)}
