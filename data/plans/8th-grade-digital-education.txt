@@ -1,0 +1,201 @@
+==================================================
+
+Grade: 8
+
+Subject: Digital Education
+
+Academic Year: 2025
+
+Overview:
+Eighth-grade digital education at Colégio Horizonte prepares students to understand, build, and critique technology in an age of artificial intelligence and data-driven decision-making. Students complete substantial digital projects that integrate programming, data analysis, and design thinking while examining ethical implications of automation, surveillance, and environmental costs. The program culminates in responsible innovation challenges tied to the school's sustainability goals and serves as a bridge to high school computer science and research methods.
+
+Core Competencies:
+- Explain how artificial intelligence systems work at a conceptual level and identify limitations
+- Analyze data sets using spreadsheets, scripts, and visualization tools to support conclusions
+- Plan, build, and document interdisciplinary digital projects with reproducible workflows
+- Evaluate innovation proposals for ethical, social, and environmental impact
+
+==================================================
+
+Unit 1
+
+Period: First Quarter
+
+Big Idea:
+Artificial intelligence amplifies human capabilities through pattern recognition but requires critical oversight and ethical guardrails.
+
+Topics:
+- Definition of AI, machine learning, and narrow vs. general intelligence
+- Training data, labels, features, and model predictions
+- Examples: recommendation systems, image classifiers, language assistants
+- Limitations: hallucinations, bias, opacity, and dependency risks
+- AI in Brazil: agriculture, health, education, and public services
+- School policy on AI-assisted work and academic integrity
+
+Learning Objectives:
+- Describe the basic pipeline from data to trained model to prediction
+- Identify tasks suited and unsuited to current AI approaches
+- Analyze a case where biased training data produced unfair outcomes
+- Explain school expectations for citing and limiting AI assistance on assignments
+- Compare benefits and risks of AI in one Brazilian industry context
+
+BNCC Skills:
+- EF08CO01, EF08CO02, EF08CO03
+
+Keywords:
+- artificial intelligence
+- ethics
+- bias
+- technology
+- innovation
+- critical thinking
+
+Project Opportunities:
+- AI case study presentation on Brazilian agtech or health applications
+- Bias detection workshop using a simplified classification demo
+- Digital awareness campaign on academic integrity and AI tools
+
+Assessment Suggestions:
+- Concept map of AI pipeline from data to deployment
+- Ethics essay responding to a scenario about biased hiring algorithms
+- Policy quiz on permitted and prohibited AI uses in schoolwork
+
+==================================================
+
+Unit 2
+
+Period: Second Quarter
+
+Big Idea:
+Data analysis combines statistical thinking, computational tools, and visual communication to reveal actionable patterns.
+
+Topics:
+- Importing and merging data from surveys, sensors, and public datasets
+- Cleaning: handling missing values, normalizing units, and documenting changes
+- Exploratory analysis: sorting, filtering, pivot summaries, and basic scripting
+- Visualization dashboards with honest scales and accessible design
+- Correlation vs. causation in interpreting trends
+- Open data sources for Brazilian environmental and social indicators
+
+Learning Objectives:
+- Merge multiple data tables into an analysis-ready spreadsheet or script
+- Document every cleaning step for reproducibility
+- Generate summary tables and charts answering defined research questions
+- Design visualizations that avoid distortion and include clear labels
+- Critique causal claims that are supported only by correlational data
+
+BNCC Skills:
+- EF08CO04, EF08CO05, EF08CO06
+
+Keywords:
+- data analysis
+- visualization
+- statistics
+- investigation
+- environment
+- sustainability
+- graphs
+
+Project Opportunities:
+- School energy audit dashboard with trend charts (science and math link)
+- Water consumption study analysis with monthly comparisons (science and math link)
+- Public dataset exploration on Brazilian deforestation or emissions indicators
+
+Assessment Suggestions:
+- Data cleaning log reviewed for completeness and accuracy
+- Dashboard rubric covering correctness, clarity, and accessibility
+- Written analysis distinguishing correlation from causation in a sample study
+
+==================================================
+
+Unit 3
+
+Period: Third Quarter
+
+Big Idea:
+Digital projects succeed when teams apply design thinking, agile planning, and responsible technology choices from inception to delivery.
+
+Topics:
+- Design thinking: empathize, define, ideate, prototype, test
+- Project charters: goals, stakeholders, timeline, and success metrics
+- Prototyping: wireframes, mockups, and minimum viable products
+- Version control with Git basics or structured folder versioning
+- User testing, iteration, and accessibility review
+- Security basics: permissions, secrets, and safe deployment for school projects
+
+Learning Objectives:
+- Write a project charter linking a school sustainability goal to deliverables
+- Produce wireframes and a prototype addressing a defined user need
+- Track versions and changes so prior work can be recovered
+- Conduct user tests and document revisions based on feedback
+- Apply permission settings that protect privacy in shared school projects
+
+BNCC Skills:
+- EF08CO07, EF08CO08, EF08CO09
+
+Keywords:
+- digital projects
+- design
+- collaboration
+- innovation
+- problem solving
+- accessibility
+- responsibility
+
+Project Opportunities:
+- Community sustainability project app or website prototype with energy and waste modules
+- Digital biodiversity field guide combining photos, data, and maps (science link)
+- Accessibility improvement proposal for a school digital resource
+
+Assessment Suggestions:
+- Project charter and timeline evaluated for realism and metrics
+- Prototype demonstration with user test notes and iteration log
+- Security checklist applied before publishing any class project
+
+==================================================
+
+Unit 4
+
+Period: Fourth Quarter
+
+Big Idea:
+Responsible innovation demands that technological solutions be evaluated for equity, privacy, environmental cost, and long-term impact.
+
+Topics:
+- Technology impact assessment framework: social, economic, environmental
+- Green computing: energy use of devices, networks, and AI training
+- Digital rights, consent, and data minimization in project design
+- Open-source culture, licensing, and contributing responsibly
+- Capstone presentation: pitch, demo, and defense before panel
+- Transition planning for high school technology pathways
+
+Learning Objectives:
+- Complete an impact assessment for a proposed digital solution
+- Estimate and compare environmental costs of alternative technical approaches
+- Implement data minimization and consent flows in a capstone project
+- License and attribute all third-party assets correctly
+- Present and defend a capstone integrating AI literacy, data analysis, and project delivery
+
+BNCC Skills:
+- EF08CO09, EF08CO10 (integration and consolidation)
+
+Keywords:
+- responsible innovation
+- ethics
+- sustainability
+- data
+- collaboration
+- communication
+- citizenship
+
+Project Opportunities:
+- Interdisciplinary capstone: school sustainability plan with data dashboard, science backing, and public pitch
+- Digital awareness campaign on green computing habits across grade levels
+- Open-source contribution or documentation package for a prior school project
+
+Assessment Suggestions:
+- Impact assessment rubric covering social, ethical, and environmental dimensions
+- Capstone defense scored on demo, data accuracy, documentation, and ethics
+- Portfolio and reflection essay on readiness for high school STEM and digital citizenship
+
+==================================================

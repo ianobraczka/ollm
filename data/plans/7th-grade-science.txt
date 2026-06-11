@@ -1,0 +1,196 @@
+==================================================
+
+Grade: 7
+
+Subject: Science
+
+Academic Year: 2025
+
+Overview:
+Seventh-grade science at Colégio Horizonte centers on ecological systems, human environmental impact, and the physical principles of matter and energy. Students analyze population dynamics, pollution pathways, and resource use in Brazilian contexts from the Amazon to urban centers. Matter and energy units bridge to chemistry and physics in eighth grade through experiments on states of matter, heat transfer, and conservation laws. Data collection and mathematical modeling are embedded throughout to support interdisciplinary projects.
+
+Core Competencies:
+- Analyze ecological relationships including competition, predation, and symbiosis
+- Evaluate human environmental impacts and propose evidence-based mitigation strategies
+- Explain matter structure, states, and energy transformations in physical systems
+- Design investigations that measure variables and support claims with quantitative evidence
+
+==================================================
+
+Unit 1
+
+Period: First Quarter
+
+Big Idea:
+Ecology explains how organisms interact with one another and their environment at multiple scales.
+
+Topics:
+- Population, community, ecosystem, and biosphere levels of organization
+- Competition, predation, parasitism, mutualism, and commensalism
+- Carrying capacity and limiting factors
+- Succession in disturbed and restored habitats
+- Energy pyramids and ten percent rule (introductory)
+
+Learning Objectives:
+- Describe ecological levels of organization with local examples
+- Classify species interactions and predict effects on populations
+- Explain how limiting factors affect population growth
+- Sequence primary and secondary succession events
+- Interpret energy pyramids to explain biomass reduction at higher trophic levels
+
+BNCC Skills:
+- EF07CI01, EF07CI02, EF07CI03
+
+Keywords:
+- ecology
+- ecosystems
+- interdependence
+- environment
+- population
+- energy
+
+Project Opportunities:
+- Schoolyard ecosystem map with interaction labels
+- Population simulation using guided role-play or spreadsheet model (math link)
+- Case study on Atlantic Forest restoration efforts in Brazil
+
+Assessment Suggestions:
+- Interaction classification exam with scenario justifications
+- Energy pyramid construction and analysis task
+- Written response on carrying capacity using a local species example
+
+==================================================
+
+Unit 2
+
+Period: Second Quarter
+
+Big Idea:
+Human activities alter ecosystems through resource extraction, pollution, and land-use change with measurable consequences.
+
+Topics:
+- Carbon, water, and nutrient cycles disrupted by human activity
+- Air, water, and soil pollution sources and pathways
+- Deforestation, mining, and urban sprawl in Brazilian contexts
+- Climate change evidence and regional impacts
+- Environmental legislation and individual action frameworks
+
+Learning Objectives:
+- Trace pollutants from source through environmental pathways to impact
+- Analyze data on deforestation or emissions trends in Brazil
+- Explain feedback loops between human activity and climate systems
+- Compare mitigation strategies: policy, technology, and behavior change
+- Propose a school-based action with measurable environmental indicators
+
+BNCC Skills:
+- EF07CI04, EF07CI05, EF07CI06, EF07CI07
+
+Keywords:
+- environmental impact
+- pollution
+- sustainability
+- climate
+- ethics
+- data
+- investigation
+
+Project Opportunities:
+- Environmental impact assessment of school operations with data tables (math link)
+- Community sustainability project with timeline and success metrics
+- Digital awareness campaign on local pollution issues (digital education link)
+
+Assessment Suggestions:
+- Pollution pathway diagram with annotated sources and effects
+- Data interpretation task using real Brazilian environmental statistics
+- Action plan rubric evaluating evidence, feasibility, and measurement
+
+==================================================
+
+Unit 3
+
+Period: Third Quarter
+
+Big Idea:
+Matter is composed of particles whose arrangement determines properties and behavior during changes.
+
+Topics:
+- Atoms, molecules, elements, and compounds (introductory particle model)
+- Physical vs. chemical changes and evidence for each
+- States of matter and phase changes
+- Properties of mixtures and solutions; concentration basics
+- Law of conservation of mass in closed systems
+
+Learning Objectives:
+- Use particle models to explain properties of solids, liquids, and gases
+- Distinguish physical and chemical changes with observable evidence
+- Describe phase changes and energy absorption or release
+- Separate mixtures using appropriate physical methods
+- Demonstrate conservation of mass in a closed-system experiment
+
+BNCC Skills:
+- EF07CI08, EF07CI09, EF07CI10
+
+Keywords:
+- matter
+- particles
+- energy
+- investigation
+- conservation
+- chemistry
+
+Project Opportunities:
+- Phase change lab report with temperature-time graph (math link)
+- Water quality testing as solution chemistry application
+- Recycling audit linking material properties to sorting decisions
+
+Assessment Suggestions:
+- Particle model drawing task for three states of the same substance
+- Lab practical on separating a mixture with written procedure
+- Conservation of mass lab report with before-and-after data
+
+==================================================
+
+Unit 4
+
+Period: Fourth Quarter
+
+Big Idea:
+Energy transfers and transformations govern physical and ecological processes and connect science to responsible citizenship.
+
+Topics:
+- Forms of energy: kinetic, potential, thermal, chemical, electrical
+- Energy transfer: conduction, convection, radiation
+- Conservation of energy in physical systems
+- Energy sources: renewable vs. non-renewable; efficiency
+- Synthesis: linking matter, energy, ecology, and human impact
+
+Learning Objectives:
+- Identify energy forms in everyday and ecological systems
+- Explain heat transfer mechanisms with classroom demonstrations
+- Apply conservation of energy to simple physical scenarios
+- Compare energy sources for environmental and social trade-offs
+- Integrate ecological and physical science concepts in a capstone explanation
+
+BNCC Skills:
+- EF07CI11, EF07CI12, EF07CI13 (integration across physical and life science)
+
+Keywords:
+- energy
+- sustainability
+- environment
+- physics
+- data
+- innovation
+- problem solving
+
+Project Opportunities:
+- School energy audit with graphs of consumption by area (math and digital education link)
+- Solar oven or insulation design challenge with efficiency measurement
+- Interdisciplinary capstone: environmental impact report with energy and matter analysis
+
+Assessment Suggestions:
+- Energy transformation chain diagram with labeled forms
+- Efficiency calculation worksheet with real appliance data
+- Comprehensive end-of-year assessment with interdisciplinary scenario items
+
+==================================================

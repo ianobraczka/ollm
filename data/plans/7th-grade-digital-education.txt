@@ -1,0 +1,196 @@
+==================================================
+
+Grade: 7
+
+Subject: Digital Education
+
+Academic Year: 2025
+
+Overview:
+Seventh-grade digital education at Colégio Horizonte advances students from block-based thinking to text-based programming fundamentals while deepening data literacy and ethical technology judgment. Students work with real data sets from school science investigations, learn to clean and visualize information responsibly, and examine how technology choices affect privacy, equity, and the environment. The curriculum directly supports interdisciplinary capstone projects requiring programming, analysis, and persuasive communication.
+
+Core Competencies:
+- Collect, clean, and interpret data sets using spreadsheets and basic scripts
+- Write simple programs that automate calculations and process user input
+- Evaluate ethical dimensions of technology use including bias, privacy, and access
+- Document and publish digital projects with reproducible methods and proper attribution
+
+==================================================
+
+Unit 1
+
+Period: First Quarter
+
+Big Idea:
+Data literacy transforms raw observations into trustworthy evidence through systematic collection and scrutiny.
+
+Topics:
+- Data types: categorical, numerical, discrete, and continuous
+- Survey design: bias, sample size, and question wording
+- Spreadsheet organization: headers, data validation, and missing values
+- Descriptive statistics: mean, median, mode, range (applied review)
+- Identifying outliers and their effect on interpretation
+
+Learning Objectives:
+- Design a survey that minimizes bias for a school investigation
+- Enter and clean data in a spreadsheet using consistent conventions
+- Compute and compare summary statistics for a data set
+- Identify outliers and decide whether to investigate or exclude with justification
+- Explain how poor data collection undermines scientific conclusions
+
+BNCC Skills:
+- EF07CO01, EF07CO02, EF07CO03
+
+Keywords:
+- data
+- statistics
+- investigation
+- ethics
+- accuracy
+- environment
+
+Project Opportunities:
+- School biodiversity survey data pipeline from field cards to spreadsheet (science link)
+- Water consumption study with cleaned daily readings and summary stats (science and math link)
+- Survey redesign workshop improving a flawed class questionnaire
+
+Assessment Suggestions:
+- Data cleaning exercise with intentional errors to detect and fix
+- Statistics computation check against a provided raw data set
+- Written critique of a misleading infographic using flawed data
+
+==================================================
+
+Unit 2
+
+Period: Second Quarter
+
+Big Idea:
+Introductory programming automates repetitive tasks and models logical decision-making.
+
+Topics:
+- Text-based programming environment setup and syntax basics
+- Variables, data types, input, and output
+- Conditionals: if, elif, else for decision branches
+- Loops: for and while for repetition
+- Functions: defining reusable blocks with parameters
+
+Learning Objectives:
+- Write programs that accept input, perform calculations, and display output
+- Implement conditionals to handle multiple cases correctly
+- Use loops to process lists and repeat calculations efficiently
+- Define and call functions that encapsulate reusable logic
+- Debug syntax and logic errors using error messages and testing
+
+BNCC Skills:
+- EF07CO04, EF07CO05, EF07CO06
+
+Keywords:
+- programming
+- algorithms
+- logic
+- problem solving
+- automation
+- innovation
+
+Project Opportunities:
+- Calculator program for environmental footprint estimates (science link)
+- Data processing script that computes class survey statistics (math link)
+- Quiz program reinforcing science vocabulary with conditional feedback
+
+Assessment Suggestions:
+- Programming checkpoint: input-output programs with test cases
+- Code reading exercise: predict output before execution
+- Debug task: fix a provided program with three intentional errors
+
+==================================================
+
+Unit 3
+
+Period: Third Quarter
+
+Big Idea:
+Ethical technology use requires understanding how design choices affect people, communities, and the planet.
+
+Topics:
+- Digital footprint and data trails left by apps and services
+- Privacy policies, terms of service, and informed consent
+- Algorithmic bias and fairness in recommendation systems
+- Technology access gaps and digital divide in Brazil
+- Environmental cost of devices, streaming, and data centers
+
+Learning Objectives:
+- Map personal data shared through commonly used school-approved apps
+- Summarize key points of a privacy policy in plain language
+- Explain how training data can produce biased algorithmic outcomes
+- Discuss digital divide impacts on education and civic participation
+- Estimate environmental footprint of digital habits and propose reductions
+
+BNCC Skills:
+- EF07CO07, EF07CO08, EF07CO09
+
+Keywords:
+- ethics
+- privacy
+- bias
+- citizenship
+- sustainability
+- technology
+- responsibility
+
+Project Opportunities:
+- Ethical audit of a popular app or platform with presentation to class
+- Digital awareness campaign on privacy and consent (cross-grade link)
+- Community sustainability project section on reducing digital energy use
+
+Assessment Suggestions:
+- Ethics case study responses with stakeholder analysis
+- Privacy policy summary rubric for clarity and completeness
+- Debate preparation on a technology policy question with cited evidence
+
+==================================================
+
+Unit 4
+
+Period: Fourth Quarter
+
+Big Idea:
+Integrated digital projects combine data, code, and ethics to communicate findings that drive action.
+
+Topics:
+- Data visualization principles: chart selection, labeling, and honesty
+- Creating dashboards or reports from multi-source data
+- Version control habits: naming, backups, and change logs
+- Project documentation: README files and reproducibility
+- Capstone project management and presentation
+
+Learning Objectives:
+- Select appropriate visualizations for categorical and time-series data
+- Build a data report combining tables, charts, and narrative analysis
+- Maintain organized project files with documented changes
+- Write documentation enabling another student to reproduce results
+- Present a capstone integrating programming output with ethical reflection
+
+BNCC Skills:
+- EF07CO09, EF07CO10 (integration and consolidation)
+
+Keywords:
+- data visualization
+- communication
+- collaboration
+- sustainability
+- investigation
+- innovation
+- graphs
+
+Project Opportunities:
+- Data collection and visualization project for environmental impact assessment (math and science link)
+- Automated report generator for school energy audit data
+- Interdisciplinary capstone: ecology data, statistical graphs, and ethical technology reflection
+
+Assessment Suggestions:
+- Visualization rubric evaluating accuracy, clarity, and honesty
+- Capstone project assessment across code, data, documentation, and presentation
+- Peer review of project documentation for reproducibility
+
+==================================================

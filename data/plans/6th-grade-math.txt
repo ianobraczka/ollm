@@ -1,0 +1,196 @@
+==================================================
+
+Grade: 6
+
+Subject: Mathematics
+
+Academic Year: 2025
+
+Overview:
+Sixth-grade mathematics at Colégio Horizonte transitions students from arithmetic fluency to proportional thinking, geometric reasoning, and statistical literacy. Students explore ratios and percentages as tools for comparing quantities in commerce, sports, and science contexts. Geometry expands to angle relationships, area of composite figures, and coordinate plotting. Statistics introduces data collection methods and graphical interpretation that support science fair projects and school surveys.
+
+Core Competencies:
+- Use ratios and percentages to compare quantities and solve practical problems
+- Apply geometric properties to compute area, perimeter, and angle measures
+- Collect, organize, and interpret data using tables and graphs
+- Communicate mathematical reasoning through models, symbols, and precise language
+
+==================================================
+
+Unit 1
+
+Period: First Quarter
+
+Big Idea:
+Ratios express multiplicative relationships and provide a foundation for proportional reasoning.
+
+Topics:
+- Ratio notation and part-to-part vs. part-to-whole comparisons
+- Equivalent ratios and scaling in recipes, maps, and mixtures
+- Unit rates in speed, price per item, and consumption contexts
+- Ratio tables and double number lines
+- Introduction to proportions through missing-value problems
+
+Learning Objectives:
+- Write ratios in multiple forms for a given situation
+- Generate equivalent ratios using multiplication and division
+- Calculate and interpret unit rates in real-world contexts
+- Solve simple proportion problems using tables or scaling
+- Explain why ratio relationships differ from additive comparisons
+
+BNCC Skills:
+- EF06MA01, EF06MA02, EF06MA03, EF06MA04
+
+Keywords:
+- ratios
+- proportion
+- problem solving
+- measurement
+- reasoning
+- data
+
+Project Opportunities:
+- Recipe ratio lab: scale ingredients for different batch sizes (science nutrition link)
+- School map scale drawing with measured distances
+- Sports statistics comparison using ratios of wins to games played
+
+Assessment Suggestions:
+- Ratio and unit rate problem set with strategy annotations
+- Error analysis on common additive-vs-multiplicative mistakes
+- Performance task comparing two products using unit rates
+
+==================================================
+
+Unit 2
+
+Period: Second Quarter
+
+Big Idea:
+Percentages translate ratios to a universal scale for comparison across finance, data, and everyday decisions.
+
+Topics:
+- Percent as per hundred and connection to fractions and decimals
+- Calculating percentages of quantities: discounts, taxes, tips
+- Percent increase and decrease in price and population contexts
+- Converting among fractions, decimals, and percents
+- Simple interest introduction in savings scenarios
+
+Learning Objectives:
+- Represent a part-whole relationship as a fraction, decimal, and percent
+- Compute a given percent of a number in contextual problems
+- Determine the whole or part when a percent is known
+- Solve problems involving percent increase and decrease
+- Interpret percentages in media, advertising, and school survey results
+
+BNCC Skills:
+- EF06MA05, EF06MA06, EF06MA07, EF06MA08
+
+Keywords:
+- percentages
+- finance
+- comparison
+- data
+- communication
+- investigation
+
+Project Opportunities:
+- Fundraising goal tracker: percent of target reached over time with graphs
+- Consumer comparison project: evaluate sale claims using percent discount
+- School survey results report with percentage breakdowns (digital education link)
+
+Assessment Suggestions:
+- Percent conversion fluency check
+- Multi-step percent word problems with rubric for reasoning
+- Media analysis: verify whether a headline percentage is misleading
+
+==================================================
+
+Unit 3
+
+Period: Third Quarter
+
+Big Idea:
+Geometry provides precise language and tools for describing, measuring, and transforming space.
+
+Topics:
+- Angle types and relationships: complementary, supplementary, vertical
+- Triangles: classification by sides and angles, angle sum property
+- Area of parallelograms, triangles, and composite figures
+- Circumference and area of circles (introductory, pi as ratio)
+- Coordinate plane: plotting points, reflections, and simple translations
+
+Learning Objectives:
+- Measure and construct angles using protractor and compass
+- Classify triangles and justify using side and angle properties
+- Decompose composite figures to calculate total area
+- Apply formulas for circumference and area of circles in practical problems
+- Plot and transform figures on the coordinate plane
+
+BNCC Skills:
+- EF06MA09, EF06MA10, EF06MA11, EF06MA12, EF06MA13
+
+Keywords:
+- geometry
+- measurement
+- spatial reasoning
+- design
+- environment
+- problem solving
+
+Project Opportunities:
+- School garden design with scaled blueprint and area calculations (science link)
+- Circle-based design project: planters, wheels, or logos with circumference and area
+- Community map with coordinate grid and distance estimates
+
+Assessment Suggestions:
+- Composite area performance task with labeled diagram
+- Geometry vocabulary test with justification requirements
+- Coordinate transformation exercise with written rules
+
+==================================================
+
+Unit 4
+
+Period: Fourth Quarter
+
+Big Idea:
+Statistics turns raw observations into organized evidence that supports conclusions and decisions.
+
+Topics:
+- Statistical questions vs. non-statistical questions
+- Data collection: surveys, experiments, and observational studies
+- Dot plots, histograms, stem-and-leaf plots, and box plot introduction
+- Measures of center: mean, median, and mode
+- Measures of spread: range and informal interpretation
+- Misleading graphs and critical interpretation
+
+Learning Objectives:
+- Formulate a statistical question appropriate for a class investigation
+- Collect and organize data in frequency tables
+- Construct and interpret dot plots and histograms
+- Compute and compare mean, median, and mode for a data set
+- Identify features of graphs that may mislead a reader
+
+BNCC Skills:
+- EF06MA14, EF06MA15, EF06MA16, EF06MA17, EF06MA18
+
+Keywords:
+- statistics
+- data
+- graphs
+- investigation
+- environment
+- collaboration
+- sustainability
+
+Project Opportunities:
+- School biodiversity survey data analysis with graphs (science link)
+- Digital awareness campaign metrics: track views and responses over time (digital education link)
+- Water consumption study: collect, graph, and interpret usage data (science link)
+
+Assessment Suggestions:
+- Full statistics project with question, data, graphs, and written analysis
+- Graph critique assignment identifying misleading features
+- End-of-year integrated assessment combining percent, geometry, and data
+
+==================================================

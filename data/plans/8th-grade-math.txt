@@ -1,0 +1,199 @@
+==================================================
+
+Grade: 8
+
+Subject: Mathematics
+
+Academic Year: 2025
+
+Overview:
+Eighth-grade mathematics at Colégio Horizonte formalizes functional thinking, advanced geometric reasoning, and statistical inference to prepare students for high school STEM pathways. Linear functions model real phenomena from science experiments and sustainability projects. Geometry extends to similarity, the Pythagorean theorem, and volume of cylinders and cones. Probability and data analysis equip students to interpret uncertainty in environmental studies, health information, and technology metrics. The curriculum emphasizes modeling, justification, and communication for interdisciplinary capstones.
+
+Core Competencies:
+- Model and analyze relationships using linear functions in tables, graphs, and equations
+- Apply geometric theorems to solve measurement and design problems
+- Calculate probabilities and interpret outcomes in compound events
+- Analyze data sets using scatter plots, two-way tables, and informal inference
+
+==================================================
+
+Unit 1
+
+Period: First Quarter
+
+Big Idea:
+Linear functions express constant rate of change and provide a universal language for modeling relationships.
+
+Topics:
+- Function concept: input, output, domain, and range
+- Linear equations in slope-intercept form y = mx + b
+- Graphing lines from equations, tables, and contextual descriptions
+- Interpreting slope and y-intercept in applied models
+- Comparing linear functions: parallel and perpendicular lines (introductory)
+- Arithmetic sequences as discrete linear functions
+
+Learning Objectives:
+- Determine whether a relationship is linear from a table or graph
+- Write linear equations modeling real situations such as cost or distance
+- Graph lines accurately using slope and intercept
+- Interpret slope as rate of change and intercept as initial value
+- Compare two linear models to make predictions and decisions
+
+BNCC Skills:
+- EF08MA01, EF08MA02, EF08MA03, EF08MA04, EF08MA05
+
+Keywords:
+- functions
+- linear models
+- graphs
+- slope
+- problem solving
+- data
+
+Project Opportunities:
+- Water consumption study: model usage over time and predict future totals (science link)
+- Fundraising linear model: graph progress toward a sustainability project goal
+- Motion investigation: graph distance vs. time for uniform movement (science physics link)
+
+Assessment Suggestions:
+- Linear modeling performance task with equation, graph, and interpretation
+- Slope-intercept fluency quiz in contextual scenarios
+- Comparison problem requiring two models and a justified recommendation
+
+==================================================
+
+Unit 2
+
+Period: Second Quarter
+
+Big Idea:
+Geometry connects visual reasoning to proof through similarity, right triangles, and three-dimensional measurement.
+
+Topics:
+- Angle relationships with parallel lines and transversals
+- Triangle similarity and scale factor in maps and models
+- Pythagorean theorem: application and converse
+- Distance on the coordinate plane
+- Volume and surface area of cylinders, cones, and spheres
+- Transformations: rotations, reflections, translations, dilations
+
+Learning Objectives:
+- Prove triangles similar using angle and side criteria
+- Apply the Pythagorean theorem to find unknown lengths
+- Calculate distance between points using the coordinate plane
+- Compute volume and surface area of cylinders and cones in design problems
+- Perform and describe transformations including dilations with scale factor
+
+BNCC Skills:
+- EF08MA06, EF08MA07, EF08MA08, EF08MA09, EF08MA10
+
+Keywords:
+- geometry
+- similarity
+- measurement
+- design
+- spatial reasoning
+- environment
+
+Project Opportunities:
+- Sustainable garden irrigation design using volume calculations (science link)
+- Scale model of a green building with similarity and surface area analysis
+- Map-based distance project using coordinate geometry
+
+Assessment Suggestions:
+- Pythagorean theorem application set with diagrams
+- Volume and surface area design problem with rubric
+- Transformation task on coordinate grid with written rules
+
+==================================================
+
+Unit 3
+
+Period: Third Quarter
+
+Big Idea:
+Probability quantifies uncertainty and supports informed decisions under incomplete information.
+
+Topics:
+- Sample spaces and probability as a number between 0 and 1
+- Theoretical vs. experimental probability
+- Compound events: independent and dependent events
+- Tree diagrams and tables for counting outcomes
+- Expected value introduction in simple games and decisions
+- Common misconceptions: gambler's fallacy and small samples
+
+Learning Objectives:
+- List sample spaces systematically for one- and two-stage events
+- Calculate theoretical probability for fair and unfair situations
+- Compare experimental results to theoretical predictions over many trials
+- Determine whether events are independent or dependent
+- Critique probability claims in media and advertising
+
+BNCC Skills:
+- EF08MA11, EF08MA12, EF08MA13, EF08MA14
+
+Keywords:
+- probability
+- uncertainty
+- data
+- reasoning
+- investigation
+- ethics
+
+Project Opportunities:
+- Experimental probability lab with dice, spinners, or genetics models (science link)
+- Risk communication project evaluating health or environmental probability claims
+- Game design with documented fair vs. unfair probability rules
+
+Assessment Suggestions:
+- Compound probability problem set with tree diagrams
+- Experimental lab report comparing theoretical and observed frequencies
+- Media critique essay on a misleading probability statement
+
+==================================================
+
+Unit 4
+
+Period: Fourth Quarter
+
+Big Idea:
+Data analysis synthesizes numerical literacy with contextual judgment for evidence-based conclusions.
+
+Topics:
+- Scatter plots, correlation, and line of best fit
+- Two-way tables and relative frequencies
+- Informal inference: margin of error and sample size effects
+- Choosing appropriate representations for different data types
+- Critiquing studies: sampling, confounding, and causation vs. correlation
+- Capstone integration: functions, geometry, probability, and data
+
+Learning Objectives:
+- Fit and interpret a line of best fit for bivariate numerical data
+- Construct and analyze two-way tables for categorical data
+- Explain how sample size affects reliability of conclusions
+- Select graphs that accurately represent data without distortion
+- Evaluate whether a claim is supported by given data and methodology
+
+BNCC Skills:
+- EF08MA15, EF08MA16, EF08MA17, EF08MA18, EF08MA19
+
+Keywords:
+- data analysis
+- statistics
+- graphs
+- sustainability
+- collaboration
+- communication
+- innovation
+
+Project Opportunities:
+- Data collection and visualization project for community sustainability metrics (science and digital education link)
+- School energy audit analysis with scatter plots and trend lines (science link)
+- Interdisciplinary capstone: model, analyze, and present a school environmental indicator
+
+Assessment Suggestions:
+- Two-way table analysis with conditional percentage questions
+- Scatter plot and trend line task with interpretation paragraph
+- End-of-year capstone rubric spanning functions, geometry, probability, and data
+
+==================================================

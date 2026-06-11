@@ -1,0 +1,196 @@
+==================================================
+
+Grade: 7
+
+Subject: Mathematics
+
+Academic Year: 2025
+
+Overview:
+Seventh-grade mathematics at Colégio Horizonte formalizes algebraic thinking and proportional reasoning while strengthening graphical literacy for interdisciplinary analysis. Students manipulate variables, solve linear equations, and model real situations with tables, graphs, and simple rules. Proportional relationships connect to science investigations on rates of change and environmental data. The year prepares students for functions in eighth grade and supports data-rich projects across the curriculum.
+
+Core Competencies:
+- Represent and analyze relationships using variables, expressions, and equations
+- Solve linear equations and inequalities in one variable
+- Apply proportional reasoning to rates, scale, and percent change problems
+- Construct and interpret graphs that model quantitative relationships
+
+==================================================
+
+Unit 1
+
+Period: First Quarter
+
+Big Idea:
+Algebraic expressions generalize arithmetic patterns and enable prediction beyond specific numbers.
+
+Topics:
+- Variables and expressions: writing, evaluating, and simplifying
+- Properties of operations: commutative, associative, distributive
+- Translating verbal descriptions into algebraic expressions
+- Like terms and equivalent expressions
+- Input-output tables and introduction to function notation
+
+Learning Objectives:
+- Write algebraic expressions that model real situations
+- Evaluate expressions for given variable values
+- Apply the distributive property to expand and factor simple expressions
+- Combine like terms to simplify expressions
+- Use tables to explore how one quantity depends on another
+
+BNCC Skills:
+- EF07MA01, EF07MA02, EF07MA03, EF07MA04
+
+Keywords:
+- algebra
+- expressions
+- patterns
+- reasoning
+- problem solving
+- data
+
+Project Opportunities:
+- Pattern exploration lab: tile arrangements and expression generalization
+- Fundraising formula: express total revenue as expression of tickets sold
+- Science link: express total water used as expression of days and daily rate
+
+Assessment Suggestions:
+- Expression translation task with verbal scenarios
+- Simplification quiz with justification of each step
+- Table completion exercise linking expressions to values
+
+==================================================
+
+Unit 2
+
+Period: Second Quarter
+
+Big Idea:
+Equations and inequalities model balanced relationships and feasible solutions in real contexts.
+
+Topics:
+- Equation meaning: equality as balance
+- One-step and two-step linear equations
+- Equations with variables on both sides (introductory)
+- Checking solutions by substitution
+- Simple inequalities and solution representation on a number line
+
+Learning Objectives:
+- Solve one- and two-step linear equations using inverse operations
+- Verify solutions by substituting into the original equation
+- Translate word problems into equations and solve
+- Represent inequality solutions on a number line
+- Explain why some equations have no solution or infinitely many solutions
+
+BNCC Skills:
+- EF07MA05, EF07MA06, EF07MA07, EF07MA08
+
+Keywords:
+- equations
+- algebra
+- balance
+- problem solving
+- reasoning
+- investigation
+
+Project Opportunities:
+- Budget balancing project: equations for expenses and income targets
+- Science lab analysis: solve for unknown concentration or mass
+- Class trip planning: equations for bus capacity and cost per student
+
+Assessment Suggestions:
+- Equation solving set with work shown for each inverse operation
+- Word problem performance task requiring equation setup
+- Error analysis on incorrect equation solutions
+
+==================================================
+
+Unit 3
+
+Period: Third Quarter
+
+Big Idea:
+Proportional reasoning connects ratios, rates, and linear relationships across disciplines.
+
+Topics:
+- Direct proportion: y = kx and constant of proportionality
+- Scale drawings and map scales
+- Speed, density, and unit conversion using proportions
+- Percent change revisited with algebraic models
+- Comparing proportional and non-proportional situations
+
+Learning Objectives:
+- Identify proportional relationships from tables, graphs, and descriptions
+- Calculate and interpret the constant of proportionality
+- Solve scale and map problems using proportional reasoning
+- Model percent change situations with equations
+- Distinguish proportional from additive relationships in data
+
+BNCC Skills:
+- EF07MA09, EF07MA10, EF07MA11, EF07MA12
+
+Keywords:
+- proportion
+- rates
+- scale
+- graphs
+- environment
+- measurement
+
+Project Opportunities:
+- Water consumption study: model daily usage and predict monthly totals (science link)
+- Scale blueprint for sustainable garden design (science and digital education link)
+- Speed investigation: graph distance vs. time for a rolling object (science physics preview)
+
+Assessment Suggestions:
+- Proportionality identification task across tables and graphs
+- Scale drawing project with measurement verification
+- Written comparison of two data sets for proportionality
+
+==================================================
+
+Unit 4
+
+Period: Fourth Quarter
+
+Big Idea:
+Graphs visualize relationships and make patterns accessible for analysis and communication.
+
+Topics:
+- Coordinate plane review and plotting ordered pairs
+- Linear relationships in tables, graphs, and equations
+- Slope as rate of change in contextual problems
+- Intercepts and their meaning in applied settings
+- Comparing two relationships on the same graph
+- Data analysis: scatter plots, line of best fit (informal), and interpretation
+
+Learning Objectives:
+- Plot points and linear relationships from tables and equations
+- Interpret slope and intercept in context such as cost vs. quantity
+- Graph and compare two proportional situations
+- Construct scatter plots from bivariate data and describe trends
+- Draw informal conclusions from graphs supporting science or social questions
+
+BNCC Skills:
+- EF07MA13, EF07MA14, EF07MA15, EF07MA16, EF07MA17
+
+Keywords:
+- graphs
+- data
+- slope
+- analysis
+- sustainability
+- collaboration
+- communication
+
+Project Opportunities:
+- Environmental impact graphing: plot waste reduction over a semester (science link)
+- Data collection and visualization project with digital charts (digital education link)
+- Interdisciplinary capstone: model, graph, and present a school sustainability metric
+
+Assessment Suggestions:
+- Graphing test with contextual interpretation questions
+- Scatter plot analysis worksheet with trend description
+- End-of-year project rubric integrating algebra, proportion, and graphs
+
+==================================================

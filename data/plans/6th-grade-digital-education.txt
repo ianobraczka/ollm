@@ -1,0 +1,195 @@
+==================================================
+
+Grade: 6
+
+Subject: Digital Education
+
+Academic Year: 2025
+
+Overview:
+Sixth-grade digital education at Colégio Horizonte strengthens students' ability to find, evaluate, and communicate information in digital environments while introducing computational thinking as a problem-solving approach. Building on fifth-grade citizenship foundations, students practice research skills for science and humanities projects, collaborate through school-approved platforms, and decompose problems into logical steps. The curriculum supports interdisciplinary work by teaching tools and habits that transfer directly to math data projects and science investigations.
+
+Core Competencies:
+- Locate and evaluate digital information using credibility criteria
+- Communicate ideas effectively through appropriate online channels and formats
+- Apply computational thinking strategies to break problems into manageable steps
+- Collaborate on shared documents while maintaining version control and attribution
+
+==================================================
+
+Unit 1
+
+Period: First Quarter
+
+Big Idea:
+Information literacy begins with purposeful searching and critical evaluation of sources.
+
+Topics:
+- Research question refinement and keyword selection
+- Using library databases, encyclopedias, and curated school resources
+- Evaluating credibility: author, date, purpose, evidence, bias
+- Distinguishing fact, opinion, and sponsored content
+- Note-taking methods and citation basics for school projects
+
+Learning Objectives:
+- Formulate effective search queries for a defined research question
+- Apply a source evaluation checklist to online and database materials
+- Identify bias and missing evidence in sample articles
+- Record notes in a structured format with source references
+- Explain why Wikipedia is a starting point but not a final source
+
+BNCC Skills:
+- EF06CO01, EF06CO02, EF06CO03
+
+Keywords:
+- information literacy
+- investigation
+- ethics
+- communication
+- critical thinking
+- research
+
+Project Opportunities:
+- Endangered species research dossier supporting science presentations
+- Source comparison activity on a current environmental topic
+- Class bibliography wall with rated sources and justification notes
+
+Assessment Suggestions:
+- Source evaluation worksheet with written credibility ratings
+- Annotated bibliography for a science or humanities topic
+- Short test on fact vs. opinion in sample web excerpts
+
+==================================================
+
+Unit 2
+
+Period: Second Quarter
+
+Big Idea:
+Online communication requires clarity, audience awareness, and norms that differ from face-to-face interaction.
+
+Topics:
+- Email and messaging etiquette for school contexts
+- Discussion boards and comment norms: constructive feedback
+- Video call participation: mute, camera, and sharing protocols
+- Digital collaboration on shared documents and slide decks
+- Managing notifications and maintaining focus during online work
+
+Learning Objectives:
+- Write clear, appropriately formal school emails with subject lines and signatures
+- Post constructive comments that advance group learning
+- Follow video conference norms that respect all participants
+- Edit shared documents without deleting others' contributions
+- Balance responsiveness with focused work time
+
+BNCC Skills:
+- EF06CO04, EF06CO05, EF06CO06
+
+Keywords:
+- communication
+- collaboration
+- citizenship
+- respect
+- productivity
+- ethics
+
+Project Opportunities:
+- Digital awareness campaign planning via shared slides (science conservation link)
+- Peer review cycle for science lab reports using comment tools
+- Cross-class pen-pal exchange with structured reflection prompts
+
+Assessment Suggestions:
+- Email writing rubric with tone, clarity, and etiquette criteria
+- Participation log and self-assessment for online collaboration
+- Revision task showing tracked changes and response to feedback
+
+==================================================
+
+Unit 3
+
+Period: Third Quarter
+
+Big Idea:
+Computational thinking organizes complex problems through decomposition, patterns, abstraction, and algorithms.
+
+Topics:
+- Decomposition: breaking projects into subtasks with timelines
+- Pattern recognition in data, nature, and daily routines
+- Abstraction: focusing on essential details while ignoring noise
+- Algorithms: step-by-step instructions and flowchart notation
+- Introduction to block-based programming environments approved by the school
+
+Learning Objectives:
+- Decompose a multi-step project into ordered subtasks with dependencies
+- Identify repeating patterns in numerical and natural data sets
+- Create a flowchart representing a decision process or recipe
+- Write an algorithm in plain language that another person can follow
+- Build a simple interactive program using block-based coding
+
+BNCC Skills:
+- EF06CO07, EF06CO08, EF06CO09
+
+Keywords:
+- computational thinking
+- algorithms
+- problem solving
+- patterns
+- logic
+- innovation
+
+Project Opportunities:
+- Flowchart for school recycling procedure (science sustainability link)
+- Pattern hunt in biodiversity survey data (math and science link)
+- Block-based quiz game reinforcing math ratio concepts
+
+Assessment Suggestions:
+- Flowchart accuracy check against a given process description
+- Algorithm execution test: classmate follows steps without clarification
+- Programming project rubric covering functionality and documentation
+
+==================================================
+
+Unit 4
+
+Period: Fourth Quarter
+
+Big Idea:
+Digital skills integrate with subject learning when students publish research, data, and solutions responsibly.
+
+Topics:
+- Spreadsheet skills: sorting, filtering, basic formulas
+- Chart creation from science and math data sets
+- Presentation design for oral defense of projects
+- Digital rights, Creative Commons, and plagiarism avoidance
+- Year-end technology reflection and goal setting
+
+Learning Objectives:
+- Organize survey data in a spreadsheet with consistent formatting
+- Create appropriate chart types for categorical and numerical data
+- Design a presentation that supports—not replaces—oral explanation
+- Apply citation and licensing rules to all published digital work
+- Set measurable goals for seventh-grade technology competencies
+
+BNCC Skills:
+- EF06CO09, EF06CO10 (integration and consolidation)
+
+Keywords:
+- data
+- graphs
+- communication
+- ethics
+- sustainability
+- collaboration
+- environment
+
+Project Opportunities:
+- Data collection and visualization project for school biodiversity survey (math and science link)
+- Community sustainability project website or slide deck with cited sources
+- Capstone presentation combining research, data charts, and computational demo
+
+Assessment Suggestions:
+- Spreadsheet and chart accuracy review against raw data
+- Presentation rubric with design, content, and citation criteria
+- Portfolio reflection linking digital skills to interdisciplinary projects
+
+==================================================

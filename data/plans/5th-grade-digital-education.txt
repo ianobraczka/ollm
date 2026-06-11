@@ -1,0 +1,195 @@
+==================================================
+
+Grade: 5
+
+Subject: Digital Education
+
+Academic Year: 2025
+
+Overview:
+Fifth-grade digital education at Colégio Horizonte introduces students to responsible participation in digital environments while fostering creative expression through technology. The program aligns with BNCC computing fundamentals and the school's technology use policy. Students learn to navigate online spaces safely, recognize trustworthy information, and produce simple digital artifacts that support learning across subjects. Emphasis is placed on citizenship, empathy, and age-appropriate boundaries rather than advanced technical skills.
+
+Core Competencies:
+- Demonstrate safe and respectful behavior in digital environments
+- Identify risks online and apply strategies to protect personal information
+- Create original digital content using school-approved tools
+- Collaborate on digital projects while crediting sources and peers appropriately
+
+==================================================
+
+Unit 1
+
+Period: First Quarter
+
+Big Idea:
+Digital citizenship begins with understanding rights, responsibilities, and respect in online communities.
+
+Topics:
+- School technology acceptable use policy and device care
+- Digital identity: usernames, avatars, and personal representation
+- Online respect: tone, empathy, and consequences of harmful messages
+- Balanced screen time and healthy technology habits
+- Difference between public and private information
+
+Learning Objectives:
+- Explain the school technology agreement in their own words
+- Describe how online actions affect real people and reputations
+- Identify examples of respectful and disrespectful digital communication
+- Set personal goals for balanced technology use at home and school
+- Distinguish information that should never be shared online
+
+BNCC Skills:
+- EF05CO01, EF05CO02, EF05CO03
+
+Keywords:
+- citizenship
+- ethics
+- communication
+- respect
+- responsibility
+- health
+
+Project Opportunities:
+- Digital citizenship charter co-created by the class and displayed in the lab
+- Comic strip illustrating a positive vs. negative online interaction
+- Family technology agreement drafted with student input
+
+Assessment Suggestions:
+- Scenario-based quiz on appropriate responses to online situations
+- Reflection journal on personal technology habits
+- Peer-reviewed digital citizenship poster
+
+==================================================
+
+Unit 2
+
+Period: Second Quarter
+
+Big Idea:
+Internet safety requires active habits of verification, privacy protection, and seeking adult support.
+
+Topics:
+- Personal data protection: passwords, phishing, and oversharing
+- Recognizing unsafe links, downloads, and pop-up traps
+- Cyberbullying: identification, reporting, and bystander action
+- Safe search practices and age-appropriate content filters
+- When and how to involve teachers, parents, or trusted adults
+
+Learning Objectives:
+- Create and manage strong passwords using school guidelines
+- Identify common signs of phishing and scam messages
+- Describe steps to take when encountering cyberbullying
+- Use child-safe search engines and evaluate result relevance
+- Document a personal safety plan for uncomfortable online situations
+
+BNCC Skills:
+- EF05CO04, EF05CO05, EF05CO06
+
+Keywords:
+- safety
+- privacy
+- ethics
+- problem solving
+- communication
+- trust
+
+Project Opportunities:
+- Internet safety awareness campaign with slides for younger grades
+- Password strength workshop with hands-on practice
+- Role-play scenarios for reporting unsafe online content
+
+Assessment Suggestions:
+- Safety checklist applied to sample websites and messages
+- Written safety plan with clear escalation steps
+- Group presentation on one major online risk and its prevention
+
+==================================================
+
+Unit 3
+
+Period: Third Quarter
+
+Big Idea:
+Digital creativity transforms ideas into shareable media while honoring originality and attribution.
+
+Topics:
+- Introduction to school-approved creative tools: slides, drawings, and simple video
+- Storyboarding and planning before production
+- Image and music sources: copyright, Creative Commons, and citation
+- Basic photo composition and accessibility (alt text, readable fonts)
+- Presenting digital work to an audience
+
+Learning Objectives:
+- Plan a digital project using a storyboard or outline
+- Produce a short multimedia artifact on a curriculum topic
+- Credit images, music, and ideas using a standard citation format
+- Apply design choices that improve clarity and accessibility
+- Deliver a brief oral presentation accompanying digital work
+
+BNCC Skills:
+- EF05CO07, EF05CO08, EF05CO09
+
+Keywords:
+- creativity
+- communication
+- collaboration
+- ethics
+- design
+- innovation
+
+Project Opportunities:
+- Digital awareness campaign on nutrition or hygiene (science link)
+- Illustrated ecosystem guide using student photos from science fieldwork
+- Class newsletter documenting quarterly projects
+
+Assessment Suggestions:
+- Multimedia project rubric covering content, design, and attribution
+- Peer feedback form on clarity and accessibility
+- Teacher conference on revision choices before publication
+
+==================================================
+
+Unit 4
+
+Period: Fourth Quarter
+
+Big Idea:
+Responsible digital participation connects technology skills to community improvement and interdisciplinary learning.
+
+Topics:
+- Organizing research materials in folders and shared drives
+- Simple data entry in spreadsheets for class surveys
+- Creating charts from collected data
+- Publishing guidelines: audience, privacy, and school approval
+- Year-end digital portfolio assembly
+
+Learning Objectives:
+- File and name documents using a consistent class convention
+- Enter survey data accurately into a shared spreadsheet
+- Generate a basic chart from numerical data
+- Review a digital product for privacy concerns before sharing
+- Curate a portfolio showcasing best work from the year
+
+BNCC Skills:
+- EF05CO09, EF05CO10 (integration and consolidation)
+
+Keywords:
+- data
+- graphs
+- collaboration
+- sustainability
+- environment
+- investigation
+- responsibility
+
+Project Opportunities:
+- Data collection and visualization project for school biodiversity survey (math and science link)
+- Digital sustainability report with charts on classroom waste audit
+- End-of-year portfolio website or slide deck for parent conference
+
+Assessment Suggestions:
+- Spreadsheet and chart accuracy check against raw survey data
+- Portfolio review rubric with self-assessment component
+- Final reflection essay on growth as a digital citizen and creator
+
+==================================================

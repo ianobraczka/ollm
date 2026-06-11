@@ -1,0 +1,198 @@
+==================================================
+
+Grade: 5
+
+Subject: Mathematics
+
+Academic Year: 2025
+
+Overview:
+Fifth-grade mathematics at Colégio Horizonte builds computational fluency, spatial reasoning, and quantitative literacy through problem-solving grounded in Brazilian daily life. Students consolidate whole-number operations, explore fractions and decimals as tools for fair sharing and measurement, and begin connecting geometry to real spaces such as classrooms, neighborhoods, and maps. The year emphasizes reasoning, justification, and communication of mathematical thinking in preparation for proportional reasoning in middle school.
+
+Core Competencies:
+- Solve multi-step problems using the four operations with whole numbers, fractions, and decimals
+- Represent and compare quantities using fractions, decimals, and standard units of measurement
+- Identify, describe, and classify two- and three-dimensional geometric figures
+- Collect, organize, and interpret simple data to support evidence-based conclusions
+
+==================================================
+
+Unit 1
+
+Period: First Quarter
+
+Big Idea:
+Whole-number operations and number sense form the foundation for all later mathematical reasoning.
+
+Topics:
+- Place value and number comparison up to six digits
+- Addition and subtraction with regrouping in contextual problems
+- Multiplication and division: meanings, properties, and mental strategies
+- Estimation and reasonableness checks in everyday situations
+- Problem-solving with money, schedules, and school inventory scenarios
+
+Learning Objectives:
+- Read, write, compare, and order natural numbers using place value
+- Solve addition and subtraction problems involving more than one step
+- Apply multiplication and division to equal-group and array situations
+- Use estimation to verify whether an answer is reasonable
+- Explain solution strategies using mathematical vocabulary in Portuguese and English
+
+BNCC Skills:
+- EF05MA01, EF05MA06, EF05MA07, EF05MA08, EF05MA19
+
+Keywords:
+- operations
+- problem solving
+- estimation
+- number sense
+- reasoning
+- communication
+
+Project Opportunities:
+- School supply budget: students plan purchases for a class event using operations and estimation
+- Classroom inventory audit: count, categorize, and report items using tables and totals
+- Neighborhood distance map: calculate walking distances between familiar locations
+
+Assessment Suggestions:
+- Performance task: multi-step word problem set with strategy explanation
+- Oral defense of estimation choices in a real-world scenario
+- Error-analysis activity: identify and correct flawed student solutions
+
+==================================================
+
+Unit 2
+
+Period: Second Quarter
+
+Big Idea:
+Fractions and decimals describe parts of a whole and enable fair comparison in real contexts.
+
+Topics:
+- Fraction concepts: part-whole, number line, and equivalence
+- Comparing and ordering fractions with like and unlike denominators
+- Addition and subtraction of fractions with common denominators
+- Introduction to decimals: tenths and hundredths linked to money and measurement
+- Converting between simple fractions and decimals
+
+Learning Objectives:
+- Represent fractions using models, number lines, and symbolic notation
+- Identify equivalent fractions and simplify when appropriate
+- Compare fractions using benchmarks such as one-half and one whole
+- Read, write, and compare decimals in real contexts such as prices and lengths
+- Solve problems involving fractional and decimal quantities in sharing and measurement
+
+BNCC Skills:
+- EF05MA03, EF05MA04, EF05MA05, EF05MA18
+
+Keywords:
+- fractions
+- decimals
+- equivalence
+- comparison
+- measurement
+- fair sharing
+
+Project Opportunities:
+- Recipe scaling project: adjust ingredient quantities for different serving sizes
+- Class pizza party planning: divide portions fairly using fractions
+- Price comparison study: compare product prices using decimals at local markets
+
+Assessment Suggestions:
+- Fraction model portfolio with written justifications
+- Decimal placement quiz tied to monetary contexts
+- Collaborative problem set on fair distribution scenarios
+
+==================================================
+
+Unit 3
+
+Period: Third Quarter
+
+Big Idea:
+Measurement connects mathematics to the physical world through standardized units and precision.
+
+Topics:
+- Length, mass, capacity, and time: metric units and conversions
+- Perimeter and area of rectangles and composite figures
+- Angles: identification, measurement with protractor, and classification
+- Volume of rectangular prisms using unit cubes
+- Measurement error, rounding, and appropriate precision
+
+Learning Objectives:
+- Convert between common metric units in practical problems
+- Calculate perimeter and area of rectangles and combined shapes
+- Measure and draw angles using appropriate tools
+- Estimate and compute volume using cubic units
+- Select suitable units and precision for a given measurement task
+
+BNCC Skills:
+- EF05MA10, EF05MA11, EF05MA12, EF05MA13, EF05MA14, EF05MA15
+
+Keywords:
+- measurement
+- geometry
+- area
+- perimeter
+- precision
+- environment
+- investigation
+
+Project Opportunities:
+- Classroom redesign: measure dimensions and propose furniture layout with area calculations
+- School garden bed planning: calculate perimeter and area for planting zones
+- Water tank capacity study: estimate volume and daily consumption (links to science)
+
+Assessment Suggestions:
+- Hands-on measurement lab with recorded data and calculations
+- Geometry diagram task: label dimensions and compute area and perimeter
+- Written reflection on unit choice and measurement accuracy
+
+==================================================
+
+Unit 4
+
+Period: Fourth Quarter
+
+Big Idea:
+Geometry and data analysis help students describe, organize, and interpret the world mathematically.
+
+Topics:
+- Properties of triangles, quadrilaterals, and circles
+- Symmetry, translations, and reflections on the coordinate plane
+- Collecting categorical and numerical data through surveys
+- Tables, bar graphs, pictographs, and line plots
+- Mean as a measure of center for simple data sets
+- Review and integration of operations, fractions, decimals, and measurement
+
+Learning Objectives:
+- Classify polygons by sides, angles, and symmetry properties
+- Plot and describe points on a first-quadrant coordinate grid
+- Design and conduct a class survey with clear categories
+- Construct and interpret bar graphs and line plots from collected data
+- Calculate and interpret the mean of a small data set
+- Apply year-long skills to interdisciplinary project problems
+
+BNCC Skills:
+- EF05MA16, EF05MA17, EF05MA20, EF05MA21, EF05MA22, EF05MA23
+
+Keywords:
+- geometry
+- data
+- graphs
+- statistics
+- symmetry
+- collaboration
+- sustainability
+
+Project Opportunities:
+- School biodiversity count: tally species observations and graph results (science link)
+- Waste audit: collect and graph classroom waste data by category (science and digital education link)
+- Community map project: plot landmarks on a coordinate grid with distance calculations
+
+Assessment Suggestions:
+- End-of-year integrated project rubric covering measurement, geometry, and data
+- Graph interpretation test with questions requiring inference
+- Geometry classification task with written property justifications
+
+==================================================

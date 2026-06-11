@@ -1,0 +1,197 @@
+==================================================
+
+Grade: 8
+
+Subject: Science
+
+Academic Year: 2025
+
+Overview:
+Eighth-grade science at Colégio Horizonte integrates physics and chemistry foundations with sustainability science to prepare students for high school laboratory work and informed citizenship. Students investigate forces, motion, energy, and waves alongside atomic structure, chemical reactions, and properties of materials. Sustainability serves as a culminating lens, requiring students to apply scientific principles to resource use, climate resilience, and green technology. Quantitative methods from mathematics and data tools from digital education are embedded in all units.
+
+Core Competencies:
+- Apply principles of mechanics and energy to explain motion and physical interactions
+- Describe atomic and molecular structure and predict products of simple chemical reactions
+- Evaluate sustainability challenges using scientific evidence and systems thinking
+- Design and conduct investigations with controlled variables, accurate measurement, and ethical reporting
+
+==================================================
+
+Unit 1
+
+Period: First Quarter
+
+Big Idea:
+Physics foundations explain motion and forces through measurable quantities and conservation laws.
+
+Topics:
+- Position, displacement, speed, velocity, and acceleration
+- Newton's laws of motion in everyday and laboratory contexts
+- Forces: gravity, friction, normal force, and free-body diagrams
+- Work, energy, and power; kinetic and potential energy conversions
+- Simple machines: mechanical advantage in school and community applications
+
+Learning Objectives:
+- Distinguish speed and velocity; calculate average speed from data
+- Draw and interpret free-body diagrams for objects at rest and in motion
+- Apply Newton's laws to predict effects of forces on motion
+- Track energy transformations in a closed system demonstration
+- Calculate mechanical advantage for levers and inclined planes used in design
+
+BNCC Skills:
+- EF08CI01, EF08CI02, EF08CI03, EF08CI04
+
+Keywords:
+- physics
+- forces
+- energy
+- motion
+- investigation
+- problem solving
+
+Project Opportunities:
+- Motion graphing lab: distance-time and velocity-time graphs (math link)
+- Simple machine design challenge for a school accessibility improvement
+- Roller coaster energy tracker using height and speed measurements
+
+Assessment Suggestions:
+- Free-body diagram quiz with written explanations
+- Motion data lab report with graphs and calculated speeds
+- Energy transformation diagram for a multi-step real system
+
+==================================================
+
+Unit 2
+
+Period: Second Quarter
+
+Big Idea:
+Chemistry foundations describe matter at the atomic scale and predict how substances interact and transform.
+
+Topics:
+- Atomic structure: protons, neutrons, electrons; periodic table organization
+- Chemical bonds: ionic and covalent (introductory models)
+- Chemical equations and conservation of atoms in reactions
+- Acids, bases, and pH in household and environmental contexts
+- Reaction rates and factors: temperature, concentration, surface area
+
+Learning Objectives:
+- Use the periodic table to identify element properties and group patterns
+- Build molecular models representing simple compounds
+- Balance chemical equations for introductory synthesis and decomposition reactions
+- Measure and interpret pH in water samples from school sources
+- Design a fair test examining one factor affecting reaction rate
+
+BNCC Skills:
+- EF08CI05, EF08CI06, EF08CI07, EF08CI08
+
+Keywords:
+- chemistry
+- atoms
+- reactions
+- matter
+- environment
+- investigation
+- health
+
+Project Opportunities:
+- Water quality testing project with pH and contamination indicators (math data link)
+- Reaction rate lab with graph of results over time (math link)
+- Materials audit: identify chemicals in everyday products and disposal guidance
+
+Assessment Suggestions:
+- Equation balancing and atom conservation test
+- pH lab practical with safety protocol checklist
+- Molecular model build with written bond justification
+
+==================================================
+
+Unit 3
+
+Period: Third Quarter
+
+Big Idea:
+Waves and electromagnetic radiation connect physics to communication technology and environmental monitoring.
+
+Topics:
+- Wave properties: amplitude, wavelength, frequency, and speed
+- Sound waves and hearing; noise pollution measurement
+- Light and the electromagnetic spectrum
+- Reflection, refraction, and color; lenses and mirrors (introductory)
+- Applications: fiber optics, satellite data, solar radiation, and remote sensing
+
+Learning Objectives:
+- Describe wave characteristics using correct vocabulary and units
+- Explain how sound travels through media and measure noise levels
+- Map the electromagnetic spectrum with everyday source examples
+- Predict reflection and refraction behavior using ray diagrams
+- Connect electromagnetic technologies to environmental data collection
+
+BNCC Skills:
+- EF08CI09, EF08CI10, EF08CI11
+
+Keywords:
+- waves
+- energy
+- technology
+- environment
+- data
+- communication
+
+Project Opportunities:
+- Noise pollution survey near school with mapped results (math and digital education link)
+- Solar panel efficiency investigation with radiation and output data
+- Digital awareness campaign explaining safe sun exposure and UV index (digital education link)
+
+Assessment Suggestions:
+- Wave parameter calculation worksheet
+- Ray diagram task for reflection and refraction cases
+- Technology application brief linking waves to a sustainability tool
+
+==================================================
+
+Unit 4
+
+Period: Fourth Quarter
+
+Big Idea:
+Sustainability science integrates physics, chemistry, and ecology to guide responsible innovation for future generations.
+
+Topics:
+- Life cycle assessment of products and services
+- Circular economy principles: reduce, reuse, recycle, redesign
+- Renewable energy systems: solar, wind, hydro, and biomass in Brazil
+- Carbon footprint calculation and offset concepts
+- Green chemistry and clean technology introductions
+- Capstone: school sustainability plan backed by scientific evidence
+
+Learning Objectives:
+- Trace materials and energy through a product life cycle diagram
+- Compare environmental trade-offs of energy sources using data
+- Calculate a simplified carbon footprint for a school activity
+- Propose a sustainability improvement with predicted scientific impact
+- Communicate findings integrating physics, chemistry, and systems thinking
+
+BNCC Skills:
+- EF08CI12, EF08CI13, EF08CI14 (integration and application)
+
+Keywords:
+- sustainability
+- innovation
+- environment
+- energy
+- ethics
+- data
+- collaboration
+
+Project Opportunities:
+- Community sustainability project with measured outcomes and public presentation
+- School energy audit recommending upgrades with cost-benefit analysis (math link)
+- Interdisciplinary capstone: data collection, linear modeling, digital dashboard, and science report
+
+Assessment Suggestions:
+- Life cycle assessment poster with data-supported claims
+- Energy source comparison essay with cited Brazilian statistics
+- Capstone rubric evaluating scientific accuracy, data use, and action feasibility
+
+==================================================
