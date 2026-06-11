@@ -4,7 +4,7 @@ import * as React from "react";
 
 import { ChatWindow } from "@/components/ChatWindow";
 import { Sidebar } from "@/components/Sidebar";
-import { getErrorMessage, readJsonResponse } from "@/lib/apiClient";
+import { getErrorMessage } from "@/lib/apiClient";
 import { BUILT_IN_DOCUMENTS } from "@/lib/builtInDocuments";
 import {
   MAX_DOCUMENTS,
@@ -12,38 +12,16 @@ import {
   NO_DOCUMENT_SELECTED_ERROR,
 } from "@/lib/constants";
 import { combineUploadedDocumentText } from "@/lib/documents";
-import { LANGUAGE_STORAGE_KEY, normalizeLanguage, type AppLanguage } from "@/lib/i18n";
+import { parseUploadedFile } from "@/lib/parseUploadedFile";
+import { useAppLanguage } from "@/lib/useAppLanguage";
 import type { ChatMessage, ParsedDocument } from "@/types/chat";
 
 function createId() {
   return crypto.randomUUID();
 }
 
-async function parseFile(file: File): Promise<ParsedDocument> {
-  const formData = new FormData();
-  formData.append("file", file);
-
-  const res = await fetch("/api/parse", { method: "POST", body: formData });
-
-  if (!res.ok) {
-    throw new Error(await getErrorMessage(res, `Failed to parse ${file.name}.`));
-  }
-
-  const data = await readJsonResponse<{
-    fileName?: string;
-    text?: string;
-    error?: string;
-  }>(res);
-
-  return {
-    id: createId(),
-    fileName: data.fileName ?? file.name,
-    text: data.text ?? "",
-  };
-}
-
 export function AppShell() {
-  const [language, setLanguage] = React.useState<AppLanguage>("en");
+  const [language, setLanguage] = useAppLanguage();
   const [documents, setDocuments] = React.useState<ParsedDocument[]>([]);
   const [selectedBuiltInIds, setSelectedBuiltInIds] = React.useState<string[]>(() =>
     BUILT_IN_DOCUMENTS.map((d) => d.id),
@@ -60,17 +38,6 @@ export function AppShell() {
 
   const hasSelectedSources =
     selectedBuiltInIds.length > 0 || (useUploadedDocument && hasUploadedText);
-
-  React.useEffect(() => {
-    if (typeof window === "undefined") return;
-    const saved = normalizeLanguage(window.localStorage.getItem(LANGUAGE_STORAGE_KEY));
-    setLanguage(saved);
-  }, []);
-
-  React.useEffect(() => {
-    if (typeof window === "undefined") return;
-    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
-  }, [language]);
 
   async function handleUpload(files: File[]) {
     setUploadError(null);
@@ -102,7 +69,7 @@ export function AppShell() {
     try {
       for (const file of files) {
         try {
-          added.push(await parseFile(file));
+          added.push(await parseUploadedFile(file));
         } catch (err) {
           errors.push(err instanceof Error ? err.message : `Failed to parse ${file.name}.`);
         }
