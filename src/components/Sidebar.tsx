@@ -5,6 +5,7 @@ import { CheckCircle2, Sparkles, Upload } from "lucide-react";
 
 import { DocumentSelector } from "@/components/DocumentSelector";
 import { LanguageSelect } from "@/components/LanguageSelect";
+import { PageNavSelect } from "@/components/PageNavSelect";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -58,11 +59,14 @@ export function Sidebar({
 
   return (
     <aside className="flex h-auto max-h-[45vh] w-full shrink-0 flex-col gap-4 overflow-y-auto border-r border-border bg-background p-4 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:h-screen lg:max-h-none lg:w-[calc(var(--spacing)*100)]">
-      <div className="flex items-center gap-3 pb-1">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <Sparkles className="h-4 w-4" />
+      <div className="space-y-2 pb-1">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <Sparkles className="h-4 w-4" />
+          </div>
+          <p className="text-sm font-semibold leading-tight">{APP_NAME}</p>
         </div>
-        <p className="text-sm font-semibold leading-tight">{APP_NAME}</p>
+        <PageNavSelect language={language} />
       </div>
 
       <DocumentSelector

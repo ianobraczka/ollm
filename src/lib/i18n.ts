@@ -40,6 +40,9 @@ export const UI_TEXT = {
     copy: "Copy",
     toggleTheme: "Toggle theme",
     language: "Language",
+    navPage: "Page",
+    navChat: "Teaching assistant",
+    navPlanning: "Interdisciplinary planning",
   },
   "pt-BR": {
     sidebarUploadTitle: "Upload (opcional)",
@@ -73,6 +76,92 @@ export const UI_TEXT = {
     copy: "Copiar",
     toggleTheme: "Alternar tema",
     language: "Idioma",
+    navPage: "Página",
+    navChat: "Assistente de ensino",
+    navPlanning: "Planejamento interdisciplinar",
+  },
+} as const;
+
+export const PLANNING_TEXT = {
+  en: {
+    pageTitle: "Interdisciplinary Lesson Planning",
+    pageDescription:
+      "Generate lesson plans, projects, or learning sequences grounded in Colégio Horizonte curriculum plans. The primary subject anchors every plan; connected subjects extend it.",
+    backToChat: "Back to chat",
+    formTitle: "Plan settings",
+    formDescription:
+      "Select grade, period, and subjects. Leave secondary subject empty to let the AI find the strongest connection.",
+    grade: "Grade",
+    gradeLabel: (g: number) => `${g}th grade`,
+    period: "Period",
+    primarySubject: "Primary subject",
+    secondarySubject: "Secondary subject",
+    secondarySubjectAuto: "Auto-detect strongest connection",
+    secondarySubjectHint:
+      "Optional. When empty, all other subjects for this grade are loaded and the AI picks the best link.",
+    outputType: "Output type",
+    outputLessonPlan: "Lesson plan",
+    outputInterdisciplinaryProject: "Interdisciplinary project",
+    outputLearningSequence: "Learning sequence",
+    teacherGoal: "Teacher goal",
+    teacherGoalPlaceholder:
+      "e.g. Focus on sustainability, include a group presentation, emphasize data collection…",
+    generatePlan: "Generate plan",
+    generating: "Generating…",
+    planningChatEmpty:
+      "Configure plan settings below and generate your first interdisciplinary plan.",
+    chatPlaceholderFollowUp:
+      "Ask follow-up questions or request changes… (Ctrl+Enter to send)",
+    resultTitle: "Generated plan",
+    resultEmpty: "Fill in the form and generate a plan to see results here.",
+    modeAutoDiscover: "Mode: auto-detected strongest connection",
+    modeSingleSecondary: "Mode: primary + selected secondary subject",
+    requestFailed: "Failed to generate plan.",
+    noStream: "No response stream received.",
+    copy: "Copy",
+    copied: "Copied",
+    export: "Export",
+    navPlanning: "Interdisciplinary planning",
+  },
+  "pt-BR": {
+    pageTitle: "Planejamento interdisciplinar",
+    pageDescription:
+      "Gere planos de aula, projetos ou sequências de aprendizagem com base nos planos curriculares do Colégio Horizonte. A disciplina principal ancora cada plano; as conexões a estendem.",
+    backToChat: "Voltar ao chat",
+    formTitle: "Configurações do plano",
+    formDescription:
+      "Selecione série, período e disciplinas. Deixe a disciplina secundária vazia para a IA encontrar a conexão mais forte.",
+    grade: "Série",
+    gradeLabel: (g: number) => `${g}º ano`,
+    period: "Período",
+    primarySubject: "Disciplina principal",
+    secondarySubject: "Disciplina secundária",
+    secondarySubjectAuto: "Detectar automaticamente a melhor conexão",
+    secondarySubjectHint:
+      "Opcional. Se vazio, todas as outras disciplinas da série são carregadas e a IA escolhe o melhor vínculo.",
+    outputType: "Tipo de saída",
+    outputLessonPlan: "Plano de aula",
+    outputInterdisciplinaryProject: "Projeto interdisciplinar",
+    outputLearningSequence: "Sequência de aprendizagem",
+    teacherGoal: "Objetivo do professor",
+    teacherGoalPlaceholder:
+      "ex.: Foco em sustentabilidade, incluir apresentação em grupo, enfatizar coleta de dados…",
+    generatePlan: "Gerar plano",
+    generating: "Gerando…",
+    planningChatEmpty:
+      "Configure as opções do plano abaixo e gere seu primeiro plano interdisciplinar.",
+    chatPlaceholderFollowUp:
+      "Faça perguntas de acompanhamento ou peça alterações… (Ctrl+Enter para enviar)",
+    resultTitle: "Plano gerado",
+    resultEmpty: "Preencha o formulário e gere um plano para ver os resultados aqui.",
+    modeAutoDiscover: "Modo: conexão mais forte detectada automaticamente",
+    modeSingleSecondary: "Modo: disciplina principal + secundária selecionada",
+    requestFailed: "Falha ao gerar o plano.",
+    noStream: "Nenhum fluxo de resposta recebido.",
+    copy: "Copiar",
+    copied: "Copiado",
+    export: "Exportar",
+    navPlanning: "Planejamento interdisciplinar",
   },
 } as const;
 
