@@ -1,5 +1,7 @@
 export type AppLanguage = "en" | "pt-BR";
 
+import type { Bimestre } from "@/types/lessonPlans";
+
 export const LANGUAGE_STORAGE_KEY = "ollm-language";
 
 export const LANGUAGE_OPTIONS: Array<{ value: AppLanguage; label: string }> = [
@@ -162,6 +164,72 @@ export const PLANNING_TEXT = {
     copied: "Copiado",
     export: "Exportar",
     navPlanning: "Planejamento interdisciplinar",
+  },
+} as const;
+
+const BIMESTRE_ORDINAL_EN: Record<Bimestre, string> = {
+  1: "1st",
+  2: "2nd",
+  3: "3rd",
+  4: "4th",
+};
+
+export const LESSON_PLANS_TEXT = {
+  en: {
+    pageTitle: "Lesson Plans",
+    pageSubtitle: (grade: number) =>
+      `Browse all lesson plans for ${grade}th grade organized by bimestre.`,
+    gradeLabel: (grade: number) => `${grade}th grade`,
+    bimestreLabel: (n: Bimestre) => `${BIMESTRE_ORDINAL_EN[n]} Bimestre`,
+    bimestreBadge: (n: Bimestre) => `${n}º`,
+    emptySubject: "No plans available",
+    footerHint:
+      "Click any plan to view details. You can clone, edit, or replan from the detailed view.",
+    detailClose: "Close",
+    loading: "Loading plans…",
+    loadError: "Failed to load lesson plans.",
+    subjectPortuguese: "Portuguese Language",
+    subjectMath: "Mathematics",
+    subjectScience: "Science",
+    subjectHistory: "History",
+    subjectGeography: "Geography",
+    subjectEnglish: "English",
+    subjectMusic: "Music",
+    sectionBigIdea: "Big Idea",
+    sectionTopics: "Topics",
+    sectionLearningObjectives: "Learning Objectives",
+    sectionBnccSkills: "BNCC Skills",
+    sectionKeywords: "Keywords",
+    sectionProjectOpportunities: "Project Opportunities",
+    sectionAssessment: "Assessment Suggestions",
+  },
+  "pt-BR": {
+    pageTitle: "Planos de Aula",
+    pageSubtitle: (grade: number) =>
+      `Visualize todos os planos de aula do ${grade}º ano organizados por bimestre.`,
+    gradeLabel: (grade: number) => `${grade}º Ano`,
+    bimestreLabel: (n: Bimestre) => `${n}º Bimestre`,
+    bimestreBadge: (n: Bimestre) => `${n}º`,
+    emptySubject: "Nenhum plano disponível",
+    footerHint:
+      "Clique em qualquer plano para visualizar os detalhes. Você pode clonar, editar ou replanejar a partir da visualização detalhada.",
+    detailClose: "Fechar",
+    loading: "Carregando planos…",
+    loadError: "Falha ao carregar os planos de aula.",
+    subjectPortuguese: "Língua Portuguesa",
+    subjectMath: "Matemática",
+    subjectScience: "Ciências",
+    subjectHistory: "História",
+    subjectGeography: "Geografia",
+    subjectEnglish: "Inglês",
+    subjectMusic: "Música",
+    sectionBigIdea: "Ideia Central",
+    sectionTopics: "Tópicos",
+    sectionLearningObjectives: "Objetivos de Aprendizagem",
+    sectionBnccSkills: "Habilidades BNCC",
+    sectionKeywords: "Palavras-chave",
+    sectionProjectOpportunities: "Oportunidades de Projeto",
+    sectionAssessment: "Sugestões de Avaliação",
   },
 } as const;
 

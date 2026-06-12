@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
       "./node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs",
     ],
     "/api/interdisciplinary": ["./data/plans/**/*", "./data/documents/**/*"],
+    "/api/lesson-plans": ["./data/plans/**/*"],
     "/api/parse": [
       "./node_modules/pdfjs-dist/legacy/build/pdf.mjs",
       "./node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs",
