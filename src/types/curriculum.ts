@@ -1,6 +1,16 @@
 import type { ChatMessage } from "@/types/chat";
 
-export type CurriculumSubject = "math" | "science" | "digital-education";
+export type CurriculumSubject =
+  | "math"
+  | "science"
+  | "digital-education"
+  | "portuguese"
+  | "english"
+  | "geography"
+  | "brazilian-social-studies"
+  | "world-social-studies"
+  | "visual-arts"
+  | "physical-education";
 
 export type CurriculumPeriod =
   | "first-quarter"

@@ -6,7 +6,7 @@ import {
   buildInterdisciplinaryPrompt,
 } from "@/lib/buildInterdisciplinaryPrompt";
 import {
-  getPeriodLabel,
+  getPeriodDisplayLabel,
   isValidGrade,
   isValidPeriod,
   isValidSubject,
@@ -113,7 +113,7 @@ export async function POST(req: Request) {
       useUploadedDocument,
     });
 
-    const periodLabel = getPeriodLabel(period as CurriculumPeriod);
+    const periodLabel = getPeriodDisplayLabel(period as CurriculumPeriod);
 
     const basePrompt = isFollowUp
       ? buildInterdisciplinaryFollowUpPrompt({

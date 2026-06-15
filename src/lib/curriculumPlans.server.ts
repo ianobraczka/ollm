@@ -4,6 +4,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import {
+  getPeriodDisplayLabel,
   getPeriodLabel,
   getSubjectsByGrade,
   isValidGrade,
@@ -80,11 +81,12 @@ export async function getCurriculumContextForInterdisciplinaryPlan(args: {
   secondarySubject?: CurriculumSubject;
 }): Promise<CurriculumContextResult> {
   const { grade, period, primarySubject, secondarySubject } = args;
-  const periodLabel = getPeriodLabel(period);
+  const periodDataLabel = getPeriodLabel(period);
+  const periodDisplayLabel = getPeriodDisplayLabel(period);
 
   const primaryFull = await getCurriculumPlan(grade, primarySubject);
-  const primaryFiltered = filterPlanByPeriod(primaryFull, periodLabel);
-  const primaryLabel = `${SUBJECT_LABELS[primarySubject]} (Grade ${grade}, ${periodLabel})`;
+  const primaryFiltered = filterPlanByPeriod(primaryFull, periodDataLabel);
+  const primaryLabel = `${SUBJECT_LABELS[primarySubject]} (Grade ${grade}, ${periodDisplayLabel})`;
 
   let connectedSubjects: CurriculumSubject[];
   let mode: CurriculumContextResult["mode"];
@@ -102,8 +104,8 @@ export async function getCurriculumContextForInterdisciplinaryPlan(args: {
 
   for (const subject of connectedSubjects) {
     const full = await getCurriculumPlan(grade, subject);
-    const filtered = filterPlanByPeriod(full, periodLabel);
-    const label = `${SUBJECT_LABELS[subject]} (Grade ${grade}, ${periodLabel})`;
+    const filtered = filterPlanByPeriod(full, periodDataLabel);
+    const label = `${SUBJECT_LABELS[subject]} (Grade ${grade}, ${periodDisplayLabel})`;
     connectedLabels.push(label);
     blocks.push(formatContextBlock(`CONNECTED SUBJECT — ${label}`, filtered));
   }

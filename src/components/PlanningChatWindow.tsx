@@ -207,10 +207,8 @@ export function PlanningChatWindow({
                   language={language}
                   isLoading={isLoading}
                   onSubmit={onInitialSubmit}
+                  leadingActions={<ModeToggle language={language} />}
                 />
-                <div className="mt-2 flex justify-end">
-                  <ModeToggle language={language} />
-                </div>
               </div>
             )}
           </div>

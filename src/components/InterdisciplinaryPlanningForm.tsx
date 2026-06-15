@@ -30,6 +30,7 @@ type InterdisciplinaryPlanningFormProps = {
   language: AppLanguage;
   isLoading: boolean;
   onSubmit: (values: InterdisciplinaryFormValues) => Promise<void>;
+  leadingActions?: React.ReactNode;
 };
 
 const defaultGrade = getAvailableGrades()[0] ?? 5;
@@ -39,6 +40,7 @@ export function InterdisciplinaryPlanningForm({
   language,
   isLoading,
   onSubmit,
+  leadingActions,
 }: InterdisciplinaryPlanningFormProps) {
   const t = PLANNING_TEXT[language];
 
@@ -108,6 +110,9 @@ export function InterdisciplinaryPlanningForm({
     }),
   );
 
+  const fieldClassName = "space-y-2.5";
+  const labelClassName = "block pl-3 text-sm font-medium";
+
   return (
     <div className="space-y-4">
       <div>
@@ -120,8 +125,8 @@ export function InterdisciplinaryPlanningForm({
 
       <form className="space-y-4" onSubmit={(e) => void handleSubmit(e)}>
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <label htmlFor="grade" className="text-sm font-medium">
+          <div className={fieldClassName}>
+            <label htmlFor="grade" className={labelClassName}>
               {t.grade} <span className="text-destructive">*</span>
             </label>
             <AppSelect
@@ -135,8 +140,8 @@ export function InterdisciplinaryPlanningForm({
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="period" className="text-sm font-medium">
+          <div className={fieldClassName}>
+            <label htmlFor="period" className={labelClassName}>
               {t.period} <span className="text-destructive">*</span>
             </label>
             <AppSelect
@@ -152,8 +157,8 @@ export function InterdisciplinaryPlanningForm({
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <div className="space-y-2">
-            <label htmlFor="primarySubject" className="text-sm font-medium">
+          <div className={fieldClassName}>
+            <label htmlFor="primarySubject" className={labelClassName}>
               {t.primarySubject} <span className="text-destructive">*</span>
             </label>
             <AppSelect
@@ -167,8 +172,8 @@ export function InterdisciplinaryPlanningForm({
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="secondarySubject" className="text-sm font-medium">
+          <div className={fieldClassName}>
+            <label htmlFor="secondarySubject" className={labelClassName}>
               {t.secondarySubject}
             </label>
             <AppSelect
@@ -179,12 +184,11 @@ export function InterdisciplinaryPlanningForm({
               onChange={setSecondarySubject}
               options={secondarySubjectOptions}
             />
-            <p className="text-xs text-muted-foreground">{t.secondarySubjectHint}</p>
           </div>
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="outputType" className="text-sm font-medium">
+        <div className={fieldClassName}>
+          <label htmlFor="outputType" className={labelClassName}>
             {t.outputType} <span className="text-destructive">*</span>
           </label>
           <AppSelect
@@ -198,8 +202,8 @@ export function InterdisciplinaryPlanningForm({
           />
         </div>
 
-        <div className="space-y-2">
-          <label htmlFor="teacherGoal" className="text-sm font-medium">
+        <div className={fieldClassName}>
+          <label htmlFor="teacherGoal" className={labelClassName}>
             {t.teacherGoal}
           </label>
           <Textarea
@@ -212,16 +216,19 @@ export function InterdisciplinaryPlanningForm({
           />
         </div>
 
-        <Button type="submit" className="w-full sm:w-auto" disabled={isLoading}>
-          {isLoading ? (
-            <>
-              <Loader2 className="animate-spin" />
-              {t.generating}
-            </>
-          ) : (
-            t.generatePlan
-          )}
-        </Button>
+        <div className="flex items-center justify-between gap-2">
+          <div className="shrink-0">{leadingActions}</div>
+          <Button type="submit" className="shrink-0" disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <Loader2 className="animate-spin" />
+                {t.generating}
+              </>
+            ) : (
+              t.generatePlan
+            )}
+          </Button>
+        </div>
       </form>
     </div>
   );

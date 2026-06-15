@@ -2,19 +2,41 @@ import type { CurriculumPeriod, CurriculumSubject } from "@/types/curriculum";
 
 const GRADES = [5, 6, 7, 8] as const;
 
-const SUBJECTS: CurriculumSubject[] = ["math", "science", "digital-education"];
+const SUBJECTS: CurriculumSubject[] = [
+  "math",
+  "science",
+  "digital-education",
+  "portuguese",
+  "english",
+  "geography",
+  "brazilian-social-studies",
+  "world-social-studies",
+  "visual-arts",
+  "physical-education",
+];
 
 export const SUBJECT_LABELS: Record<CurriculumSubject, string> = {
   math: "Mathematics",
   science: "Science",
   "digital-education": "Digital Education",
+  portuguese: "Portuguese",
+  english: "English",
+  geography: "Geography",
+  "brazilian-social-studies": "Brazilian Social Studies",
+  "world-social-studies": "World Social Studies",
+  "visual-arts": "Visual Arts",
+  "physical-education": "Physical Education",
 };
 
-export const PERIOD_OPTIONS: Array<{ value: CurriculumPeriod; label: string }> = [
-  { value: "first-quarter", label: "First Quarter" },
-  { value: "second-quarter", label: "Second Quarter" },
-  { value: "third-quarter", label: "Third Quarter" },
-  { value: "fourth-quarter", label: "Fourth Quarter" },
+export const PERIOD_OPTIONS: Array<{
+  value: CurriculumPeriod;
+  label: string;
+  dataLabel: string;
+}> = [
+  { value: "first-quarter", label: "1st quarter", dataLabel: "First Quarter" },
+  { value: "second-quarter", label: "2nd quarter", dataLabel: "Second Quarter" },
+  { value: "third-quarter", label: "3rd quarter", dataLabel: "Third Quarter" },
+  { value: "fourth-quarter", label: "4th quarter", dataLabel: "Fourth Quarter" },
 ];
 
 export function isValidGrade(grade: number): boolean {
@@ -30,6 +52,10 @@ export function isValidPeriod(period: string): period is CurriculumPeriod {
 }
 
 export function getPeriodLabel(period: CurriculumPeriod): string {
+  return PERIOD_OPTIONS.find((option) => option.value === period)?.dataLabel ?? period;
+}
+
+export function getPeriodDisplayLabel(period: CurriculumPeriod): string {
   return PERIOD_OPTIONS.find((option) => option.value === period)?.label ?? period;
 }
 

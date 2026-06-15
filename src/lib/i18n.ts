@@ -97,10 +97,8 @@ export const PLANNING_TEXT = {
     gradeLabel: (g: number) => `${g}th grade`,
     period: "Period",
     primarySubject: "Primary subject",
-    secondarySubject: "Secondary subject",
+    secondarySubject: "Secondary subject (optional)",
     secondarySubjectAuto: "Auto-detect strongest connection",
-    secondarySubjectHint:
-      "Optional. When empty, all other subjects for this grade are loaded and the AI picks the best link.",
     outputType: "Output type",
     outputLessonPlan: "Lesson plan",
     outputInterdisciplinaryProject: "Interdisciplinary project",
@@ -137,10 +135,8 @@ export const PLANNING_TEXT = {
     gradeLabel: (g: number) => `${g}º ano`,
     period: "Período",
     primarySubject: "Disciplina principal",
-    secondarySubject: "Disciplina secundária",
+    secondarySubject: "Disciplina secundária (opcional)",
     secondarySubjectAuto: "Detectar automaticamente a melhor conexão",
-    secondarySubjectHint:
-      "Opcional. Se vazio, todas as outras disciplinas da série são carregadas e a IA escolhe o melhor vínculo.",
     outputType: "Tipo de saída",
     outputLessonPlan: "Plano de aula",
     outputInterdisciplinaryProject: "Projeto interdisciplinar",
@@ -151,7 +147,7 @@ export const PLANNING_TEXT = {
     generatePlan: "Gerar plano",
     generating: "Gerando…",
     planningChatEmpty:
-      "Configure as opções do plano abaixo e gere seu primeiro plano interdisciplinar.",
+      "Configure as opções abaixo e gere seu plano interdisciplinar.",
     chatPlaceholderFollowUp:
       "Faça perguntas de acompanhamento ou peça alterações… (Ctrl+Enter para enviar)",
     resultTitle: "Plano gerado",
