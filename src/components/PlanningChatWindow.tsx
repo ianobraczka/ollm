@@ -122,17 +122,21 @@ export function PlanningChatWindow({
   return (
     <div className="relative min-h-screen bg-background">
       {!hasStarted ? (
-        <div className="flex min-h-screen items-center justify-center px-2 py-8 lg:px-3">
-          <div className="mx-auto w-full max-w-6xl space-y-4">
+        <div className="flex min-h-screen flex-col px-2 py-6 lg:px-3">
+          <div className="mx-auto w-full max-w-6xl">
             <p className="text-center text-sm text-muted-foreground">{t.planningChatEmpty}</p>
-            {errorAlerts}
-            <div className="rounded-2xl border border-border/60 bg-background/90 p-3 shadow-lg backdrop-blur-md">
-              <InterdisciplinaryPlanningForm
-                language={language}
-                isLoading={isLoading}
-                onSubmit={onInitialSubmit}
-                leadingActions={<ModeToggle language={language} />}
-              />
+          </div>
+          <div className="flex flex-1 items-center justify-center pb-8">
+            <div className="mx-auto w-full max-w-6xl space-y-4">
+              {errorAlerts}
+              <div className="rounded-2xl border border-border/60 bg-background/90 p-3 shadow-lg backdrop-blur-md">
+                <InterdisciplinaryPlanningForm
+                  language={language}
+                  isLoading={isLoading}
+                  onSubmit={onInitialSubmit}
+                  leadingActions={<ModeToggle language={language} />}
+                />
+              </div>
             </div>
           </div>
         </div>
