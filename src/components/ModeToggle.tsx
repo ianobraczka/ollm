@@ -20,7 +20,7 @@ export function ModeToggle({ language }: ModeToggleProps) {
 
   if (!mounted) {
     return (
-      <Button variant="outline" size="icon" aria-label={t.toggleTheme} disabled>
+      <Button type="button" variant="outline" size="icon" aria-label={t.toggleTheme} disabled>
         <Sun className="h-4 w-4" />
       </Button>
     );
@@ -30,6 +30,7 @@ export function ModeToggle({ language }: ModeToggleProps) {
 
   return (
     <Button
+      type="button"
       variant="outline"
       size="icon"
       aria-label={t.toggleTheme}

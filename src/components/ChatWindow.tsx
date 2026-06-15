@@ -4,7 +4,6 @@ import { Download, Send, X } from "lucide-react";
 import * as React from "react";
 
 import { MessageBubble } from "@/components/MessageBubble";
-import { ModeToggle } from "@/components/ModeToggle";
 import { QuickActions } from "@/components/QuickActions";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -187,8 +186,7 @@ export function ChatWindow({
                   }
                 }}
               />
-              <div className="flex items-center justify-between gap-2 pt-2">
-                <ModeToggle language={language} />
+              <div className="flex items-center justify-end gap-2 pt-2">
                 <Button type="submit" disabled={!canChat || isLoading || !input.trim()}>
                   <Send className="h-4 w-4" />
                   {isLoading ? t.sending : t.send}

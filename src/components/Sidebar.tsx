@@ -5,6 +5,7 @@ import { CheckCircle2, Sparkles, Upload } from "lucide-react";
 
 import { DocumentSelector } from "@/components/DocumentSelector";
 import { LanguageSelect } from "@/components/LanguageSelect";
+import { ModeToggle } from "@/components/ModeToggle";
 import { PageNavSelect } from "@/components/PageNavSelect";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -156,8 +157,9 @@ export function Sidebar({
         </CardContent>
       </Card>
 
-      <div className="mt-auto pt-2">
+      <div className="mt-auto flex w-full items-center justify-between pt-2">
         <LanguageSelect value={language} onChange={onLanguageChange} />
+        <ModeToggle language={language} />
       </div>
     </aside>
   );

@@ -7,7 +7,6 @@ import {
   InterdisciplinaryPlanningForm,
 } from "@/components/InterdisciplinaryPlanningForm";
 import { MessageBubble } from "@/components/MessageBubble";
-import { ModeToggle } from "@/components/ModeToggle";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { PLANNING_TEXT, UI_TEXT, type AppLanguage } from "@/lib/i18n";
@@ -134,7 +133,6 @@ export function PlanningChatWindow({
                   language={language}
                   isLoading={isLoading}
                   onSubmit={onInitialSubmit}
-                  leadingActions={<ModeToggle language={language} />}
                 />
               </div>
             </div>
@@ -199,8 +197,7 @@ export function PlanningChatWindow({
                       }
                     }}
                   />
-                  <div className="flex items-center justify-between gap-2 pt-2">
-                    <ModeToggle language={language} />
+                  <div className="flex items-center justify-end gap-2 pt-2">
                     <Button type="submit" disabled={isLoading || !input.trim()}>
                       <Send className="h-4 w-4" />
                       {isLoading ? ui.sending : ui.send}

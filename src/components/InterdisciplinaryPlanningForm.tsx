@@ -31,7 +31,6 @@ type InterdisciplinaryPlanningFormProps = {
   language: AppLanguage;
   isLoading: boolean;
   onSubmit: (values: InterdisciplinaryFormValues) => Promise<void>;
-  leadingActions?: React.ReactNode;
 };
 
 const defaultGrade = getAvailableGrades()[0] ?? 5;
@@ -41,7 +40,6 @@ export function InterdisciplinaryPlanningForm({
   language,
   isLoading,
   onSubmit,
-  leadingActions,
 }: InterdisciplinaryPlanningFormProps) {
   const t = PLANNING_TEXT[language];
 
@@ -217,8 +215,7 @@ export function InterdisciplinaryPlanningForm({
           />
         </div>
 
-        <div className="flex items-center justify-between gap-2">
-          <div className="shrink-0">{leadingActions}</div>
+        <div className="flex justify-end">
           <Button type="submit" className="shrink-0 gap-2" disabled={isLoading}>
             {isLoading ? (
               <>
