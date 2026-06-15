@@ -170,27 +170,25 @@ const BIMESTRE_ORDINAL_EN: Record<Bimestre, string> = {
   4: "4th",
 };
 
-export const LESSON_PLANS_TEXT = {
+export const LESSON_MAP_TEXT = {
   en: {
-    pageTitle: "Lesson Plans",
-    pageSubtitle: (grade: number) =>
-      `Browse all lesson plans for ${grade}th grade organized by bimestre.`,
+    pageTitle: "Lesson Map",
     gradeLabel: (grade: number) => `${grade}th grade`,
-    bimestreLabel: (n: Bimestre) => `${BIMESTRE_ORDINAL_EN[n]} Bimestre`,
-    bimestreBadge: (n: Bimestre) => `${n}º`,
-    emptySubject: "No plans available",
-    footerHint:
-      "Click any plan to view details. You can clone, edit, or replan from the detailed view.",
+    bimestreLabel: (n: Bimestre) => `${BIMESTRE_ORDINAL_EN[n]} Quarter`,
+    bimestreBadge: (n: Bimestre) => BIMESTRE_ORDINAL_EN[n],
     detailClose: "Close",
-    loading: "Loading plans…",
-    loadError: "Failed to load lesson plans.",
-    subjectPortuguese: "Portuguese Language",
+    loading: "Loading lesson map…",
+    loadError: "Failed to load lesson map.",
+    subjectPortuguese: "Portuguese",
+    subjectEnglish: "English",
     subjectMath: "Mathematics",
     subjectScience: "Science",
-    subjectHistory: "History",
     subjectGeography: "Geography",
-    subjectEnglish: "English",
-    subjectMusic: "Music",
+    subjectBrazilianSocialStudies: "Brazilian Social Studies",
+    subjectWorldSocialStudies: "World Social Studies",
+    subjectVisualArts: "Visual Arts",
+    subjectPhysicalEducation: "Physical Education",
+    subjectDigitalEducation: "Digital Education",
     sectionBigIdea: "Big Idea",
     sectionTopics: "Topics",
     sectionLearningObjectives: "Learning Objectives",
@@ -200,25 +198,23 @@ export const LESSON_PLANS_TEXT = {
     sectionAssessment: "Assessment Suggestions",
   },
   "pt-BR": {
-    pageTitle: "Planos de Aula",
-    pageSubtitle: (grade: number) =>
-      `Visualize todos os planos de aula do ${grade}º ano organizados por bimestre.`,
+    pageTitle: "Mapa Curricular",
     gradeLabel: (grade: number) => `${grade}º Ano`,
     bimestreLabel: (n: Bimestre) => `${n}º Bimestre`,
     bimestreBadge: (n: Bimestre) => `${n}º`,
-    emptySubject: "Nenhum plano disponível",
-    footerHint:
-      "Clique em qualquer plano para visualizar os detalhes. Você pode clonar, editar ou replanejar a partir da visualização detalhada.",
     detailClose: "Fechar",
-    loading: "Carregando planos…",
-    loadError: "Falha ao carregar os planos de aula.",
+    loading: "Carregando mapa curricular…",
+    loadError: "Falha ao carregar o mapa curricular.",
     subjectPortuguese: "Língua Portuguesa",
+    subjectEnglish: "Inglês",
     subjectMath: "Matemática",
     subjectScience: "Ciências",
-    subjectHistory: "História",
     subjectGeography: "Geografia",
-    subjectEnglish: "Inglês",
-    subjectMusic: "Música",
+    subjectBrazilianSocialStudies: "Estudos Sociais Brasil",
+    subjectWorldSocialStudies: "Estudos Sociais Mundo",
+    subjectVisualArts: "Artes Visuais",
+    subjectPhysicalEducation: "Educação Física",
+    subjectDigitalEducation: "Educação Digital",
     sectionBigIdea: "Ideia Central",
     sectionTopics: "Tópicos",
     sectionLearningObjectives: "Objetivos de Aprendizagem",
@@ -228,6 +224,9 @@ export const LESSON_PLANS_TEXT = {
     sectionAssessment: "Sugestões de Avaliação",
   },
 } as const;
+
+/** @deprecated Use LESSON_MAP_TEXT */
+export const LESSON_PLANS_TEXT = LESSON_MAP_TEXT;
 
 export function normalizeLanguage(value: string | null | undefined): AppLanguage {
   return value === "pt-BR" ? "pt-BR" : "en";

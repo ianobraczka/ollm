@@ -9,6 +9,7 @@ import {
   LESSON_PLAN_SUBJECTS,
   PERIOD_LABEL_TO_BIMESTRE,
   SUBJECT_FILE_SLUG,
+  TOPICS_PER_QUARTER_MAX,
 } from "@/lib/lessonPlans.shared";
 import type {
   Bimestre,
@@ -29,7 +30,8 @@ function parseTopics(unitText: string): string[] {
   return topicsMatch[1]
     .split("\n")
     .map((line) => line.replace(/^- /, "").trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .slice(0, TOPICS_PER_QUARTER_MAX);
 }
 
 function parseUnitTitle(unitText: string): string {
@@ -113,8 +115,6 @@ export async function getLessonPlansForGrade(grade: number): Promise<LessonPlans
 
   for (const subject of LESSON_PLAN_SUBJECTS) {
     const slug = SUBJECT_FILE_SLUG[subject];
-    if (!slug) continue;
-
     const text = await loadSubjectPlan(grade, slug);
     if (!text) continue;
 

@@ -29,7 +29,6 @@ Topics:
 - Digital identity: usernames, avatars, and personal representation
 - Online respect: tone, empathy, and consequences of harmful messages
 - Balanced screen time and healthy technology habits
-- Difference between public and private information
 
 Learning Objectives:
 - Explain the school technology agreement in their own words
@@ -73,7 +72,6 @@ Topics:
 - Recognizing unsafe links, downloads, and pop-up traps
 - Cyberbullying: identification, reporting, and bystander action
 - Safe search practices and age-appropriate content filters
-- When and how to involve teachers, parents, or trusted adults
 
 Learning Objectives:
 - Create and manage strong passwords using school guidelines
@@ -117,7 +115,6 @@ Topics:
 - Storyboarding and planning before production
 - Image and music sources: copyright, Creative Commons, and citation
 - Basic photo composition and accessibility (alt text, readable fonts)
-- Presenting digital work to an audience
 
 Learning Objectives:
 - Plan a digital project using a storyboard or outline
@@ -161,7 +158,6 @@ Topics:
 - Simple data entry in spreadsheets for class surveys
 - Creating charts from collected data
 - Publishing guidelines: audience, privacy, and school approval
-- Year-end digital portfolio assembly
 
 Learning Objectives:
 - File and name documents using a consistent class convention

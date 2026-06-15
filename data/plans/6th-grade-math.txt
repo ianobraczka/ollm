@@ -29,7 +29,6 @@ Topics:
 - Equivalent ratios and scaling in recipes, maps, and mixtures
 - Unit rates in speed, price per item, and consumption contexts
 - Ratio tables and double number lines
-- Introduction to proportions through missing-value problems
 
 Learning Objectives:
 - Write ratios in multiple forms for a given situation
@@ -73,7 +72,6 @@ Topics:
 - Calculating percentages of quantities: discounts, taxes, tips
 - Percent increase and decrease in price and population contexts
 - Converting among fractions, decimals, and percents
-- Simple interest introduction in savings scenarios
 
 Learning Objectives:
 - Represent a part-whole relationship as a fraction, decimal, and percent
@@ -117,7 +115,6 @@ Topics:
 - Triangles: classification by sides and angles, angle sum property
 - Area of parallelograms, triangles, and composite figures
 - Circumference and area of circles (introductory, pi as ratio)
-- Coordinate plane: plotting points, reflections, and simple translations
 
 Learning Objectives:
 - Measure and construct angles using protractor and compass
@@ -161,8 +158,6 @@ Topics:
 - Data collection: surveys, experiments, and observational studies
 - Dot plots, histograms, stem-and-leaf plots, and box plot introduction
 - Measures of center: mean, median, and mode
-- Measures of spread: range and informal interpretation
-- Misleading graphs and critical interpretation
 
 Learning Objectives:
 - Formulate a statistical question appropriate for a class investigation

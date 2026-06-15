@@ -29,8 +29,6 @@ Topics:
 - Family and community migration histories linked to global patterns
 - Demographic dynamics: age structure, growth rates, and spatial mobility
 - Latin American migration: voluntary and forced flows, policies, and border tensions
-- Concepts of state, nation, territory, government, and country in contemporary conflicts
-- Regional organizations: Mercosul, OEA, Unasul, African Union, and cooperation bodies
 
 Learning Objectives:
 - Describe major global migration patterns and their historical and environmental causes
@@ -75,8 +73,6 @@ Topics:
 - China, BRICS nations, and shifting global economic leadership
 - Brazil's position in Latin America and relations with major world powers
 - Worldwide patterns of agricultural and industrial production and trade
-- Social movements in rural and urban Brazil compared with Latin American examples
-- Economic decentralization and recentralization driven by US and Chinese capital
 
 Learning Objectives:
 - Analyze US global leadership and its economic, strategic, and political dimensions
@@ -121,8 +117,6 @@ Topics:
 - Natural resources and energy production in Latin America; Mercosul cooperation
 - Urban problems in major Latin American cities: housing, services, and employment
 - Socio-spatial segregation: favelas, informal settlements, and risk zones
-- Cartographic analysis: thematic maps, croquis, cartograms, and anamorphosis
-- Light Rio reference: water management, urban inequality, and hillside risk planning
 
 Learning Objectives:
 - Analyze significance and governance challenges of major Latin American water systems
@@ -167,9 +161,6 @@ Topics:
 - Climate impacts on Latin America and Africa: drought, floods, sea level, and biodiversity
 - Antarctica's environmental and geopolitical significance for South America
 - Technology, production systems, and their role in environmental transformation
-- International climate agreements and national mitigation and adaptation strategies
-- Brazil's climate policy, Amazon protection, and renewable energy transitions
-- Integration review: geopolitics, sustainability, and climate action across scales
 
 Learning Objectives:
 - Explain causes and evidence of climate change using scientific and geographic sources

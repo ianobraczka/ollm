@@ -29,7 +29,6 @@ Topics:
 - Plant vs. animal cell structures and organelle functions
 - Unicellular and multicellular organisms
 - Microscope technique and prepared slide observation
-- Relationship between cell structure and specialized function
 
 Learning Objectives:
 - State the cell theory and its significance for biology
@@ -73,7 +72,6 @@ Topics:
 - Brazilian biodiversity hotspots and endemic species
 - Threats: habitat loss, invasive species, climate change, poaching
 - Conservation strategies: protected areas, breeding programs, legislation
-- Citizen science and school participation in biodiversity monitoring
 
 Learning Objectives:
 - Define biodiversity at genetic, species, and ecosystem levels
@@ -118,7 +116,6 @@ Topics:
 - Rock cycle and soil formation (introductory)
 - Water cycle: evaporation, condensation, precipitation, collection
 - Weather vs. climate; seasons and latitude effects
-- Natural resources: renewable vs. non-renewable; responsible use
 
 Learning Objectives:
 - Describe the four major Earth systems and give interaction examples
@@ -162,7 +159,6 @@ Topics:
 - Environmental impact assessment on school grounds
 - Designing solutions: reduce, reuse, recycle, restore
 - Science communication: posters, reports, and presentations
-- Preparation for seventh-grade ecology and matter units
 
 Learning Objectives:
 - Explain how healthy cells, diverse species, and stable Earth systems depend on one another

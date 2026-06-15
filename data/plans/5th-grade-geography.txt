@@ -29,8 +29,6 @@ Topics:
 - Map elements: title, legend, scale (graphic and numeric), orientation, and coordinates
 - Cardinal and intermediate directions; locating places on Brazil and world maps
 - Latitude and longitude at introductory level; parallels and meridians
-- Reading elevation and landform symbols; simple sketch maps of the school area
-- Comparing paper maps with digital maps and aerial photographs
 
 Learning Objectives:
 - Identify essential map components and explain what each communicates
@@ -75,8 +73,6 @@ Topics:
 - Major landforms: Amazon Basin, Brazilian Highlands, Pantanal, coastal plains, and plateaus
 - Rivers and hydrographic basins: Amazon, São Francisco, Paraná, and Tietê references
 - Population distribution patterns across regions; Rio de Janeiro in the Southeast
-- Economic activities by region: agriculture, mining, industry, services, and tourism
-- City-countryside relationships and urban networks connecting Brazilian cities
 
 Learning Objectives:
 - Name and locate Brazil's five macro-regions on a political map
@@ -121,8 +117,6 @@ Topics:
 - Climate zones in Brazil: equatorial, tropical, semi-arid, subtropical, and highland
 - Relationship among climate, soil, vegetation, and biome characteristics
 - Brazilian biomes overview: Amazon, Cerrado, Caatinga, Atlantic Forest, Pampa, Pantanal
-- Seasonal patterns and the influence of latitude, altitude, and proximity to the ocean
-- Climate and daily life: clothing, housing, agriculture, and water availability
 
 Learning Objectives:
 - Distinguish daily weather from long-term climate patterns
@@ -167,8 +161,6 @@ Topics:
 - Local environmental problems near the school: litter, flooding, erosion, and pollution
 - Water resources: rivers, reservoirs, and ocean health along the Rio coastline
 - Urban growth and landscape change in metropolitan Rio de Janeiro
-- Public institutions and citizen participation for environmental improvement
-- Year review: integrating maps, regions, climate, and local place-based knowledge
 
 Learning Objectives:
 - Identify environmental problems in the school surroundings and propose solutions

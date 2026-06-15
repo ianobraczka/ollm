@@ -3,15 +3,28 @@ import type { Bimestre, LessonPlanCard, LessonPlanSubject } from "@/types/lesson
 
 export const LESSON_PLAN_GRADES = [5, 6, 7, 8] as const;
 
-/** Display order matches the reference image (7 columns). */
+/** Fixed topic slots shown per subject column in each bimestre grid. */
+export const TOPIC_SLOTS_PER_QUARTER = 4;
+
+/** Maximum topics parsed from plan files per quarter unit. */
+export const TOPICS_PER_QUARTER_MAX = 4;
+
+/** Layout dimensions for the lesson map topic grid. */
+export const LESSON_MAP_SLOT_HEIGHT = "5.5rem";
+
+export const LESSON_PLAN_BIMESTRES = [1, 2, 3, 4] as const satisfies readonly Bimestre[];
+
 export const LESSON_PLAN_SUBJECTS: LessonPlanSubject[] = [
   "portuguese",
+  "english",
   "math",
   "science",
-  "history",
   "geography",
-  "english",
-  "music",
+  "brazilian-social-studies",
+  "world-social-studies",
+  "visual-arts",
+  "physical-education",
+  "digital-education",
 ];
 
 export const PERIOD_LABEL_TO_BIMESTRE: Record<string, Bimestre> = {
@@ -23,33 +36,72 @@ export const PERIOD_LABEL_TO_BIMESTRE: Record<string, Bimestre> = {
 
 export type SubjectLabelKey =
   | "subjectPortuguese"
+  | "subjectEnglish"
   | "subjectMath"
   | "subjectScience"
-  | "subjectHistory"
   | "subjectGeography"
-  | "subjectEnglish"
-  | "subjectMusic";
+  | "subjectBrazilianSocialStudies"
+  | "subjectWorldSocialStudies"
+  | "subjectVisualArts"
+  | "subjectPhysicalEducation"
+  | "subjectDigitalEducation";
 
 export type SubjectMeta = {
-  icon: "book" | "calculator" | "flask" | "globe" | "map-pin" | "languages" | "music";
+  icon:
+    | "book"
+    | "languages"
+    | "calculator"
+    | "flask"
+    | "map-pin"
+    | "landmark"
+    | "earth"
+    | "palette"
+    | "dumbbell"
+    | "monitor";
   colorClass: string;
   labelKey: SubjectLabelKey;
 };
 
 export const SUBJECT_META: Record<LessonPlanSubject, SubjectMeta> = {
   portuguese: { icon: "book", colorClass: "text-sky-400", labelKey: "subjectPortuguese" },
+  english: { icon: "languages", colorClass: "text-violet-400", labelKey: "subjectEnglish" },
   math: { icon: "calculator", colorClass: "text-blue-400", labelKey: "subjectMath" },
   science: { icon: "flask", colorClass: "text-emerald-400", labelKey: "subjectScience" },
-  history: { icon: "globe", colorClass: "text-amber-400", labelKey: "subjectHistory" },
   geography: { icon: "map-pin", colorClass: "text-rose-400", labelKey: "subjectGeography" },
-  english: { icon: "languages", colorClass: "text-violet-400", labelKey: "subjectEnglish" },
-  music: { icon: "music", colorClass: "text-orange-400", labelKey: "subjectMusic" },
+  "brazilian-social-studies": {
+    icon: "landmark",
+    colorClass: "text-amber-400",
+    labelKey: "subjectBrazilianSocialStudies",
+  },
+  "world-social-studies": {
+    icon: "earth",
+    colorClass: "text-orange-400",
+    labelKey: "subjectWorldSocialStudies",
+  },
+  "visual-arts": { icon: "palette", colorClass: "text-pink-400", labelKey: "subjectVisualArts" },
+  "physical-education": {
+    icon: "dumbbell",
+    colorClass: "text-lime-400",
+    labelKey: "subjectPhysicalEducation",
+  },
+  "digital-education": {
+    icon: "monitor",
+    colorClass: "text-cyan-400",
+    labelKey: "subjectDigitalEducation",
+  },
 };
 
-/** Maps UI subjects to on-disk plan file slugs (only where files exist today). */
-export const SUBJECT_FILE_SLUG: Partial<Record<LessonPlanSubject, string>> = {
+export const SUBJECT_FILE_SLUG: Record<LessonPlanSubject, string> = {
+  portuguese: "portuguese",
+  english: "english",
   math: "math",
   science: "science",
+  geography: "geography",
+  "brazilian-social-studies": "brazilian-social-studies",
+  "world-social-studies": "world-social-studies",
+  "visual-arts": "visual-arts",
+  "physical-education": "physical-education",
+  "digital-education": "digital-education",
 };
 
 type BimestreDates = { pt: string; en: string };
@@ -95,11 +147,36 @@ export function isValidLessonPlanGrade(grade: number): boolean {
 export function emptyBimestreSubjects(): Record<LessonPlanSubject, LessonPlanCard[]> {
   return {
     portuguese: [],
+    english: [],
     math: [],
     science: [],
-    history: [],
     geography: [],
-    english: [],
-    music: [],
+    "brazilian-social-studies": [],
+    "world-social-studies": [],
+    "visual-arts": [],
+    "physical-education": [],
+    "digital-education": [],
   };
+}
+
+export function groupCardsBySubjectAndBimestre(
+  data: { bimestres: Array<{ bimestre: Bimestre; subjects: Record<LessonPlanSubject, LessonPlanCard[]> }> },
+): Record<LessonPlanSubject, Record<Bimestre, LessonPlanCard[]>> {
+  const grouped = Object.fromEntries(
+    LESSON_PLAN_SUBJECTS.map((subject) => [
+      subject,
+      Object.fromEntries(LESSON_PLAN_BIMESTRES.map((bimestre) => [bimestre, [] as LessonPlanCard[]])) as Record<
+        Bimestre,
+        LessonPlanCard[]
+      >,
+    ]),
+  ) as Record<LessonPlanSubject, Record<Bimestre, LessonPlanCard[]>>;
+
+  for (const bimestreData of data.bimestres) {
+    for (const subject of LESSON_PLAN_SUBJECTS) {
+      grouped[subject][bimestreData.bimestre as Bimestre] = bimestreData.subjects[subject];
+    }
+  }
+
+  return grouped;
 }

@@ -29,8 +29,6 @@ Topics:
 - Territorial formation of Brazil: historical flows and contemporary tensions
 - Territorial rights of indigenous peoples, quilombola communities, and traditional groups
 - Population distribution by region; density, ethnicity, income, sex, and age patterns
-- Internal migration routes and push-pull factors within Brazil
-- Demographic data sources: IBGE census, thematic maps, and statistical tables
 
 Learning Objectives:
 - Critique stereotypes about Brazilian regions using geographic evidence
@@ -75,8 +73,6 @@ Topics:
 - Production, circulation, and consumption chains and their environmental impacts
 - Transport and communication networks shaping Brazilian territory
 - Industrialization, technology, and spatial concentration of economic activity
-- Regional economic specialization: agriculture, mining, industry, and services
-- Wealth distribution and spatial inequality across Brazilian macro-regions
 
 Learning Objectives:
 - Explain how capitalism transformed economic geography from mercantilist patterns
@@ -121,8 +117,6 @@ Topics:
 - Biodiversity threats: deforestation, fires, illegal extraction, and habitat fragmentation
 - Conservation units and the SNUC system; comparing local and national protected areas
 - Global issues: food security, water scarcity, ocean pollution, and species loss
-- Climate variability and extreme events affecting Brazil and the world
-- Interpreting environmental data through maps, graphs, and satellite monitoring
 
 Learning Objectives:
 - Characterize Brazil's major biomes and their distribution on national maps
@@ -167,8 +161,6 @@ Topics:
 - Social and spatial inequality: formal neighborhoods, favelas, and risk areas
 - Port, tourism, and service economy in a global coastal city
 - Environmental pressures: bay pollution, landslides, flooding, and coastal erosion
-- Public policy responses: housing, mobility, sanitation, and civil defense
-- Integration review: demographics, economy, environment, and urban case analysis
 
 Learning Objectives:
 - Describe the spatial structure of metropolitan Rio using maps and zones

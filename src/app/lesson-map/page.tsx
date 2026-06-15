@@ -1,5 +1,5 @@
 import { LessonPlansPage } from "@/components/LessonPlansPage";
 
-export default function LessonPlansRoutePage() {
+export default function LessonMapRoutePage() {
   return <LessonPlansPage />;
 }

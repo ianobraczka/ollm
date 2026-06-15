@@ -13,6 +13,7 @@ import {
   PERIOD_OPTIONS,
   SUBJECT_LABELS,
 } from "@/lib/curriculumPlans.shared";
+import { FIELD_CONTROL_CLASSNAME } from "@/lib/fieldControlStyles";
 import { PLANNING_TEXT, type AppLanguage } from "@/lib/i18n";
 import type {
   CurriculumPeriod,
@@ -136,6 +137,7 @@ export function InterdisciplinaryPlanningForm({
               value={grade}
               onChange={setGrade}
               options={gradeOptions}
+              triggerClassName={FIELD_CONTROL_CLASSNAME}
             />
           </div>
 
@@ -151,6 +153,7 @@ export function InterdisciplinaryPlanningForm({
               value={period}
               onChange={setPeriod}
               options={periodOptions}
+              triggerClassName={FIELD_CONTROL_CLASSNAME}
             />
           </div>
         </div>
@@ -168,6 +171,7 @@ export function InterdisciplinaryPlanningForm({
               value={primarySubject}
               onChange={setPrimarySubject}
               options={subjectOptions}
+              triggerClassName={FIELD_CONTROL_CLASSNAME}
             />
           </div>
 
@@ -182,6 +186,7 @@ export function InterdisciplinaryPlanningForm({
               value={secondarySubject}
               onChange={setSecondarySubject}
               options={secondarySubjectOptions}
+              triggerClassName={FIELD_CONTROL_CLASSNAME}
             />
           </div>
         </div>
@@ -198,6 +203,7 @@ export function InterdisciplinaryPlanningForm({
             value={outputType}
             onChange={setOutputType}
             options={outputTypeOptions}
+            triggerClassName={FIELD_CONTROL_CLASSNAME}
           />
         </div>
 
@@ -212,6 +218,7 @@ export function InterdisciplinaryPlanningForm({
             rows={3}
             placeholder={t.teacherGoalPlaceholder}
             onChange={(e) => setTeacherGoal(e.target.value)}
+            className={FIELD_CONTROL_CLASSNAME}
           />
         </div>
 

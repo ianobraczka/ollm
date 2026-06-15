@@ -97,7 +97,7 @@ export function AppSelect<T extends string | number>({
         aria-haspopup="listbox"
         aria-expanded={open}
         className={cn(
-          "app-select-trigger flex w-full items-center gap-2 rounded-md border border-border/80 bg-background/80 px-3 py-2.5 text-sm font-medium text-foreground shadow-sm backdrop-blur-sm transition-[border-color,box-shadow,background-color]",
+          "app-select-trigger flex w-full cursor-pointer items-center gap-2 rounded-md border border-border/80 bg-background/80 px-3 py-2.5 text-sm font-medium text-foreground shadow-sm backdrop-blur-sm transition-[border-color,box-shadow,background-color]",
           "hover:border-primary/25 hover:bg-background hover:shadow-md",
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/60 focus-visible:ring-offset-1 focus-visible:ring-offset-background",
           "disabled:cursor-not-allowed disabled:opacity-50",
@@ -141,7 +141,7 @@ export function AppSelect<T extends string | number>({
                   role="option"
                   aria-selected={selected}
                   className={cn(
-                    "flex w-full items-center gap-2 rounded-md px-3 py-2.5 text-left text-sm transition-colors",
+                    "flex w-full cursor-pointer items-center gap-2 rounded-md px-3 py-2.5 text-left text-sm transition-colors",
                     selected
                       ? "bg-primary/10 font-medium text-primary"
                       : "text-foreground hover:bg-accent/80 hover:text-accent-foreground",

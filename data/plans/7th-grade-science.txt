@@ -29,7 +29,6 @@ Topics:
 - Competition, predation, parasitism, mutualism, and commensalism
 - Carrying capacity and limiting factors
 - Succession in disturbed and restored habitats
-- Energy pyramids and ten percent rule (introductory)
 
 Learning Objectives:
 - Describe ecological levels of organization with local examples
@@ -73,7 +72,6 @@ Topics:
 - Air, water, and soil pollution sources and pathways
 - Deforestation, mining, and urban sprawl in Brazilian contexts
 - Climate change evidence and regional impacts
-- Environmental legislation and individual action frameworks
 
 Learning Objectives:
 - Trace pollutants from source through environmental pathways to impact
@@ -118,7 +116,6 @@ Topics:
 - Physical vs. chemical changes and evidence for each
 - States of matter and phase changes
 - Properties of mixtures and solutions; concentration basics
-- Law of conservation of mass in closed systems
 
 Learning Objectives:
 - Use particle models to explain properties of solids, liquids, and gases
@@ -162,7 +159,6 @@ Topics:
 - Energy transfer: conduction, convection, radiation
 - Conservation of energy in physical systems
 - Energy sources: renewable vs. non-renewable; efficiency
-- Synthesis: linking matter, energy, ecology, and human impact
 
 Learning Objectives:
 - Identify energy forms in everyday and ecological systems

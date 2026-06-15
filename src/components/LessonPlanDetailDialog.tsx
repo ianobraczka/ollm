@@ -5,7 +5,7 @@ import * as React from "react";
 
 import { SUBJECT_META } from "@/lib/lessonPlans.shared";
 import { parseUnitDetail } from "@/lib/parseUnitDetail";
-import { LESSON_PLANS_TEXT, type AppLanguage } from "@/lib/i18n";
+import { LESSON_MAP_TEXT, type AppLanguage } from "@/lib/i18n";
 import type { LessonPlanCard } from "@/types/lessonPlans";
 
 type LessonPlanDetailDialogProps = {
@@ -15,7 +15,7 @@ type LessonPlanDetailDialogProps = {
 };
 
 export function LessonPlanDetailDialog({ card, language, onClose }: LessonPlanDetailDialogProps) {
-  const t = LESSON_PLANS_TEXT[language];
+  const t = LESSON_MAP_TEXT[language];
 
   React.useEffect(() => {
     if (!card) return;
@@ -33,31 +33,31 @@ export function LessonPlanDetailDialog({ card, language, onClose }: LessonPlanDe
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center p-5"
       role="dialog"
       aria-modal="true"
       aria-labelledby="lesson-plan-detail-title"
     >
       <button
         type="button"
-        className="absolute inset-0 bg-black/70"
+        className="absolute inset-0 bg-black/60"
         aria-label={t.detailClose}
         onClick={onClose}
       />
-      <div className="relative z-10 max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-xl border border-slate-700 bg-slate-900 p-6 shadow-2xl">
+      <div className="relative z-10 max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-xl border border-border bg-card p-6 shadow-2xl">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
               {subjectLabel} · {card.unitTitle}
             </p>
-            <h2 id="lesson-plan-detail-title" className="mt-1 text-lg font-semibold text-slate-100">
+            <h2 id="lesson-plan-detail-title" className="mt-1 text-lg font-semibold text-foreground">
               {card.title}
             </h2>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md p-1 text-slate-400 hover:bg-slate-800 hover:text-slate-200"
+            className="rounded-md p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
             aria-label={t.detailClose}
           >
             <X className="h-5 w-5" />
@@ -67,8 +67,8 @@ export function LessonPlanDetailDialog({ card, language, onClose }: LessonPlanDe
         <div className="mt-6 space-y-5">
           {sections.map((section) => (
             <section key={section.key}>
-              <h3 className="text-sm font-semibold text-slate-300">{t[section.titleKey]}</h3>
-              <div className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-slate-400">
+              <h3 className="text-sm font-semibold text-foreground">{t[section.titleKey]}</h3>
+              <div className="mt-2 whitespace-pre-wrap text-sm leading-relaxed text-muted-foreground">
                 {section.content}
               </div>
             </section>

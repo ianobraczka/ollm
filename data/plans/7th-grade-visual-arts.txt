@@ -29,7 +29,6 @@ Topics:
 - Digital drawing tablets, layers, and non-destructive editing basics
 - Color, composition, and typography in screen-based design
 - Ethics of image use: copyright, attribution, AI awareness, and personal data
-- Hybrid workflows: scanning hand drawings and combining with digital layers
 
 Learning Objectives:
 - Navigate basic digital art software to create an original layered composition
@@ -73,7 +72,6 @@ Topics:
 - Clay modeling, plaster gauze, wire, and mixed-material construction
 - Subtractive carving introduction with soft materials and safe tool protocols
 - Environmental and installation sculpture concepts for school or community contexts
-- Surface treatment: paint, patina effects, texture layering, and finishing
 
 Learning Objectives:
 - Build an armature or internal support appropriate to the chosen sculpture scale
@@ -117,7 +115,6 @@ Topics:
 - Visual analysis of line, form, color, composition, and material choices
 - Contextual criticism: artist biography, historical period, and cultural setting
 - Brazilian art case studies: Portinari's social themes and Tarsila's modernist vision
-- Debating multiple valid interpretations and distinguishing opinion from evidence
 
 Learning Objectives:
 - Write a structured critique of an artwork using the four-step critical model
@@ -161,7 +158,6 @@ Topics:
 - Documentation photography and basic portfolio layout for mixed media bodies of work
 - Art careers and cultural production: artist, curator, designer, educator, and conservator paths
 - Collaborative critique circles with structured roles: facilitator, note-taker, and responder
-- Year review connecting technology ethics, sculpture craft, and critical writing growth
 
 Learning Objectives:
 - Draft a feasible capstone proposal with theme, media, and assessment criteria

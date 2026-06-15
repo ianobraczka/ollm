@@ -29,7 +29,6 @@ Topics:
 - Newton's laws of motion in everyday and laboratory contexts
 - Forces: gravity, friction, normal force, and free-body diagrams
 - Work, energy, and power; kinetic and potential energy conversions
-- Simple machines: mechanical advantage in school and community applications
 
 Learning Objectives:
 - Distinguish speed and velocity; calculate average speed from data
@@ -73,7 +72,6 @@ Topics:
 - Chemical bonds: ionic and covalent (introductory models)
 - Chemical equations and conservation of atoms in reactions
 - Acids, bases, and pH in household and environmental contexts
-- Reaction rates and factors: temperature, concentration, surface area
 
 Learning Objectives:
 - Use the periodic table to identify element properties and group patterns
@@ -118,7 +116,6 @@ Topics:
 - Sound waves and hearing; noise pollution measurement
 - Light and the electromagnetic spectrum
 - Reflection, refraction, and color; lenses and mirrors (introductory)
-- Applications: fiber optics, satellite data, solar radiation, and remote sensing
 
 Learning Objectives:
 - Describe wave characteristics using correct vocabulary and units
@@ -162,8 +159,6 @@ Topics:
 - Circular economy principles: reduce, reuse, recycle, redesign
 - Renewable energy systems: solar, wind, hydro, and biomass in Brazil
 - Carbon footprint calculation and offset concepts
-- Green chemistry and clean technology introductions
-- Capstone: school sustainability plan backed by scientific evidence
 
 Learning Objectives:
 - Trace materials and energy through a product life cycle diagram

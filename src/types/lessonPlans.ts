@@ -1,14 +1,16 @@
 export type Bimestre = 1 | 2 | 3 | 4;
 
-/** Seven subjects shown in the browser UI (matches reference layout). */
 export type LessonPlanSubject =
   | "portuguese"
+  | "english"
   | "math"
   | "science"
-  | "history"
   | "geography"
-  | "english"
-  | "music";
+  | "brazilian-social-studies"
+  | "world-social-studies"
+  | "visual-arts"
+  | "physical-education"
+  | "digital-education";
 
 export type LessonPlanCard = {
   id: string;

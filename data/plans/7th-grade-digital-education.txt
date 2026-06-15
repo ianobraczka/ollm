@@ -29,7 +29,6 @@ Topics:
 - Survey design: bias, sample size, and question wording
 - Spreadsheet organization: headers, data validation, and missing values
 - Descriptive statistics: mean, median, mode, range (applied review)
-- Identifying outliers and their effect on interpretation
 
 Learning Objectives:
 - Design a survey that minimizes bias for a school investigation
@@ -73,7 +72,6 @@ Topics:
 - Variables, data types, input, and output
 - Conditionals: if, elif, else for decision branches
 - Loops: for and while for repetition
-- Functions: defining reusable blocks with parameters
 
 Learning Objectives:
 - Write programs that accept input, perform calculations, and display output
@@ -117,7 +115,6 @@ Topics:
 - Privacy policies, terms of service, and informed consent
 - Algorithmic bias and fairness in recommendation systems
 - Technology access gaps and digital divide in Brazil
-- Environmental cost of devices, streaming, and data centers
 
 Learning Objectives:
 - Map personal data shared through commonly used school-approved apps
@@ -162,7 +159,6 @@ Topics:
 - Creating dashboards or reports from multi-source data
 - Version control habits: naming, backups, and change logs
 - Project documentation: README files and reproducibility
-- Capstone project management and presentation
 
 Learning Objectives:
 - Select appropriate visualizations for categorical and time-series data

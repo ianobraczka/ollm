@@ -29,7 +29,6 @@ Topics:
 - Addition and subtraction with regrouping in contextual problems
 - Multiplication and division: meanings, properties, and mental strategies
 - Estimation and reasonableness checks in everyday situations
-- Problem-solving with money, schedules, and school inventory scenarios
 
 Learning Objectives:
 - Read, write, compare, and order natural numbers using place value
@@ -73,7 +72,6 @@ Topics:
 - Comparing and ordering fractions with like and unlike denominators
 - Addition and subtraction of fractions with common denominators
 - Introduction to decimals: tenths and hundredths linked to money and measurement
-- Converting between simple fractions and decimals
 
 Learning Objectives:
 - Represent fractions using models, number lines, and symbolic notation
@@ -117,7 +115,6 @@ Topics:
 - Perimeter and area of rectangles and composite figures
 - Angles: identification, measurement with protractor, and classification
 - Volume of rectangular prisms using unit cubes
-- Measurement error, rounding, and appropriate precision
 
 Learning Objectives:
 - Convert between common metric units in practical problems
@@ -162,8 +159,6 @@ Topics:
 - Symmetry, translations, and reflections on the coordinate plane
 - Collecting categorical and numerical data through surveys
 - Tables, bar graphs, pictographs, and line plots
-- Mean as a measure of center for simple data sets
-- Review and integration of operations, fractions, decimals, and measurement
 
 Learning Objectives:
 - Classify polygons by sides, angles, and symmetry properties

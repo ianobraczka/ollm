@@ -29,7 +29,6 @@ Topics:
 - Properties of operations: commutative, associative, distributive
 - Translating verbal descriptions into algebraic expressions
 - Like terms and equivalent expressions
-- Input-output tables and introduction to function notation
 
 Learning Objectives:
 - Write algebraic expressions that model real situations
@@ -73,7 +72,6 @@ Topics:
 - One-step and two-step linear equations
 - Equations with variables on both sides (introductory)
 - Checking solutions by substitution
-- Simple inequalities and solution representation on a number line
 
 Learning Objectives:
 - Solve one- and two-step linear equations using inverse operations
@@ -117,7 +115,6 @@ Topics:
 - Scale drawings and map scales
 - Speed, density, and unit conversion using proportions
 - Percent change revisited with algebraic models
-- Comparing proportional and non-proportional situations
 
 Learning Objectives:
 - Identify proportional relationships from tables, graphs, and descriptions
@@ -161,8 +158,6 @@ Topics:
 - Linear relationships in tables, graphs, and equations
 - Slope as rate of change in contextual problems
 - Intercepts and their meaning in applied settings
-- Comparing two relationships on the same graph
-- Data analysis: scatter plots, line of best fit (informal), and interpretation
 
 Learning Objectives:
 - Plot points and linear relationships from tables and equations

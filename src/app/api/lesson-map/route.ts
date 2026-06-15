@@ -20,9 +20,9 @@ export async function GET(req: Request) {
     const data = await getLessonPlansForGrade(grade);
     return NextResponse.json(data);
   } catch (error) {
-    console.error("[api/lesson-plans]", error);
+    console.error("[api/lesson-map]", error);
     const message =
-      error instanceof Error ? error.message : "Failed to load lesson plans.";
+      error instanceof Error ? error.message : "Failed to load lesson map.";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

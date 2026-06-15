@@ -29,7 +29,6 @@ Topics:
 - Classification of plants and animals using keys and field guides
 - Microscopic life: introduction to microorganisms in soil and water
 - Native and introduced species in urban and school environments
-- Scientific observation journals and specimen documentation
 
 Learning Objectives:
 - Distinguish living from non-living things using established criteria
@@ -73,7 +72,6 @@ Topics:
 - Food chains and food webs in local ecosystems
 - Producers, consumers, and decomposers
 - Energy flow and matter cycling at introductory level
-- Human impact on habitats: deforestation, pollution, and urbanization
 
 Learning Objectives:
 - Define ecosystem, habitat, population, and community with local examples
@@ -117,7 +115,6 @@ Topics:
 - Organs and their functions at an introductory level
 - Nutrition: food groups, balanced diet, and hydration
 - Hygiene, disease prevention, and vaccination awareness
-- Physical activity and rest as contributors to well-being
 
 Learning Objectives:
 - Name major organs and associate them with primary functions
@@ -161,7 +158,6 @@ Topics:
 - Data collection, tables, and simple graphing of results
 - Water, soil, and air quality indicators on school grounds
 - Waste reduction, recycling, and composting in school settings
-- Integration review: living things, ecosystems, and human health connections
 
 Learning Objectives:
 - Pose investigable questions and identify independent and dependent variables

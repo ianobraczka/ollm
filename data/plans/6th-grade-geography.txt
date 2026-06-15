@@ -29,8 +29,6 @@ Topics:
 - Comparing landscape change in places of student experience across time periods
 - Indigenous and traditional societies' relationships with Brazilian landscapes
 - Agricultural and extractive activities reshaping rural environments
-- Industrialization and infrastructure as drivers of landscape transformation
-- Photographs, maps, and satellite images as evidence of landscape change
 
 Learning Objectives:
 - Define landscape and identify natural and human-made elements in local examples
@@ -75,8 +73,6 @@ Topics:
 - Urban functions: residential, commercial, industrial, and service zones
 - Metropolitan areas and the Rio de Janeiro urban agglomeration
 - Urban infrastructure: housing, transport, sanitation, and energy networks
-- Social and environmental consequences of rapid urbanization
-- City planning concepts: zoning, green spaces, and public participation
 
 Learning Objectives:
 - Explain factors that drive urban growth and migration to Brazilian cities
@@ -121,8 +117,6 @@ Topics:
 - Climate patterns across Brazil: temperature, rainfall, and seasonal variation
 - Water cycle; surface runoff in urban and rural settings
 - River basins, watershed morphology, and Brazil's major hydrographic systems
-- Relationships among climate, soil, relief, and vegetation formations
-- Map scale: measuring distances with graphic and numeric scales
 
 Learning Objectives:
 - Describe how atmospheric circulation produces Brazil's climate patterns
@@ -167,8 +161,6 @@ Topics:
 - Water resource management: supply, treatment, distribution, and consumption
 - Biodiversity and human impacts on ecosystems across Brazilian biomes
 - Urban heat islands and microclimate changes from human activity
-- Environmental consequences and trade-offs of development projects
-- Integration review: urbanization, physical systems, and sustainability in Brazil
 
 Learning Objectives:
 - Compare land and water management techniques and their advantages/disadvantages

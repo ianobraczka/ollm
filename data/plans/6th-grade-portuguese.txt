@@ -29,7 +29,6 @@ Topics:
 - Fact versus opinion in news, editorials, and social media posts
 - Comparing coverage of the same event across print, web, and video
 - Partiality and framing: how word choice and selection shape meaning
-- School and community news: identifying newsworthy local topics
 
 Learning Objectives:
 - Recognize that news accounts involve editorial choices and degrees of partiality
@@ -73,7 +72,6 @@ Topics:
 - Opinion genres: letters to the editor, commentaries, and short opinion articles
 - Persuasive devices: word choice, metaphors, titles, and emotional appeal
 - Evaluating argument strength and identifying logical gaps
-- Formal register and connectors for addition, contrast, cause, and conclusion
 
 Learning Objectives:
 - Identify explicit thesis and supporting arguments in opinion texts
@@ -117,7 +115,6 @@ Topics:
 - Planning and producing news for print, audio, and video formats
 - Reviews and vlogs: structure, evaluation criteria, and audience engagement
 - Advertising texts: slogans, visual design, and ethical persuasion
-- Interview skills: question design, active listening, and transcription basics
 
 Learning Objectives:
 - Analyze how images and layout contribute to meaning in news and media texts
@@ -161,7 +158,6 @@ Topics:
 - Agreement: nominal and verbal concord in formal writing
 - Normative and legal texts: rights, rules, and school regulations
 - Complaint and request letters: organization, justification, and formal tone
-- Year-end synthesis: connecting argument, media, and grammar in polished writing
 
 Learning Objectives:
 - Identify clauses and coordinated periods in read and self-produced texts

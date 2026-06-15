@@ -29,8 +29,6 @@ Topics:
 - Linear equations in slope-intercept form y = mx + b
 - Graphing lines from equations, tables, and contextual descriptions
 - Interpreting slope and y-intercept in applied models
-- Comparing linear functions: parallel and perpendicular lines (introductory)
-- Arithmetic sequences as discrete linear functions
 
 Learning Objectives:
 - Determine whether a relationship is linear from a table or graph
@@ -74,8 +72,6 @@ Topics:
 - Triangle similarity and scale factor in maps and models
 - Pythagorean theorem: application and converse
 - Distance on the coordinate plane
-- Volume and surface area of cylinders, cones, and spheres
-- Transformations: rotations, reflections, translations, dilations
 
 Learning Objectives:
 - Prove triangles similar using angle and side criteria
@@ -119,8 +115,6 @@ Topics:
 - Theoretical vs. experimental probability
 - Compound events: independent and dependent events
 - Tree diagrams and tables for counting outcomes
-- Expected value introduction in simple games and decisions
-- Common misconceptions: gambler's fallacy and small samples
 
 Learning Objectives:
 - List sample spaces systematically for one- and two-stage events
@@ -164,8 +158,6 @@ Topics:
 - Two-way tables and relative frequencies
 - Informal inference: margin of error and sample size effects
 - Choosing appropriate representations for different data types
-- Critiquing studies: sampling, confounding, and causation vs. correlation
-- Capstone integration: functions, geometry, probability, and data
 
 Learning Objectives:
 - Fit and interpret a line of best fit for bivariate numerical data

@@ -29,8 +29,6 @@ Topics:
 - Training data, labels, features, and model predictions
 - Examples: recommendation systems, image classifiers, language assistants
 - Limitations: hallucinations, bias, opacity, and dependency risks
-- AI in Brazil: agriculture, health, education, and public services
-- School policy on AI-assisted work and academic integrity
 
 Learning Objectives:
 - Describe the basic pipeline from data to trained model to prediction
@@ -74,8 +72,6 @@ Topics:
 - Cleaning: handling missing values, normalizing units, and documenting changes
 - Exploratory analysis: sorting, filtering, pivot summaries, and basic scripting
 - Visualization dashboards with honest scales and accessible design
-- Correlation vs. causation in interpreting trends
-- Open data sources for Brazilian environmental and social indicators
 
 Learning Objectives:
 - Merge multiple data tables into an analysis-ready spreadsheet or script
@@ -120,8 +116,6 @@ Topics:
 - Project charters: goals, stakeholders, timeline, and success metrics
 - Prototyping: wireframes, mockups, and minimum viable products
 - Version control with Git basics or structured folder versioning
-- User testing, iteration, and accessibility review
-- Security basics: permissions, secrets, and safe deployment for school projects
 
 Learning Objectives:
 - Write a project charter linking a school sustainability goal to deliverables
@@ -166,8 +160,6 @@ Topics:
 - Green computing: energy use of devices, networks, and AI training
 - Digital rights, consent, and data minimization in project design
 - Open-source culture, licensing, and contributing responsibly
-- Capstone presentation: pitch, demo, and defense before panel
-- Transition planning for high school technology pathways
 
 Learning Objectives:
 - Complete an impact assessment for a proposed digital solution

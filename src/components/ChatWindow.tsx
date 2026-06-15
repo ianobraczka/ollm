@@ -1,12 +1,12 @@
 "use client";
 
-import { Download, Send, X } from "lucide-react";
+import { Download, X } from "lucide-react";
 import * as React from "react";
 
 import { MessageBubble } from "@/components/MessageBubble";
+import { ChatComposer } from "@/components/ChatComposer";
 import { QuickActions } from "@/components/QuickActions";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { UI_TEXT, type AppLanguage } from "@/lib/i18n";
 import type { ChatMessage } from "@/types/chat";
 
@@ -34,7 +34,6 @@ export function ChatWindow({
   const [visibleError, setVisibleError] = React.useState<string | null>(null);
   const [visibleUploadError, setVisibleUploadError] = React.useState<string | null>(null);
   const bottomRef = React.useRef<HTMLDivElement>(null);
-  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
   const streamingId = isLoading
     ? messages.filter((m) => m.role === "assistant").at(-1)?.id
@@ -63,7 +62,6 @@ export function ChatWindow({
     if (!trimmed || isLoading || !canChat) return;
     setInput("");
     await onSend(trimmed);
-    textareaRef.current?.focus();
   }
 
   function exportLastAssistant() {
@@ -143,7 +141,6 @@ export function ChatWindow({
                 disabled={!canChat || isLoading}
                 onSelect={(prompt) => {
                   setInput(prompt);
-                  textareaRef.current?.focus();
                 }}
               />
               {lastAssistant?.content && (
@@ -160,39 +157,18 @@ export function ChatWindow({
               )}
             </div>
 
-            <form
-              className="rounded-2xl border border-border/60 bg-background/90 p-3 shadow-lg backdrop-blur-md"
-              onSubmit={(e) => {
-                e.preventDefault();
-                void submit();
-              }}
-            >
-              <Textarea
-                ref={textareaRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={
-                  canChat
-                    ? t.chatPlaceholderWithSources
-                    : t.chatPlaceholderNoSources
-                }
-                disabled={!canChat || isLoading}
-                rows={3}
-                className="resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-                    e.preventDefault();
-                    void submit();
-                  }
-                }}
-              />
-              <div className="flex items-center justify-end gap-2 pt-2">
-                <Button type="submit" disabled={!canChat || isLoading || !input.trim()}>
-                  <Send className="h-4 w-4" />
-                  {isLoading ? t.sending : t.send}
-                </Button>
-              </div>
-            </form>
+            <ChatComposer
+              value={input}
+              onChange={setInput}
+              onSubmit={submit}
+              placeholder={
+                canChat ? t.chatPlaceholderWithSources : t.chatPlaceholderNoSources
+              }
+              disabled={!canChat}
+              isLoading={isLoading}
+              sendLabel={t.send}
+              sendingLabel={t.sending}
+            />
           </div>
         </div>
       </div>

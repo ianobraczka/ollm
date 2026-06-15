@@ -29,7 +29,6 @@ Topics:
 - Using library databases, encyclopedias, and curated school resources
 - Evaluating credibility: author, date, purpose, evidence, bias
 - Distinguishing fact, opinion, and sponsored content
-- Note-taking methods and citation basics for school projects
 
 Learning Objectives:
 - Formulate effective search queries for a defined research question
@@ -73,7 +72,6 @@ Topics:
 - Discussion boards and comment norms: constructive feedback
 - Video call participation: mute, camera, and sharing protocols
 - Digital collaboration on shared documents and slide decks
-- Managing notifications and maintaining focus during online work
 
 Learning Objectives:
 - Write clear, appropriately formal school emails with subject lines and signatures
@@ -117,7 +115,6 @@ Topics:
 - Pattern recognition in data, nature, and daily routines
 - Abstraction: focusing on essential details while ignoring noise
 - Algorithms: step-by-step instructions and flowchart notation
-- Introduction to block-based programming environments approved by the school
 
 Learning Objectives:
 - Decompose a multi-step project into ordered subtasks with dependencies
@@ -161,7 +158,6 @@ Topics:
 - Chart creation from science and math data sets
 - Presentation design for oral defense of projects
 - Digital rights, Creative Commons, and plagiarism avoidance
-- Year-end technology reflection and goal setting
 
 Learning Objectives:
 - Organize survey data in a spreadsheet with consistent formatting
