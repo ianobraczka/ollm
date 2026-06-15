@@ -87,60 +87,77 @@ export function PlanningChatWindow({
 
   const lastAssistant = [...messages].reverse().find((m) => m.role === "assistant");
 
+  const errorAlerts = (
+    <>
+      {visibleUploadError && (
+        <div className="relative rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+          <button
+            type="button"
+            className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
+            aria-label={ui.dismiss}
+            onClick={() => setVisibleUploadError(null)}
+          >
+            <X className="h-4 w-4" />
+          </button>
+          {visibleUploadError}
+        </div>
+      )}
+
+      {visibleError && (
+        <div className="relative rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+          <button
+            type="button"
+            className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
+            aria-label={ui.dismiss}
+            onClick={() => setVisibleError(null)}
+          >
+            <X className="h-4 w-4" />
+          </button>
+          {visibleError}
+        </div>
+      )}
+    </>
+  );
+
   return (
     <div className="relative min-h-screen bg-background">
-      <div className="px-2 py-6 pb-56 lg:px-3">
-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4">
-          {!hasStarted ? (
+      {!hasStarted ? (
+        <div className="flex min-h-screen items-center justify-center px-2 py-8 lg:px-3">
+          <div className="mx-auto w-full max-w-6xl space-y-4">
             <p className="text-center text-sm text-muted-foreground">{t.planningChatEmpty}</p>
-          ) : (
-            messages.map((message) => (
-              <MessageBubble
-                key={message.id}
-                message={message}
+            {errorAlerts}
+            <div className="rounded-2xl border border-border/60 bg-background/90 p-3 shadow-lg backdrop-blur-md">
+              <InterdisciplinaryPlanningForm
                 language={language}
-                isStreaming={message.id === streamingId && isLoading}
-                loadingLabel={t.generating}
+                isLoading={isLoading}
+                onSubmit={onInitialSubmit}
+                leadingActions={<ModeToggle language={language} />}
               />
-            ))
-          )}
-          <div ref={bottomRef} aria-hidden className="h-px shrink-0" />
+            </div>
+          </div>
         </div>
-      </div>
+      ) : (
+        <>
+          <div className="px-2 py-6 pb-56 lg:px-3">
+            <div className="mx-auto flex w-full max-w-6xl flex-col gap-4">
+              {messages.map((message) => (
+                <MessageBubble
+                  key={message.id}
+                  message={message}
+                  language={language}
+                  isStreaming={message.id === streamingId && isLoading}
+                  loadingLabel={t.generating}
+                />
+              ))}
+              <div ref={bottomRef} aria-hidden className="h-px shrink-0" />
+            </div>
+          </div>
 
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 lg:left-[calc(var(--spacing)*100)]">
-        <div className="pointer-events-auto bg-gradient-to-t from-background from-40% via-background/95 to-transparent px-2 pb-4 pt-10 lg:px-3">
-          <div className="mx-auto w-full max-w-6xl space-y-3">
-            {visibleUploadError && (
-              <div className="relative rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-                <button
-                  type="button"
-                  className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
-                  aria-label={ui.dismiss}
-                  onClick={() => setVisibleUploadError(null)}
-                >
-                  <X className="h-4 w-4" />
-                </button>
-                {visibleUploadError}
-              </div>
-            )}
+          <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 lg:left-[calc(var(--spacing)*100)]">
+            <div className="pointer-events-auto bg-gradient-to-t from-background from-40% via-background/95 to-transparent px-2 pb-4 pt-10 lg:px-3">
+              <div className="mx-auto w-full max-w-6xl space-y-3">
+                {errorAlerts}
 
-            {visibleError && (
-              <div className="relative rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-                <button
-                  type="button"
-                  className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
-                  aria-label={ui.dismiss}
-                  onClick={() => setVisibleError(null)}
-                >
-                  <X className="h-4 w-4" />
-                </button>
-                {visibleError}
-              </div>
-            )}
-
-            {hasStarted ? (
-              <>
                 {lastAssistant?.content && (
                   <div className="flex justify-end">
                     <Button
@@ -186,20 +203,11 @@ export function PlanningChatWindow({
                     </Button>
                   </div>
                 </form>
-              </>
-            ) : (
-              <div className="rounded-2xl border border-border/60 bg-background/90 p-3 shadow-lg backdrop-blur-md">
-                <InterdisciplinaryPlanningForm
-                  language={language}
-                  isLoading={isLoading}
-                  onSubmit={onInitialSubmit}
-                  leadingActions={<ModeToggle language={language} />}
-                />
               </div>
-            )}
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }
