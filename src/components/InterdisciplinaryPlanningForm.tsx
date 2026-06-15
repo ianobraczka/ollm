@@ -3,6 +3,7 @@
 import { Loader2, Sparkles } from "lucide-react";
 import * as React from "react";
 
+import { AppSelect, type AppSelectOption } from "@/components/AppSelect";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -77,8 +78,35 @@ export function InterdisciplinaryPlanningForm({
     });
   }
 
-  const selectClassName =
-    "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring";
+  const gradeOptions = getAvailableGrades().map((g) => ({
+    value: g,
+    label: t.gradeLabel(g),
+  }));
+
+  const periodOptions = PERIOD_OPTIONS.map((option) => ({
+    value: option.value,
+    label: option.label,
+  }));
+
+  const subjectOptions = subjects.map((subject) => ({
+    value: subject,
+    label: SUBJECT_LABELS[subject],
+  }));
+
+  const secondarySubjectOptions: AppSelectOption<CurriculumSubject | "">[] = [
+    { value: "", label: t.secondarySubjectAuto },
+    ...secondaryOptions.map((subject) => ({
+      value: subject,
+      label: SUBJECT_LABELS[subject],
+    })),
+  ];
+
+  const outputTypeOptions = (Object.keys(OUTPUT_TYPE_LABEL_KEYS) as InterdisciplinaryOutputType[]).map(
+    (value) => ({
+      value,
+      label: t[OUTPUT_TYPE_LABEL_KEYS[value]],
+    }),
+  );
 
   return (
     <div className="space-y-4">
@@ -96,40 +124,30 @@ export function InterdisciplinaryPlanningForm({
             <label htmlFor="grade" className="text-sm font-medium">
               {t.grade} <span className="text-destructive">*</span>
             </label>
-            <select
+            <AppSelect
               id="grade"
               required
-              className={selectClassName}
-              value={grade}
               disabled={isLoading}
-              onChange={(e) => setGrade(Number(e.target.value))}
-            >
-              {getAvailableGrades().map((g) => (
-                <option key={g} value={g}>
-                  {t.gradeLabel(g)}
-                </option>
-              ))}
-            </select>
+              aria-label={t.grade}
+              value={grade}
+              onChange={setGrade}
+              options={gradeOptions}
+            />
           </div>
 
           <div className="space-y-2">
             <label htmlFor="period" className="text-sm font-medium">
               {t.period} <span className="text-destructive">*</span>
             </label>
-            <select
+            <AppSelect
               id="period"
               required
-              className={selectClassName}
-              value={period}
               disabled={isLoading}
-              onChange={(e) => setPeriod(e.target.value as CurriculumPeriod)}
-            >
-              {PERIOD_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
+              aria-label={t.period}
+              value={period}
+              onChange={setPeriod}
+              options={periodOptions}
+            />
           </div>
         </div>
 
@@ -138,42 +156,29 @@ export function InterdisciplinaryPlanningForm({
             <label htmlFor="primarySubject" className="text-sm font-medium">
               {t.primarySubject} <span className="text-destructive">*</span>
             </label>
-            <select
+            <AppSelect
               id="primarySubject"
               required
-              className={selectClassName}
-              value={primarySubject}
               disabled={isLoading}
-              onChange={(e) => setPrimarySubject(e.target.value as CurriculumSubject)}
-            >
-              {subjects.map((subject) => (
-                <option key={subject} value={subject}>
-                  {SUBJECT_LABELS[subject]}
-                </option>
-              ))}
-            </select>
+              aria-label={t.primarySubject}
+              value={primarySubject}
+              onChange={setPrimarySubject}
+              options={subjectOptions}
+            />
           </div>
 
           <div className="space-y-2">
             <label htmlFor="secondarySubject" className="text-sm font-medium">
               {t.secondarySubject}
             </label>
-            <select
+            <AppSelect
               id="secondarySubject"
-              className={selectClassName}
-              value={secondarySubject}
               disabled={isLoading}
-              onChange={(e) =>
-                setSecondarySubject(e.target.value ? (e.target.value as CurriculumSubject) : "")
-              }
-            >
-              <option value="">{t.secondarySubjectAuto}</option>
-              {secondaryOptions.map((subject) => (
-                <option key={subject} value={subject}>
-                  {SUBJECT_LABELS[subject]}
-                </option>
-              ))}
-            </select>
+              aria-label={t.secondarySubject}
+              value={secondarySubject}
+              onChange={setSecondarySubject}
+              options={secondarySubjectOptions}
+            />
             <p className="text-xs text-muted-foreground">{t.secondarySubjectHint}</p>
           </div>
         </div>
@@ -182,22 +187,15 @@ export function InterdisciplinaryPlanningForm({
           <label htmlFor="outputType" className="text-sm font-medium">
             {t.outputType} <span className="text-destructive">*</span>
           </label>
-          <select
+          <AppSelect
             id="outputType"
             required
-            className={selectClassName}
-            value={outputType}
             disabled={isLoading}
-            onChange={(e) => setOutputType(e.target.value as InterdisciplinaryOutputType)}
-          >
-            {(Object.keys(OUTPUT_TYPE_LABEL_KEYS) as InterdisciplinaryOutputType[]).map(
-              (value) => (
-                <option key={value} value={value}>
-                  {t[OUTPUT_TYPE_LABEL_KEYS[value]]}
-                </option>
-              ),
-            )}
-          </select>
+            aria-label={t.outputType}
+            value={outputType}
+            onChange={setOutputType}
+            options={outputTypeOptions}
+          />
         </div>
 
         <div className="space-y-2">
