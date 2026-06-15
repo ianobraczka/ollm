@@ -83,18 +83,32 @@
 }
 
 .page-nav-select {
-  appearance: none;
   margin-left: calc(var(--spacing) * 11);
   max-width: calc(100% - calc(var(--spacing) * 11));
-  padding-right: calc(var(--spacing) * 6.5);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23737373' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right calc(var(--spacing) * 1) center;
-  background-size: 0.875rem;
 }
 
-.dark .page-nav-select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+.app-select-trigger {
+  padding-right: calc(var(--spacing) * 2);
+}
+
+.app-select-chevron {
+  margin-left: auto;
+}
+
+.app-select-menu {
+  animation: app-select-in 0.16s ease-out;
+}
+
+@keyframes app-select-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .lesson-plans-grade-select {

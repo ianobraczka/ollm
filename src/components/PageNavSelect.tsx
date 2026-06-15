@@ -1,13 +1,15 @@
 "use client";
 
+import { Layers, MessageSquare } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
+import { AppSelect } from "@/components/AppSelect";
 import { UI_TEXT, type AppLanguage } from "@/lib/i18n";
 
 const ROUTES = [
-  { path: "/", labelKey: "navChat" as const },
-  { path: "/interdisciplinary-planning", labelKey: "navPlanning" as const },
-];
+  { path: "/", labelKey: "navChat" as const, icon: MessageSquare },
+  { path: "/interdisciplinary-planning", labelKey: "navPlanning" as const, icon: Layers },
+] as const;
 
 type PageNavSelectProps = {
   language: AppLanguage;
@@ -18,21 +20,26 @@ export function PageNavSelect({ language }: PageNavSelectProps) {
   const router = useRouter();
   const t = UI_TEXT[language];
 
-  const current =
-    ROUTES.find((route) => route.path === pathname)?.path ?? ROUTES[0].path;
+  const currentRoute =
+    ROUTES.find((route) => route.path === pathname) ?? ROUTES[0];
 
   return (
-    <select
-      value={current}
+    <AppSelect
+      className="page-nav-select"
+      triggerClassName="px-2"
+      width="fit"
       aria-label={t.navPage}
-      className="page-nav-select w-fit rounded-md border border-border bg-background px-2 py-2.5 text-sm"
-      onChange={(e) => router.push(e.target.value)}
-    >
-      {ROUTES.map((route) => (
-        <option key={route.path} value={route.path}>
-          {t[route.labelKey]}
-        </option>
-      ))}
-    </select>
+      value={currentRoute.path}
+      onChange={(path) => {
+        if (path !== pathname) {
+          router.push(path);
+        }
+      }}
+      options={ROUTES.map((route) => ({
+        value: route.path,
+        label: t[route.labelKey],
+        icon: route.icon,
+      }))}
+    />
   );
 }
