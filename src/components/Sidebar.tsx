@@ -5,6 +5,7 @@ import { CheckCircle2, Sparkles, Upload } from "lucide-react";
 
 import { DocumentSelector } from "@/components/DocumentSelector";
 import { LanguageSelect } from "@/components/LanguageSelect";
+import { LessonMapLink } from "@/components/LessonMapLink";
 import { ModeToggle } from "@/components/ModeToggle";
 import { PageNavSelect } from "@/components/PageNavSelect";
 import { Badge } from "@/components/ui/badge";
@@ -159,7 +160,10 @@ export function Sidebar({
 
       <div className="mt-auto flex w-full items-center justify-between pt-2">
         <LanguageSelect value={language} onChange={onLanguageChange} />
-        <ModeToggle language={language} />
+        <div className="flex items-center gap-2">
+          <LessonMapLink language={language} />
+          <ModeToggle language={language} />
+        </div>
       </div>
     </aside>
   );

@@ -45,6 +45,7 @@ export const UI_TEXT = {
     navPage: "Page",
     navChat: "Teaching assistant",
     navPlanning: "Interdisciplinary planning",
+    navLessonMap: "Lesson map",
   },
   "pt-BR": {
     sidebarUploadTitle: "Upload (opcional)",
@@ -81,6 +82,7 @@ export const UI_TEXT = {
     navPage: "Página",
     navChat: "Assistente de ensino",
     navPlanning: "Planejamento interdisciplinar",
+    navLessonMap: "Mapa curricular",
   },
 } as const;
 

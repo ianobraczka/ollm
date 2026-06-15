@@ -5,6 +5,7 @@ import * as React from "react";
 
 import { AppSelect } from "@/components/AppSelect";
 import { LanguageSelect } from "@/components/LanguageSelect";
+import { LessonMapLink } from "@/components/LessonMapLink";
 import { LessonPlanDetailDialog } from "@/components/LessonPlanDetailDialog";
 import { LessonPlanSubjectAccordion } from "@/components/LessonPlanSubjectAccordion";
 import { ModeToggle } from "@/components/ModeToggle";
@@ -99,6 +100,7 @@ export function LessonPlansPage() {
               onChange={setLanguage}
               aria-label={ui.language}
             />
+            <LessonMapLink language={language} />
             <ModeToggle language={language} />
           </div>
         </div>
