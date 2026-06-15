@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, Loader2, Send, X } from "lucide-react";
+import { Download, Send, X } from "lucide-react";
 import * as React from "react";
 
 import { MessageBubble } from "@/components/MessageBubble";
@@ -99,14 +99,9 @@ export function ChatWindow({
                 message={message}
                 language={language}
                 isStreaming={message.id === streamingId && isLoading}
+                loadingLabel={t.chatThinking}
               />
             ))
-          )}
-          {isLoading && messages.length > 0 && !streamingId && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              {t.chatThinking}
-            </div>
           )}
           <div ref={bottomRef} aria-hidden className="h-px shrink-0" />
         </div>
@@ -195,17 +190,8 @@ export function ChatWindow({
               <div className="flex items-center justify-between gap-2 pt-2">
                 <ModeToggle language={language} />
                 <Button type="submit" disabled={!canChat || isLoading || !input.trim()}>
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="animate-spin" />
-                      {t.sending}
-                    </>
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4" />
-                      {t.send}
-                    </>
-                  )}
+                  <Send className="h-4 w-4" />
+                  {isLoading ? t.sending : t.send}
                 </Button>
               </div>
             </form>

@@ -80,6 +80,10 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
+
+  .prose {
+    font-family: var(--font-sans);
+  }
 }
 
 .page-nav-select {
@@ -97,6 +101,41 @@
 
 .app-select-menu {
   animation: app-select-in 0.16s ease-out;
+}
+
+@keyframes assistant-dot-bounce {
+  0%,
+  70%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0) scale(0.92);
+  }
+
+  35% {
+    opacity: 1;
+    transform: translateY(-0.3rem) scale(1);
+  }
+}
+
+.assistant-loading-dot {
+  animation: assistant-dot-bounce 1.1s ease-in-out infinite;
+}
+
+@keyframes assistant-stream-pulse {
+  0%,
+  100% {
+    border-color: color-mix(in oklch, var(--border) 70%, var(--primary) 30%);
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--primary) 15%, transparent);
+  }
+
+  50% {
+    border-color: color-mix(in oklch, var(--border) 40%, var(--primary) 60%);
+    box-shadow: 0 0 0 4px color-mix(in oklch, var(--primary) 8%, transparent);
+  }
+}
+
+.assistant-streaming-shell {
+  animation: assistant-stream-pulse 2s ease-in-out infinite;
 }
 
 @keyframes app-select-in {

@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, Loader2, Send, X } from "lucide-react";
+import { Download, Send, X } from "lucide-react";
 import * as React from "react";
 
 import {
@@ -100,14 +100,9 @@ export function PlanningChatWindow({
                 message={message}
                 language={language}
                 isStreaming={message.id === streamingId && isLoading}
+                loadingLabel={t.generating}
               />
             ))
-          )}
-          {isLoading && hasStarted && !streamingId && (
-            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              {t.generating}
-            </div>
           )}
           <div ref={bottomRef} aria-hidden className="h-px shrink-0" />
         </div>
@@ -186,17 +181,8 @@ export function PlanningChatWindow({
                   <div className="flex items-center justify-between gap-2 pt-2">
                     <ModeToggle language={language} />
                     <Button type="submit" disabled={isLoading || !input.trim()}>
-                      {isLoading ? (
-                        <>
-                          <Loader2 className="animate-spin" />
-                          {ui.sending}
-                        </>
-                      ) : (
-                        <>
-                          <Send className="h-4 w-4" />
-                          {ui.send}
-                        </>
-                      )}
+                      <Send className="h-4 w-4" />
+                      {isLoading ? ui.sending : ui.send}
                     </Button>
                   </div>
                 </form>

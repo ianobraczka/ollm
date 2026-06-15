@@ -9,7 +9,6 @@ import { getErrorMessage } from "@/lib/apiClient";
 import { BUILT_IN_DOCUMENTS } from "@/lib/builtInDocuments";
 import { MAX_DOCUMENTS, MAX_UPLOAD_BYTES } from "@/lib/constants";
 import { combineUploadedDocumentText } from "@/lib/documents";
-import { formatPlanSettingsUserMessage } from "@/lib/formatPlanSettingsMessage";
 import {
   PLANNING_TEXT,
 } from "@/lib/i18n";
@@ -146,7 +145,7 @@ export function InterdisciplinaryPlanningPage() {
       const message = err instanceof Error ? err.message : t.requestFailed;
       setChatError(message);
       setMessages((prev) => prev.filter((m) => m.id !== assistantId));
-      if (nextMessages.length === 1) {
+      if (nextMessages.length === 0) {
         setPlanSettings(null);
       }
     } finally {
@@ -156,9 +155,7 @@ export function InterdisciplinaryPlanningPage() {
 
   async function handleInitialSubmit(values: InterdisciplinaryFormValues) {
     setPlanSettings(values);
-    const userContent = formatPlanSettingsUserMessage(values, language);
-    const userMessage: ChatMessage = { id: createId(), role: "user", content: userContent };
-    await sendRequest([userMessage], values);
+    await sendRequest([], values);
   }
 
   async function handleFollowUpSend(content: string) {

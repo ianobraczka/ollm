@@ -5,6 +5,7 @@ import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+import { AssistantLoadingIndicator } from "@/components/AssistantLoadingIndicator";
 import { Button } from "@/components/ui/button";
 import { UI_TEXT, type AppLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
@@ -14,12 +15,19 @@ type MessageBubbleProps = {
   language: AppLanguage;
   message: ChatMessage;
   isStreaming?: boolean;
+  loadingLabel?: string;
 };
 
-export function MessageBubble({ language, message, isStreaming }: MessageBubbleProps) {
+export function MessageBubble({
+  language,
+  message,
+  isStreaming,
+  loadingLabel,
+}: MessageBubbleProps) {
   const isUser = message.role === "user";
   const [copied, setCopied] = React.useState(false);
   const t = UI_TEXT[language];
+  const isWaitingForContent = Boolean(isStreaming && !message.content.trim());
 
   async function copyContent() {
     await navigator.clipboard.writeText(message.content);
@@ -34,19 +42,23 @@ export function MessageBubble({ language, message, isStreaming }: MessageBubbleP
     >
       <div
         className={cn(
-          "group relative max-w-[min(100%,42rem)] rounded-2xl px-4 py-3 text-sm shadow-sm",
+          "group relative rounded-2xl px-4 py-3 text-sm shadow-sm transition-[border-color,box-shadow] duration-300",
           isUser
-            ? "bg-primary text-primary-foreground"
-            : "border border-border bg-card text-card-foreground",
+            ? "max-w-[min(100%,42rem)] bg-primary text-primary-foreground"
+            : "max-w-[min(100%,50.4rem)] border border-border bg-card text-card-foreground",
+          isWaitingForContent && "assistant-streaming-shell",
         )}
       >
         {isUser ? (
           <p className="whitespace-pre-wrap">{message.content}</p>
+        ) : isWaitingForContent ? (
+          <AssistantLoadingIndicator
+            className="text-primary/70"
+            label={loadingLabel ?? t.chatThinking}
+          />
         ) : (
-          <div className="prose prose-sm dark:prose-invert max-w-none prose-p:my-2 prose-headings:my-3 prose-ul:my-2 prose-ol:my-2">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {message.content || (isStreaming ? "…" : "")}
-            </ReactMarkdown>
+          <div className="prose prose-sm prose-sans dark:prose-invert max-w-none font-sans prose-p:my-2 prose-headings:my-3 prose-ul:my-2 prose-ol:my-2 prose-headings:font-semibold prose-code:font-mono">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
           </div>
         )}
 

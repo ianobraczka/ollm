@@ -1,8 +1,9 @@
 "use client";
 
-import { Loader2, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import * as React from "react";
 
+import { AssistantLoadingIndicator } from "@/components/AssistantLoadingIndicator";
 import { AppSelect, type AppSelectOption } from "@/components/AppSelect";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -218,10 +219,10 @@ export function InterdisciplinaryPlanningForm({
 
         <div className="flex items-center justify-between gap-2">
           <div className="shrink-0">{leadingActions}</div>
-          <Button type="submit" className="shrink-0" disabled={isLoading}>
+          <Button type="submit" className="shrink-0 gap-2" disabled={isLoading}>
             {isLoading ? (
               <>
-                <Loader2 className="animate-spin" />
+                <AssistantLoadingIndicator compact className="text-primary-foreground" />
                 {t.generating}
               </>
             ) : (
