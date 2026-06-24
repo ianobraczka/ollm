@@ -7,20 +7,7 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-/** pdfjs-dist (via pdf-parse v2) expects DOMMatrix in Node — same polyfill as the app. */
-async function ensurePdfJsGlobals(): Promise<void> {
-  if (typeof globalThis.DOMMatrix !== "undefined") return;
-
-  const { default: DOMMatrix } = await import("dommatrix");
-  globalThis.DOMMatrix = DOMMatrix as typeof globalThis.DOMMatrix;
-}
-
-async function parsePdfBuffer(buffer: Buffer): Promise<string> {
-  await ensurePdfJsGlobals();
-  const { pdf } = await import("pdf-parse");
-  const result = await pdf(buffer);
-  return result.text?.trim() ?? "";
-}
+import { parsePdf } from "../src/lib/parsePdf";
 
 function printUsage(): void {
   console.error("Usage: npm run convert-pdf -- <input.pdf> <output.txt>");
@@ -47,7 +34,7 @@ async function main(): Promise<void> {
     }
 
     console.log("Extracting text with pdf-parse…");
-    const text = await parsePdfBuffer(buffer);
+    const text = await parsePdf(buffer);
 
     if (!text.trim()) {
       console.error(

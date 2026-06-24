@@ -293,7 +293,10 @@ export const ASSESSMENT_TEXT = {
     openInSchoology: "Open in Schoology",
     myCourses: "My courses",
     coursesLoading: "Loading courses…",
-    coursesLoginHint: "Set SCHOOLOGY_CONSUMER_KEY and SCHOOLOGY_CONSUMER_SECRET in .env.local, then use the refresh icon.",
+    coursesLoginHint: "Set SCHOOLOGY_CONSUMER_KEY and SCHOOLOGY_CONSUMER_SECRET in .env.local, then restart the dev server and use the refresh icon.",
+    coursesReconnectHint: "You logged out locally. Click the refresh icon next to My courses to reconnect.",
+    sessionApiUnavailable:
+      "Could not reach the Schoology connection API. Restart the dev server after changing .env.local.",
     noCourses: "No courses found for this API key. Try refreshing.",
     refreshCourses: "Refresh courses",
     logout: "Log out",
@@ -375,7 +378,10 @@ export const ASSESSMENT_TEXT = {
     openInSchoology: "Abrir no Schoology",
     myCourses: "Meus cursos",
     coursesLoading: "Carregando cursos…",
-    coursesLoginHint: "Defina SCHOOLOGY_CONSUMER_KEY e SCHOOLOGY_CONSUMER_SECRET no .env.local e use o ícone de atualizar.",
+    coursesLoginHint: "Defina SCHOOLOGY_CONSUMER_KEY e SCHOOLOGY_CONSUMER_SECRET no .env.local, reinicie o servidor de desenvolvimento e use o ícone de atualizar.",
+    coursesReconnectHint: "Você saiu localmente. Clique no ícone de atualizar ao lado de Meus cursos para reconectar.",
+    sessionApiUnavailable:
+      "Não foi possível acessar a API de conexão do Schoology. Reinicie o servidor de desenvolvimento após alterar o .env.local.",
     noCourses: "Nenhum curso encontrado para esta chave de API. Tente atualizar.",
     refreshCourses: "Atualizar cursos",
     logout: "Sair",

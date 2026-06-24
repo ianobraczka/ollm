@@ -72,22 +72,36 @@ export function AssessmentAssistantPage() {
     null,
   );
   const [assignmentFilter, setAssignmentFilter] = React.useState<"ungraded" | "graded">("ungraded");
+  const [locallyDisconnected, setLocallyDisconnected] = React.useState(false);
 
   const refreshSession = React.useCallback(async () => {
     setSessionLoading(true);
     try {
       const res = await fetch("/api/assessment-assistant/session");
+      const contentType = res.headers.get("content-type") ?? "";
+      if (!contentType.includes("application/json")) {
+        const fallback = {
+          hasSession: false,
+          error: t.sessionApiUnavailable,
+        };
+        setSessionStatus(fallback);
+        return fallback;
+      }
+
       const data = (await res.json()) as SchoologySessionStatus;
+      if (!res.ok && !data.error) {
+        data.error = t.sessionExpired;
+      }
       setSessionStatus(data);
       return data;
     } catch {
-      const fallback = { hasSession: false };
+      const fallback = { hasSession: false, error: t.sessionApiUnavailable };
       setSessionStatus(fallback);
       return fallback;
     } finally {
       setSessionLoading(false);
     }
-  }, []);
+  }, [t.sessionApiUnavailable, t.sessionExpired]);
 
   const refreshCourses = React.useCallback(async () => {
     setCoursesLoading(true);
@@ -191,6 +205,7 @@ export function AssessmentAssistantPage() {
   React.useEffect(() => {
     const disconnected = sessionStorage.getItem(SCHOOLOGY_DISCONNECTED_STORAGE_KEY) === "1";
     if (disconnected) {
+      setLocallyDisconnected(true);
       setSessionStatus({ hasSession: false });
       setSessionLoading(false);
       return;
@@ -205,6 +220,7 @@ export function AssessmentAssistantPage() {
 
   async function handleRefreshConnection() {
     sessionStorage.removeItem(SCHOOLOGY_DISCONNECTED_STORAGE_KEY);
+    setLocallyDisconnected(false);
     setError(null);
     const status = await refreshSession();
     if (status.hasSession) {
@@ -214,6 +230,7 @@ export function AssessmentAssistantPage() {
 
   function handleLogout() {
     sessionStorage.setItem(SCHOOLOGY_DISCONNECTED_STORAGE_KEY, "1");
+    setLocallyDisconnected(true);
     setSessionStatus({ hasSession: false });
     setCourses([]);
     setCoursesError(null);
@@ -263,6 +280,7 @@ export function AssessmentAssistantPage() {
         onSelectCourse={handleSelectCourse}
         onRefreshConnection={() => void handleRefreshConnection()}
         onLogout={handleLogout}
+        locallyDisconnected={locallyDisconnected}
         actionsDisabled={retrieveLoading}
       />
 

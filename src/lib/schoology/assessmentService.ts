@@ -154,8 +154,6 @@ export async function fetchAssessmentData(
   }
 
   let apiDetails: Awaited<ReturnType<typeof fetchAssignmentApiDetails>> = null;
-  let submissions: SchoologyAssessmentData["submissions"] = [];
-  let rubric: SchoologyAssessmentData["rubric"];
 
   try {
     apiDetails = await fetchAssignmentApiDetails(trimmedSectionId, trimmedAssessmentId);
@@ -174,12 +172,10 @@ export async function fetchAssessmentData(
     );
   }
 
-  const [subs, rub] = await Promise.all([
+  const [submissions, rubric] = await Promise.all([
     fetchAssignmentSubmissions(trimmedSectionId, trimmedAssessmentId).catch(() => []),
     fetchAssignmentRubric(trimmedSectionId, trimmedAssessmentId).catch(() => null),
   ]);
-  submissions = subs;
-  rubric = rub ?? undefined;
 
   const description = apiDetails?.description;
   const title = apiDetails?.title;

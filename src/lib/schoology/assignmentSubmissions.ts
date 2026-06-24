@@ -18,17 +18,20 @@ type AssignmentDetailResponse = {
   max_points?: string | number;
   grade_item_id?: string | number;
   grading_scale?: string | number;
+  grading_scale_type?: string | number;
   description?: string;
 };
 
+type EnrollmentRecord = {
+  id?: string | number;
+  uid?: string | number;
+  name_display?: string;
+  name_first?: string;
+  name_last?: string;
+};
+
 type EnrollmentResponse = {
-  enrollment?: Array<{
-    id?: string | number;
-    uid?: string | number;
-    name_display?: string;
-    name_first?: string;
-    name_last?: string;
-  }>;
+  enrollment?: EnrollmentRecord | EnrollmentRecord[];
 };
 
 type SubmissionRevision = {
@@ -241,7 +244,7 @@ export async function fetchAssignmentSubmissions(
   if (assignmentScaleId) {
     scaleIds.add(assignmentScaleId);
   }
-  for (const grade of normalizeApiArray(gradesData.grades?.grade)) {
+  for (const grade of normalizeApiArray<GradeEntry>(gradesData.grades?.grade)) {
     if (grade.scale_id == null) {
       continue;
     }
@@ -257,7 +260,7 @@ export async function fetchAssignmentSubmissions(
   const namesByUid = new Map<string, string>();
   const uidByEnrollmentId = new Map<string, string>();
 
-  for (const enrollment of normalizeApiArray(enrollmentsData.enrollment)) {
+  for (const enrollment of normalizeApiArray<EnrollmentRecord>(enrollmentsData.enrollment)) {
     if (enrollment.uid == null) {
       continue;
     }
@@ -275,7 +278,7 @@ export async function fetchAssignmentSubmissions(
   }
 
   const gradesByUid = new Map<string, GradeEntry>();
-  for (const grade of normalizeApiArray(gradesData.grades?.grade)) {
+  for (const grade of normalizeApiArray<GradeEntry>(gradesData.grades?.grade)) {
     if (grade.enrollment_id == null) {
       continue;
     }

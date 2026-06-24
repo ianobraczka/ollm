@@ -45,7 +45,7 @@ type EnrollmentRecord = {
 };
 
 type EnrollmentResponse = {
-  enrollment?: EnrollmentRecord[];
+  enrollment?: EnrollmentRecord | EnrollmentRecord[];
 };
 
 type GradeRow = {
@@ -209,7 +209,7 @@ export async function fetchCourseMaterials(
         () => ({ enrollment: [] } satisfies EnrollmentResponse),
       ),
       schoologyApiGet<GradesResponse>(`/sections/${trimmedSectionId}/grades`).catch(
-        () => ({ grades: {} } satisfies GradesResponse),
+        () => ({ grades: { grade: [] } } satisfies GradesResponse),
       ),
     ]);
 
@@ -231,9 +231,9 @@ export async function fetchCourseMaterials(
     (assignment) => assignment.id != null && assignment.title?.trim() && countsInGradebook(assignment),
   );
 
-  const enrollments = normalizeApiArray(enrollmentsData.enrollment);
+  const enrollments = normalizeApiArray<EnrollmentRecord>(enrollmentsData.enrollment);
   const { enrollmentIdByUid } = buildEnrollmentUidMaps(enrollments);
-  const allGrades = normalizeApiArray(gradesData.grades?.grade);
+  const allGrades = normalizeApiArray<GradeRow>(gradesData.grades?.grade);
   const gradesByAssignment = buildGradesByAssignment(allGrades);
   const gradingStatus = await resolveTeacherGradingStatus(
     trimmedSectionId,

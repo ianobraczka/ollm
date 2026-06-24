@@ -33,6 +33,7 @@ type AssessmentAssistantSidebarProps = {
   onSelectCourse: (course: SchoologyCourse) => void;
   onRefreshConnection: () => void;
   onLogout: () => void;
+  locallyDisconnected?: boolean;
   actionsDisabled?: boolean;
 };
 
@@ -81,6 +82,7 @@ export function AssessmentAssistantSidebar({
   onSelectCourse,
   onRefreshConnection,
   onLogout,
+  locallyDisconnected = false,
   actionsDisabled = false,
 }: AssessmentAssistantSidebarProps) {
   const t = ASSESSMENT_TEXT[language];
@@ -170,7 +172,18 @@ export function AssessmentAssistantSidebar({
 
         <div className="min-h-0 flex-1 overflow-y-auto rounded-lg border border-border">
           {!sessionStatus?.hasSession && !sessionLoading ? (
-            <p className="p-3 text-xs text-muted-foreground">{t.coursesLoginHint}</p>
+            <p
+              className={cn(
+                "p-3 text-xs",
+                sessionStatus?.error ? "text-destructive" : "text-muted-foreground",
+              )}
+            >
+              {sessionStatus?.error
+                ? sessionStatus.error
+                : locallyDisconnected
+                  ? t.coursesReconnectHint
+                  : t.coursesLoginHint}
+            </p>
           ) : coursesLoading ? (
             <div className="flex items-center gap-2 p-3 text-xs text-muted-foreground">
               <Loader2 className="h-3 w-3 animate-spin" />
