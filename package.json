@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "verify:gemini": "node scripts/verify-gemini.mjs",
+    "verify:schoology": "tsx scripts/verify-schoology.ts",
     "convert-pdf": "tsx scripts/convert-pdf.ts"
   },
   "dependencies": {
@@ -28,6 +29,7 @@
     "react-dom": "19.1.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
+    "server-only": "^0.0.1",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
