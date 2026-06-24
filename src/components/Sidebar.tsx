@@ -17,31 +17,33 @@ import { APP_NAME } from "@/lib/constants";
 import type { ParsedDocument } from "@/types/chat";
 
 type SidebarProps = {
+  variant?: "full" | "minimal";
   language: AppLanguage;
   onLanguageChange: (language: AppLanguage) => void;
-  documents: ParsedDocument[];
-  selectedBuiltInIds: string[];
-  onBuiltInChange: (ids: string[]) => void;
-  useUploadedDocument: boolean;
-  onUseUploadedChange: (value: boolean) => void;
-  hasUploadedDocument: boolean;
-  uploadedFileNames: string[];
-  isUploading: boolean;
-  onUpload: (files: File[]) => Promise<void>;
+  documents?: ParsedDocument[];
+  selectedBuiltInIds?: string[];
+  onBuiltInChange?: (ids: string[]) => void;
+  useUploadedDocument?: boolean;
+  onUseUploadedChange?: (value: boolean) => void;
+  hasUploadedDocument?: boolean;
+  uploadedFileNames?: string[];
+  isUploading?: boolean;
+  onUpload?: (files: File[]) => Promise<void>;
 };
 
 export function Sidebar({
+  variant = "full",
   language,
   onLanguageChange,
-  documents,
-  selectedBuiltInIds,
-  onBuiltInChange,
-  useUploadedDocument,
-  onUseUploadedChange,
-  hasUploadedDocument,
-  uploadedFileNames,
-  isUploading,
-  onUpload,
+  documents = [],
+  selectedBuiltInIds = [],
+  onBuiltInChange = () => {},
+  useUploadedDocument = false,
+  onUseUploadedChange = () => {},
+  hasUploadedDocument = false,
+  uploadedFileNames = [],
+  isUploading = false,
+  onUpload = async () => {},
 }: SidebarProps) {
   const t = UI_TEXT[language];
   const displayTitle = (id: string, title: string) =>
@@ -71,6 +73,8 @@ export function Sidebar({
         <PageNavSelect language={language} />
       </div>
 
+      {variant === "minimal" ? null : (
+        <>
       <DocumentSelector
         language={language}
         selectedBuiltInIds={selectedBuiltInIds}
@@ -165,6 +169,8 @@ export function Sidebar({
           <ModeToggle language={language} />
         </div>
       </div>
+        </>
+      )}
     </aside>
   );
 }

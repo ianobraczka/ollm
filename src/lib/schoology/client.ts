@@ -21,6 +21,8 @@ export type SchoologyUser = {
   primary_email?: string;
   role_id?: string;
   school_id?: string;
+  picture_url?: string;
+  profile_url?: string;
 };
 
 export type SchoologyAppUserInfoResponse = {

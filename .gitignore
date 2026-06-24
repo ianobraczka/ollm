@@ -41,5 +41,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Source PDFs at repo root (use scripts/convert-pdf → data/documents/*.txt)
-/*.pdf
+# Schoology API debug artifacts (local only — never commit)
+/data/schoology-session.json
+/data/schoology-oauth-pending.json
+/data/schoology-user.json
+/data/schoology-export/
+/data/schoology-debug-report.json
+/data/schoology-debug.log

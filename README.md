@@ -2,6 +2,8 @@
 
 Chat with an AI assistant grounded in **built-in curriculum frameworks** and optional **session uploads** (PDF, DOCX, or TXT). Use it to draft lesson plans, activities, rubrics, and classroom ideas.
 
+**Assessment Assistant** ([`/assessment-assistant`](http://localhost:3030/assessment-assistant)) connects to **Schoology** via the REST API to browse courses, assignments, submissions, and rubrics.
+
 **Built-in sources** (bundled with the app):
 
 - Brazilian **BNCC**
@@ -39,6 +41,11 @@ Open [http://localhost:3030](http://localhost:3030) (OLM's Teaching Assistant us
 |----------|----------|-------------|
 | `GEMINI_API_KEY` | Yes | Google Generative AI API key |
 | `GEMINI_MODEL` | No | Override the default model chain (see `src/lib/gemini.ts`) |
+| `SCHOOLOGY_BASE_URL` | For Assessment Assistant | Schoology REST API base (default `https://api.schoology.com/v1`) |
+| `SCHOOLOGY_CONSUMER_KEY` | For Assessment Assistant | Two-legged API consumer key |
+| `SCHOOLOGY_CONSUMER_SECRET` | For Assessment Assistant | Two-legged API consumer secret |
+| `SCHOOLOGY_DOMAIN` | No | Schoology web UI host for “Open in Schoology” links only (not API calls) |
+| `SCHOOLOGY_DEBUG` | No | Set to `1` to enable debug routes and `data/schoology-debug.log` |
 
 ## Built-in reference documents
 
@@ -87,13 +94,18 @@ src/
   app/
     api/chat/         # Streaming Gemini; loads selected built-ins + optional upload
     api/parse/        # PDF/DOCX/TXT extraction for session uploads
+    api/assessment-assistant/  # Schoology REST API (session, courses, materials, retrieve, file)
+    assessment-assistant/      # Assessment Assistant UI
   components/
+    AssessmentAssistantPage.tsx
+    AssessmentAssistantSidebar.tsx
     DocumentSelector.tsx
     UploadBox.tsx
     ChatWindow.tsx
     Sidebar.tsx
     ...
   lib/
+    schoology/            # OAuth 1.0 signing + REST API client (no Playwright / scraping)
     builtInDocuments.ts   # Registry (id, title, description, filePath)
     loadBuiltInDocument.ts
     documentContext.ts    # buildDocumentContext()
@@ -138,7 +150,8 @@ Later versions should replace truncation with chunking, search, embeddings, or a
 1. Push the repo to GitHub (include `data/documents/*.txt`).
 2. Import the project in [Vercel](https://vercel.com).
 3. Add `GEMINI_API_KEY` in **Project → Settings → Environment Variables**.
-4. Deploy (Node 20+).
+4. For Assessment Assistant, add `SCHOOLOGY_CONSUMER_KEY`, `SCHOOLOGY_CONSUMER_SECRET`, and optionally `SCHOOLOGY_BASE_URL` / `SCHOOLOGY_DOMAIN`.
+5. Deploy (Node 20+).
 
 ## MVP limitations (by design)
 
@@ -156,3 +169,83 @@ Later versions should replace truncation with chunking, search, embeddings, or a
 | `npm run build` | Production build |
 | `npm run start` | Start production server |
 | `npm run lint` | ESLint |
+| `npm run verify:schoology` | Verify Schoology API credentials (`app-user-info` flow) |
+
+## Assessment Assistant (Schoology)
+
+Local feature at [`/assessment-assistant`](http://localhost:3030/assessment-assistant). Lists your Schoology courses, assignments, submissions, and rubrics via the **Schoology REST API** only — **no Playwright, no browser automation, and no HTML page scraping**.
+
+The browser calls same-origin `/api/assessment-assistant/*` routes. The server signs outbound requests to `https://api.schoology.com/v1` with **two-legged OAuth 1.0** (`SCHOOLOGY_CONSUMER_KEY` + `SCHOOLOGY_CONSUMER_SECRET`).
+
+### Architecture
+
+```
+Browser UI → /api/assessment-assistant/* → lib/schoology/* → signed fetch → api.schoology.com/v1
+```
+
+- **Auth / profile:** `GET /app-user-info` → `GET /users/{uid}` (not `/users/me`)
+- **Courses:** `GET /users/{uid}/sections`
+- **Materials:** `GET /sections/{id}/assignments`, grading categories, etc.
+- **Assignment detail:** `GET /sections/{id}/assignments/{id}`, submissions, grades, rubrics
+- **Files:** API `download_path` URLs proxied through `/api/assessment-assistant/file`
+
+`https://app.schoology.com/...` URLs are built only for display (“Open in Schoology” links), never fetched for data extraction.
+
+No browser OAuth redirect, no callback URL, and no ngrok required for local development.
+
+### Setup (local)
+
+1. Obtain **two-legged** Schoology API keys at **Integration → API** (`/api` → Request API Keys).  
+   Platform App keys (App Publisher → API Info) are **three-legged only** and will return  
+   `This application is not authorized to make 2-legged OAuth requests.`
+2. Copy `.env.example` to `.env.local` and set:
+
+```bash
+SCHOOLOGY_BASE_URL=https://api.schoology.com/v1
+SCHOOLOGY_CONSUMER_KEY=your_consumer_key
+SCHOOLOGY_CONSUMER_SECRET=your_consumer_secret
+# Optional — web UI links only (not API):
+# SCHOOLOGY_DOMAIN=https://app.schoology.com
+```
+
+3. Restart `npm run dev` after changing `.env.local`.
+4. Open `/assessment-assistant` — connection and courses load automatically when credentials are valid.
+
+**Log out** in the UI disconnects locally (clears course list in the browser). API credentials remain in `.env.local` until you remove them or click refresh to reconnect.
+
+### Setup (production)
+
+Add the same `SCHOOLOGY_*` variables in your host’s environment (e.g. Vercel **Project → Settings → Environment Variables**). Do not commit `.env.local`.
+
+### Verify credentials
+
+```bash
+npm run verify:schoology
+```
+
+Or in development:
+
+```bash
+curl http://localhost:3030/api/assessment-assistant/verify
+```
+
+Full diagnostics: `GET /api/assessment-assistant/debug` (development or `SCHOOLOGY_DEBUG=1`). Writes `data/schoology-debug-report.json`.
+
+### API routes
+
+| Route | Purpose |
+|-------|---------|
+| `GET /api/assessment-assistant/session` | Connection status + user profile (`picture_url` when available) |
+| `GET /api/assessment-assistant/courses` | Teacher sections |
+| `GET /api/assessment-assistant/materials?sectionId=` | Assignments grouped by grading period |
+| `POST /api/assessment-assistant/retrieve` | Assignment/test detail, submissions, rubric |
+| `GET /api/assessment-assistant/file` | Proxied download for submission attachments |
+| `GET /api/assessment-assistant/verify` | Dev credential check |
+| `GET /api/assessment-assistant/debug` | Dev diagnostics |
+
+### Notes
+
+- Keys must belong to a user with API access and appropriate teacher permissions.
+- Profile pictures come from the `picture_url` field on `GET /users/{id}`.
+- Assessment display URLs are built in `src/lib/schoology/schoologyUrls.ts`.
+- The network tab should show only same-origin `/api/assessment-assistant/*` requests, never direct calls to `api.schoology.com` from the browser.

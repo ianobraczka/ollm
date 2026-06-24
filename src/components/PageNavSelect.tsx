@@ -1,6 +1,6 @@
 "use client";
 
-import { Layers, MessageSquare } from "lucide-react";
+import { ClipboardCheck, Layers, MessageSquare } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 import { AppSelect } from "@/components/AppSelect";
@@ -9,6 +9,7 @@ import { UI_TEXT, type AppLanguage } from "@/lib/i18n";
 const ROUTES = [
   { path: "/", labelKey: "navChat" as const, icon: MessageSquare },
   { path: "/interdisciplinary-planning", labelKey: "navPlanning" as const, icon: Layers },
+  { path: "/assessment-assistant", labelKey: "navAssessmentAssistant" as const, icon: ClipboardCheck },
 ] as const;
 
 type PageNavSelectProps = {

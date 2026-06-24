@@ -1,5 +1,5 @@
 /**
- * Quick local check: Schoology two-legged OAuth credentials work.
+ * Quick local check: Schoology two-legged API credentials (app-user-info flow).
  * Usage: npm run verify:schoology
  */
 import { readFileSync, existsSync } from "fs";
