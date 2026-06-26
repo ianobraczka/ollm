@@ -119,23 +119,14 @@ function findCategory(question: string, snapshot: CourseSnapshot): string | unde
   return snapshot.categories.find((category) => normalizeText(category).includes(candidate));
 }
 
-function extractTopic(question: string, snapshot: CourseSnapshot): string | undefined {
+function extractTopic(question: string): string | undefined {
   const match = question.match(TOPIC_RE);
   if (!match?.[1]) {
     return undefined;
   }
 
   const topic = match[1].trim();
-  if (topic.length < 3) {
-    return undefined;
-  }
-
-  const normalizedTopic = normalizeText(topic);
-  const hasAssignmentMatch = snapshot.assignments.some((assignment) =>
-    normalizeText(assignment.title).includes(normalizedTopic),
-  );
-
-  return hasAssignmentMatch || normalizedTopic.length >= 4 ? topic : undefined;
+  return topic.length >= 3 ? topic : undefined;
 }
 
 function isMissingQuestion(question: string): boolean {
@@ -148,14 +139,43 @@ function isStrugglingQuestion(question: string): boolean {
   return /\b(struggl|weak|lowest|failing|difficult|difficulty|behind|at risk)\b/i.test(question);
 }
 
+function isPerformanceQuestion(question: string): boolean {
+  return /\b(doing well|well on|good at|how is|how's|how are|progress|performing|performance)\b/i.test(
+    question,
+  );
+}
+
+function resolveStudent(
+  question: string,
+  snapshot: CourseSnapshot,
+  focusedStudentUid?: string,
+): { uid: string; name: string } | undefined {
+  const fromQuestion = findStudent(question, snapshot);
+  if (fromQuestion) {
+    return fromQuestion;
+  }
+
+  if (!focusedStudentUid) {
+    return undefined;
+  }
+
+  const focused = snapshot.students.find((student) => student.uid === focusedStudentUid);
+  if (!focused) {
+    return undefined;
+  }
+
+  return { uid: focused.uid, name: focused.name };
+}
+
 export function classifyCourseQuestion(
   question: string,
   snapshot: CourseSnapshot,
   focusedAssignmentId?: string,
+  focusedStudentUid?: string,
 ): CourseQuestionClassification {
-  const student = findStudent(question, snapshot);
+  const student = resolveStudent(question, snapshot, focusedStudentUid);
   const categoryName = findCategory(question, snapshot);
-  const topic = extractTopic(question, snapshot);
+  const topic = extractTopic(question);
   const missingThreshold = extractMissingThreshold(question);
 
   if (DEEP_DIVE_RE.test(question) && (focusedAssignmentId || student)) {
@@ -175,7 +195,7 @@ export function classifyCourseQuestion(
     };
   }
 
-  if (student && (isStrugglingQuestion(question) || categoryName)) {
+  if (student && (isStrugglingQuestion(question) || isPerformanceQuestion(question) || categoryName || topic)) {
     return {
       intent: "student_profile",
       studentUid: student.uid,
@@ -185,7 +205,7 @@ export function classifyCourseQuestion(
     };
   }
 
-  if (topic && isStrugglingQuestion(question)) {
+  if (topic && (isStrugglingQuestion(question) || isPerformanceQuestion(question))) {
     return {
       intent: "topic_performance",
       topic,

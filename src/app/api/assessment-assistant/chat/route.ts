@@ -9,6 +9,11 @@ import {
 import { buildCourseAnalytics, serializeCourseAnalytics } from "@/lib/courseAnalytics";
 import { buildDocumentContext } from "@/lib/documentContext";
 import { generateContentStreamWithFallback } from "@/lib/gemini";
+import {
+  loadCourseAssignmentMetadata,
+  selectAssignmentIdsForMetadata,
+  shouldLoadAssignmentMetadata,
+} from "@/lib/loadCourseAssignmentMetadata";
 import { fetchAssessmentData } from "@/lib/schoology/assessmentService";
 import { normalizeLanguage } from "@/lib/i18n";
 import type { CourseSnapshot } from "@/types/schoology";
@@ -24,6 +29,7 @@ export type CourseChatRequestBody = {
   snapshot: CourseSnapshot;
   courseName?: string;
   focusedAssignmentId?: string;
+  focusedStudentUid?: string;
   responseLanguage?: string;
 };
 
@@ -55,6 +61,8 @@ export async function POST(req: Request) {
       typeof body.focusedAssignmentId === "string"
         ? body.focusedAssignmentId.trim()
         : undefined;
+    const focusedStudentUid =
+      typeof body.focusedStudentUid === "string" ? body.focusedStudentUid.trim() : undefined;
     const responseLanguage = normalizeLanguage(body.responseLanguage);
     const latestQuestion = getLatestUserMessage(body.messages);
 
@@ -62,10 +70,13 @@ export async function POST(req: Request) {
       latestQuestion,
       snapshot,
       focusedAssignmentId,
+      focusedStudentUid,
     );
     const analytics = buildCourseAnalytics(snapshot, classification);
 
     let focusedAssignmentContext: string | undefined;
+    let assignmentMetadataContext: string | undefined;
+
     if (needsAssignmentDeepContext(classification) && focusedAssignmentId) {
       try {
         const assessment = await fetchAssessmentData(
@@ -84,7 +95,28 @@ export async function POST(req: Request) {
         (assignment) => assignment.id === focusedAssignmentId,
       );
       if (focused) {
-        focusedAssignmentContext = `Teacher is currently viewing assignment: ${focused.title} (ID ${focused.id}, category: ${focused.categoryName}).`;
+        focusedAssignmentContext = `Assignment: ${focused.title} (ID ${focused.id}, category: ${focused.categoryName}).`;
+      }
+    }
+
+    if (shouldLoadAssignmentMetadata(classification)) {
+      const assignmentIds = selectAssignmentIdsForMetadata(snapshot, classification, {
+        focusedStudentUid,
+        focusedAssignmentId,
+      });
+
+      if (assignmentIds.length > 0) {
+        try {
+          assignmentMetadataContext = await loadCourseAssignmentMetadata(
+            snapshot.sectionId,
+            snapshot,
+            assignmentIds,
+          );
+        } catch (error) {
+          console.warn("[api/assessment-assistant/chat] assignment metadata load failed", error);
+          assignmentMetadataContext =
+            "[Assignment descriptions and rubrics could not be loaded. Use titles and analytics only.]";
+        }
       }
     }
 
@@ -105,6 +137,7 @@ export async function POST(req: Request) {
     const basePrompt = buildCourseChatPrompt({
       courseName,
       analyticsContext: serializeCourseAnalytics(analytics),
+      assignmentMetadataContext,
       focusedAssignmentContext,
       documentContext,
       messages: body.messages,

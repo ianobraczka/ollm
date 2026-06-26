@@ -217,6 +217,7 @@ function buildStudentProfile(
   cellMap: Map<string, CourseSnapshotCell>,
   studentUid: string,
   categoryName?: string,
+  topic?: string,
 ) {
   const student = snapshot.students.find((entry) => entry.uid === studentUid);
   if (!student) {
@@ -235,11 +236,18 @@ function buildStudentProfile(
     };
   });
 
-  const scopedAssignments = categoryName
+  let scopedAssignments = categoryName
     ? snapshot.assignments.filter(
         (assignment) => assignment.categoryName.toLowerCase() === categoryName.toLowerCase(),
       )
     : snapshot.assignments;
+
+  if (topic) {
+    const topicMatches = filterAssignmentsByTopic(scopedAssignments, topic);
+    if (topicMatches.length > 0) {
+      scopedAssignments = topicMatches;
+    }
+  }
 
   const assignmentBreakdown = scopedAssignments
     .map((assignment) => {
@@ -294,6 +302,7 @@ function buildStudentProfile(
     lowestScoredAssignments: lowestScored,
     missingAssignments,
     focusedCategory: categoryName,
+    focusedTopic: topic,
   };
 }
 
@@ -360,6 +369,7 @@ export function buildCourseAnalytics(
           cellMap,
           classification.studentUid,
           classification.categoryName,
+          classification.topic,
         ),
       };
     }
@@ -460,6 +470,7 @@ export function buildCourseAnalytics(
             cellMap,
             classification.studentUid,
             classification.categoryName,
+            classification.topic,
           ),
         };
       }

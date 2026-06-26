@@ -23,6 +23,7 @@ type CourseChatSidebarProps = {
   focusedAssignmentId?: string | null;
   focusedAssignmentTitle?: string | null;
   focusedStudentName?: string | null;
+  focusedStudentUid?: string | null;
   materialsLoading?: boolean;
   onRefreshCourse?: () => void;
   refreshDisabled?: boolean;
@@ -35,12 +36,12 @@ export function CourseChatSidebar({
   focusedAssignmentId,
   focusedAssignmentTitle,
   focusedStudentName,
+  focusedStudentUid,
   materialsLoading = false,
   onRefreshCourse,
   refreshDisabled = false,
 }: CourseChatSidebarProps) {
   const t = ASSESSMENT_TEXT[language];
-  const locale = language === "pt-BR" ? "pt-BR" : "en-US";
   const [messages, setMessages] = React.useState<ChatMessage[]>([]);
   const [input, setInput] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -84,6 +85,7 @@ export function CourseChatSidebar({
           snapshot,
           courseName,
           focusedAssignmentId: focusedAssignmentId ?? undefined,
+          focusedStudentUid: focusedStudentUid ?? undefined,
           responseLanguage: language,
         }),
       });
@@ -130,14 +132,13 @@ export function CourseChatSidebar({
     await handleSend(trimmed);
   }
 
-  const extractedLabel = snapshot?.extractedAt
-    ? t.courseChatDataUpdated(
-        new Intl.DateTimeFormat(locale, {
-          dateStyle: "medium",
-          timeStyle: "short",
-        }).format(new Date(snapshot.extractedAt)),
-      )
-    : null;
+  const contextLabel = focusedStudentName
+    ? t.courseChatFocusedStudent(focusedStudentName)
+    : focusedAssignmentTitle
+      ? t.courseChatFocusedAssignment(focusedAssignmentTitle)
+      : snapshot && courseName
+        ? t.courseChatCourseContext(courseName)
+        : null;
 
   return (
     <aside className="flex h-auto max-h-[45vh] w-full shrink-0 flex-col gap-3 overflow-hidden border-t border-border bg-background p-4 lg:fixed lg:inset-y-0 lg:right-0 lg:z-30 lg:h-screen lg:max-h-none lg:w-[calc(var(--spacing)*100)] lg:border-l lg:border-t-0">
@@ -145,7 +146,9 @@ export function CourseChatSidebar({
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 space-y-1">
             <p className="text-sm font-semibold leading-tight">{t.courseChatTitle}</p>
-            <p className="text-xs text-muted-foreground">{t.courseChatDescription}</p>
+            {contextLabel && (
+              <p className="text-xs text-muted-foreground">{contextLabel}</p>
+            )}
           </div>
           {onRefreshCourse && (
             <Button
@@ -161,19 +164,6 @@ export function CourseChatSidebar({
             </Button>
           )}
         </div>
-        {extractedLabel && (
-          <p className="text-[11px] text-muted-foreground">{extractedLabel}</p>
-        )}
-        {focusedStudentName && (
-          <p className="text-xs text-muted-foreground">
-            {t.courseChatFocusedStudent(focusedStudentName)}
-          </p>
-        )}
-        {focusedAssignmentTitle && (
-          <p className="text-xs text-muted-foreground">
-            {t.courseChatFocusedAssignment(focusedAssignmentTitle)}
-          </p>
-        )}
       </div>
 
       <div className="min-h-0 flex-1 space-y-4 overflow-y-auto rounded-lg border border-border bg-muted/20 p-3">

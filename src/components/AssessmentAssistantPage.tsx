@@ -3,13 +3,14 @@
 import * as React from "react";
 import { AlertCircle, ArrowLeft, ChevronDown, ChevronUp, ExternalLink, Loader2, Paperclip } from "lucide-react";
 
+import { CourseMaterialsAccordion } from "@/components/CourseMaterialsAccordion";
 import { CourseChatSidebar } from "@/components/CourseChatSidebar";
 import { CourseStudentsAccordion } from "@/components/CourseStudentsAccordion";
 import { AssessmentAssistantSidebar } from "@/components/AssessmentAssistantSidebar";
 import { StudentDetailView } from "@/components/StudentDetailView";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getErrorMessage } from "@/lib/apiClient";
 import { ASSESSMENT_TEXT } from "@/lib/i18n";
 import { useAppLanguage } from "@/lib/useAppLanguage";
@@ -76,7 +77,6 @@ export function AssessmentAssistantPage() {
     null,
   );
   const [selectedStudent, setSelectedStudent] = React.useState<CourseSnapshotStudent | null>(null);
-  const [assignmentFilter, setAssignmentFilter] = React.useState<"ungraded" | "graded">("ungraded");
   const [locallyDisconnected, setLocallyDisconnected] = React.useState(false);
 
   const refreshSession = React.useCallback(async () => {
@@ -253,7 +253,6 @@ export function AssessmentAssistantPage() {
     setSelectedStudent(null);
     setSelectedAssignment(null);
     setAssessment(null);
-    setAssignmentFilter("ungraded");
     void loadCourseMaterials(course);
   }
 
@@ -282,10 +281,6 @@ export function AssessmentAssistantPage() {
       return;
     }
     void loadAssignment({ id: assignmentId, title, url: "", isFullyGraded: false }, selectedCourse);
-  }
-
-  function matchesAssignmentFilter(isFullyGraded: boolean): boolean {
-    return assignmentFilter === "graded" ? isFullyGraded : !isFullyGraded;
   }
 
   function handleSelectAssignment(assignment: SchoologyAssignmentSummary) {
@@ -319,9 +314,8 @@ export function AssessmentAssistantPage() {
 
       <main className="min-h-screen min-w-0 px-5 py-8 lg:ml-[calc(var(--spacing)*100)] lg:mr-[calc(var(--spacing)*100)]">
         <div className="mx-auto max-w-5xl space-y-6">
-          <header className="space-y-2">
+          <header>
             <h1 className="text-2xl font-semibold tracking-tight">{t.pageTitle}</h1>
-            <p className="max-w-2xl text-sm text-muted-foreground">{t.pageDescription}</p>
           </header>
 
           {!selectedCourse ? (
@@ -353,90 +347,17 @@ export function AssessmentAssistantPage() {
             />
           ) : (
             <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div className="space-y-1">
-                    <CardTitle className="text-base">{t.courseMaterialsTitle}</CardTitle>
-                    <CardDescription>{selectedCourse.name}</CardDescription>
-                  </div>
-                  <div className="inline-flex rounded-md border border-border p-0.5">
-                    <button
-                        type="button"
-                        className={cn(
-                          "rounded px-2.5 py-1 text-xs font-medium transition-colors",
-                          assignmentFilter === "ungraded"
-                            ? "bg-primary text-primary-foreground"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                        onClick={() => setAssignmentFilter("ungraded")}
-                      >
-                      {t.assignmentFilterUngraded}
-                    </button>
-                    <button
-                        type="button"
-                        className={cn(
-                          "rounded px-2.5 py-1 text-xs font-medium transition-colors",
-                          assignmentFilter === "graded"
-                            ? "bg-primary text-primary-foreground"
-                            : "text-muted-foreground hover:text-foreground",
-                        )}
-                        onClick={() => setAssignmentFilter("graded")}
-                      >
-                      {t.assignmentFilterGraded}
-                    </button>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {materialsLoading ? (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    {t.courseMaterialsLoading}
-                  </div>
-                ) : materialsError ? (
-                  <p className="text-sm text-destructive">{materialsError}</p>
-                ) : courseMaterials ? (
-                  (() => {
-                    const allAssignments = courseMaterials.groups.flatMap((group) => group.assignments);
-                    const filteredAssignments = allAssignments.filter((assignment) =>
-                      matchesAssignmentFilter(assignment.isFullyGraded),
-                    );
+              <CourseMaterialsAccordion
+                key={selectedCourse.id}
+                language={language}
+                courseName={selectedCourse.name}
+                materials={courseMaterials}
+                loading={materialsLoading}
+                error={materialsError}
+                onSelectAssignment={handleSelectAssignment}
+              />
 
-                    return (
-                      <div className="space-y-3">
-                        {filteredAssignments.length === 0 ? (
-                          <p className="text-sm text-muted-foreground">
-                            {allAssignments.length === 0
-                              ? t.noAssignmentsInPeriod
-                              : t.noAssignmentsForFilter}
-                          </p>
-                        ) : (
-                          <ul className="divide-y divide-border rounded-lg border border-border">
-                            {filteredAssignments.map((assignment) => (
-                              <li key={assignment.id}>
-                                <button
-                                  type="button"
-                                  onClick={() => handleSelectAssignment(assignment)}
-                                  className="w-full px-3 py-2.5 text-left transition-colors hover:bg-accent"
-                                >
-                                  <p className="text-sm font-medium">{assignment.title}</p>
-                                  <p className="mt-0.5 text-xs text-muted-foreground">
-                                    ID {assignment.id}
-                                  </p>
-                                </button>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </div>
-                    );
-                  })()
-                ) : null}
-              </CardContent>
-            </Card>
-
-            <CourseStudentsAccordion
+              <CourseStudentsAccordion
               language={language}
               snapshot={courseMaterials?.snapshot ?? null}
               loading={materialsLoading}
@@ -464,6 +385,7 @@ export function AssessmentAssistantPage() {
         focusedAssignmentId={selectedAssignment?.id}
         focusedAssignmentTitle={selectedAssignment?.title ?? assessment?.title}
         focusedStudentName={selectedStudent?.name}
+        focusedStudentUid={selectedStudent?.uid}
         materialsLoading={materialsLoading}
         onRefreshCourse={
           selectedCourse ? () => void loadCourseMaterials(selectedCourse) : undefined
