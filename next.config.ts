@@ -28,6 +28,7 @@ const nextConfig: NextConfig = {
       "./node_modules/pdfjs-dist/legacy/build/pdf.worker.mjs",
       "./node_modules/pdfjs-dist/legacy/build/pdf.worker.min.mjs",
     ],
+    "/api/assessment-assistant/chat": ["./data/documents/**/*"],
     "/api/interdisciplinary": ["./data/plans/**/*", "./data/documents/**/*"],
     "/api/lesson-map": ["./data/plans/**/*"],
     "/api/parse": [

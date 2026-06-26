@@ -314,6 +314,17 @@ export const ASSESSMENT_TEXT = {
     noAssignmentsForFilter: "No assignments match this filter.",
     assignmentFilterUngraded: "Needs grading",
     assignmentFilterGraded: "Graded",
+    assignmentChatTitle: "Assignment assistant",
+    assignmentChatDescription:
+      "Ask about this assignment. Context includes Schoology details, BNCC, and the Massachusetts Curriculum Framework.",
+    assignmentChatEmpty:
+      "Ask for grading help, rubric guidance, feedback ideas, or curriculum-aligned suggestions for this assignment.",
+    assignmentChatPlaceholder: "Ask about this assignment…",
+    assignmentChatSend: "Send",
+    assignmentChatSending: "Sending…",
+    assignmentChatThinking: "Thinking…",
+    assignmentChatFailed: "Failed to get a response.",
+    assignmentChatStreamError: "No response stream received. Restart the dev server and try again.",
   },
   "pt-BR": {
     pageTitle: "Assistente de Avaliação",
@@ -399,6 +410,18 @@ export const ASSESSMENT_TEXT = {
     noAssignmentsForFilter: "Nenhuma tarefa corresponde a este filtro.",
     assignmentFilterUngraded: "Para avaliar",
     assignmentFilterGraded: "Avaliadas",
+    assignmentChatTitle: "Assistente da tarefa",
+    assignmentChatDescription:
+      "Pergunte sobre esta tarefa. O contexto inclui detalhes do Schoology, BNCC e Massachusetts Curriculum Framework.",
+    assignmentChatEmpty:
+      "Peça ajuda com notas, rubrica, feedback ou sugestões alinhadas ao currículo para esta tarefa.",
+    assignmentChatPlaceholder: "Pergunte sobre esta tarefa…",
+    assignmentChatSend: "Enviar",
+    assignmentChatSending: "Enviando…",
+    assignmentChatThinking: "Pensando…",
+    assignmentChatFailed: "Falha ao obter resposta.",
+    assignmentChatStreamError:
+      "Nenhum fluxo de resposta recebido. Reinicie o servidor de desenvolvimento e tente novamente.",
   },
 } as const;
 
