@@ -325,6 +325,22 @@ export const ASSESSMENT_TEXT = {
     assignmentChatThinking: "Thinking…",
     assignmentChatFailed: "Failed to get a response.",
     assignmentChatStreamError: "No response stream received. Restart the dev server and try again.",
+    courseChatTitle: "Course assistant",
+    courseChatDescription:
+      "Ask about the whole course. Answers use gradebook analytics plus BNCC and Massachusetts framework docs.",
+    courseChatEmpty:
+      "Try: “Which students are missing more than 3 activities?” or “How is Maria doing on quizzes?”",
+    courseChatPlaceholder: "Ask about this course…",
+    courseChatSend: "Send",
+    courseChatSending: "Sending…",
+    courseChatThinking: "Thinking…",
+    courseChatFailed: "Failed to get a response.",
+    courseChatStreamError: "No response stream received. Restart the dev server and try again.",
+    courseChatSelectCourse: "Select a course to start chatting.",
+    courseChatLoadingData: "Loading course data…",
+    courseChatRefresh: "Refresh course data",
+    courseChatDataUpdated: (date: string) => `Course data: ${date}`,
+    courseChatFocusedAssignment: (title: string) => `Viewing: ${title}`,
   },
   "pt-BR": {
     pageTitle: "Assistente de Avaliação",
@@ -422,6 +438,23 @@ export const ASSESSMENT_TEXT = {
     assignmentChatFailed: "Falha ao obter resposta.",
     assignmentChatStreamError:
       "Nenhum fluxo de resposta recebido. Reinicie o servidor de desenvolvimento e tente novamente.",
+    courseChatTitle: "Assistente do curso",
+    courseChatDescription:
+      "Pergunte sobre o curso inteiro. As respostas usam análises do boletim, BNCC e Massachusetts Curriculum Framework.",
+    courseChatEmpty:
+      "Experimente: “Quais alunos estão com mais de 3 atividades em falta?” ou “Como está a Maria nas provas?”",
+    courseChatPlaceholder: "Pergunte sobre este curso…",
+    courseChatSend: "Enviar",
+    courseChatSending: "Enviando…",
+    courseChatThinking: "Pensando…",
+    courseChatFailed: "Falha ao obter resposta.",
+    courseChatStreamError:
+      "Nenhum fluxo de resposta recebido. Reinicie o servidor de desenvolvimento e tente novamente.",
+    courseChatSelectCourse: "Selecione um curso para conversar.",
+    courseChatLoadingData: "Carregando dados do curso…",
+    courseChatRefresh: "Atualizar dados do curso",
+    courseChatDataUpdated: (date: string) => `Dados do curso: ${date}`,
+    courseChatFocusedAssignment: (title: string) => `Visualizando: ${title}`,
   },
 } as const;
 

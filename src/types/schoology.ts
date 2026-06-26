@@ -27,12 +27,53 @@ export type SchoologyGradingPeriodGroup = {
   assignments: SchoologyAssignmentSummary[];
 };
 
+export type CourseSnapshotStudent = {
+  uid: string;
+  name: string;
+};
+
+export type CourseSnapshotAssignment = {
+  id: string;
+  title: string;
+  categoryName: string;
+  maxPoints?: number;
+  dueDate?: string;
+};
+
+export type CourseSnapshotSubmissionStatus =
+  | "missing"
+  | "submitted"
+  | "late"
+  | "excused"
+  | "incomplete"
+  | "graded";
+
+export type CourseSnapshotCell = {
+  studentUid: string;
+  assignmentId: string;
+  status: CourseSnapshotSubmissionStatus;
+  scorePercent?: number;
+  gradeLetter?: string;
+  scoreDisplay?: string;
+};
+
+export type CourseSnapshot = {
+  sectionId: string;
+  courseName?: string;
+  extractedAt: string;
+  students: CourseSnapshotStudent[];
+  assignments: CourseSnapshotAssignment[];
+  cells: CourseSnapshotCell[];
+  categories: string[];
+};
+
 export type SchoologyCourseMaterialsResult = {
   sectionId: string;
   courseName?: string;
   gradingPeriods: string[];
   groups: SchoologyGradingPeriodGroup[];
   extractedAt: string;
+  snapshot: CourseSnapshot;
 };
 
 export type SchoologyMaterialType = "assignment" | "test";

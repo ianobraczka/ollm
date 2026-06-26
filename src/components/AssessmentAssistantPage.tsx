@@ -3,13 +3,13 @@
 import * as React from "react";
 import { AlertCircle, ArrowLeft, ChevronDown, ChevronUp, ExternalLink, Loader2, Paperclip } from "lucide-react";
 
-import { AssignmentChatPanel } from "@/components/AssignmentChatPanel";
+import { CourseChatSidebar } from "@/components/CourseChatSidebar";
 import { AssessmentAssistantSidebar } from "@/components/AssessmentAssistantSidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getErrorMessage } from "@/lib/apiClient";
-import { ASSESSMENT_TEXT, type AppLanguage } from "@/lib/i18n";
+import { ASSESSMENT_TEXT } from "@/lib/i18n";
 import { useAppLanguage } from "@/lib/useAppLanguage";
 import { cn } from "@/lib/utils";
 import type {
@@ -285,7 +285,7 @@ export function AssessmentAssistantPage() {
         actionsDisabled={retrieveLoading}
       />
 
-      <main className="min-h-screen min-w-0 px-5 py-8 lg:ml-[calc(var(--spacing)*100)]">
+      <main className="min-h-screen min-w-0 px-5 py-8 lg:ml-[calc(var(--spacing)*100)] lg:mr-[calc(var(--spacing)*100)]">
         <div className="mx-auto max-w-5xl space-y-6">
           <header className="space-y-2">
             <h1 className="text-2xl font-semibold tracking-tight">{t.pageTitle}</h1>
@@ -305,7 +305,6 @@ export function AssessmentAssistantPage() {
               courseName={selectedCourse.name}
               error={error}
               loading={retrieveLoading}
-              language={language}
               locale={locale}
               onBack={handleBackToAssignments}
               t={t}
@@ -405,6 +404,19 @@ export function AssessmentAssistantPage() {
           )}
         </div>
       </main>
+
+      <CourseChatSidebar
+        language={language}
+        snapshot={courseMaterials?.snapshot ?? null}
+        courseName={selectedCourse?.name ?? ""}
+        focusedAssignmentId={selectedAssignment?.id}
+        focusedAssignmentTitle={selectedAssignment?.title ?? assessment?.title}
+        materialsLoading={materialsLoading}
+        onRefreshCourse={
+          selectedCourse ? () => void loadCourseMaterials(selectedCourse) : undefined
+        }
+        refreshDisabled={retrieveLoading}
+      />
     </div>
   );
 }
@@ -415,7 +427,6 @@ function AssignmentDetailView({
   courseName,
   error,
   loading,
-  language,
   locale,
   onBack,
   t,
@@ -425,7 +436,6 @@ function AssignmentDetailView({
   courseName: string;
   error: string | null;
   loading: boolean;
-  language: AppLanguage;
   locale: string;
   onBack: () => void;
   t: (typeof ASSESSMENT_TEXT)[keyof typeof ASSESSMENT_TEXT];
@@ -552,11 +562,6 @@ function AssignmentDetailView({
             )}
           </Card>
 
-          <AssignmentChatPanel
-            language={language}
-            assessment={assessment}
-            courseName={courseName}
-          />
         </>
       ) : null}
     </div>

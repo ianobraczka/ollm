@@ -5,6 +5,8 @@ import {
 } from "@/lib/schoology/apiClient";
 import { getSchoologyAppConfig, SCHOOLOGY_WEB_DOMAIN_DEFAULT } from "@/lib/schoology/config";
 import type {
+  CourseSnapshot,
+  CourseSnapshotCell,
   SchoologyAssignmentSummary,
   SchoologyCourseMaterialsResult,
   SchoologyGradingPeriodGroup,
@@ -33,6 +35,8 @@ type AssignmentRecord = {
   grading_category?: string | number;
   grading_period?: string | number;
   grade_item_id?: string | number;
+  max_points?: string | number;
+  due?: string;
 };
 
 type AssignmentsResponse = {
@@ -42,6 +46,9 @@ type AssignmentsResponse = {
 type EnrollmentRecord = {
   id?: string | number;
   uid?: string | number;
+  name_display?: string;
+  name_first?: string;
+  name_last?: string;
 };
 
 type EnrollmentResponse = {
@@ -53,6 +60,7 @@ type GradeRow = {
   assignment_id?: string | number;
   grade?: string | number | null;
   exception?: number;
+  max_points?: string | number;
 };
 
 type GradesResponse = {
@@ -64,6 +72,8 @@ type GradesResponse = {
 type SubmissionRevision = {
   uid?: string | number;
   draft?: number;
+  late?: number;
+  created?: number;
 };
 
 type SubmissionsResponse = {
@@ -135,13 +145,171 @@ function buildGradesByAssignment(allGrades: GradeRow[]): Map<string, Map<string,
   return gradesByAssignment;
 }
 
-async function resolveTeacherGradingStatus(
+type StudentSubmissionState = {
+  submitted: boolean;
+  late: boolean;
+};
+
+function isLetterGrade(value: string): boolean {
+  return /^[A-F][+-]?$/i.test(value.trim());
+}
+
+function parseNumericGrade(value: string | number | null | undefined): number | undefined {
+  if (value == null || value === "") {
+    return undefined;
+  }
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+function formatEnrollmentName(enrollment: EnrollmentRecord): string {
+  return (
+    enrollment.name_display?.trim() ||
+    [enrollment.name_first, enrollment.name_last].filter(Boolean).join(" ").trim() ||
+    (enrollment.uid != null ? `Student ${enrollment.uid}` : "Unknown student")
+  );
+}
+
+function deriveCellStatus(args: {
+  submission?: StudentSubmissionState;
+  gradeRow?: GradeRow;
+  assignmentMaxPoints?: number;
+}): Pick<CourseSnapshotCell, "status" | "scorePercent" | "gradeLetter" | "scoreDisplay"> {
+  const { submission, gradeRow, assignmentMaxPoints } = args;
+
+  if (gradeRow?.exception === 1) {
+    return { status: "excused", scoreDisplay: "Excused" };
+  }
+
+  if (gradeRow?.exception === 2) {
+    return { status: "incomplete", scoreDisplay: "Incomplete" };
+  }
+
+  if (gradeRow?.exception === 3) {
+    return { status: "missing" };
+  }
+
+  const rawGrade = gradeRow?.grade;
+  if (rawGrade != null && rawGrade !== "") {
+    const rawGradeString = String(rawGrade).trim();
+    if (isLetterGrade(rawGradeString)) {
+      return {
+        status: "graded",
+        gradeLetter: rawGradeString.toUpperCase(),
+        scoreDisplay: rawGradeString.toUpperCase(),
+      };
+    }
+
+    const points = parseNumericGrade(rawGrade);
+    const maxPoints =
+      parseNumericGrade(gradeRow?.max_points) ?? assignmentMaxPoints ?? points;
+    if (points != null && maxPoints != null && maxPoints > 0) {
+      const scorePercent = Math.round((points / maxPoints) * 1000) / 10;
+      return {
+        status: "graded",
+        scorePercent,
+        scoreDisplay: `${points}/${maxPoints}`,
+      };
+    }
+
+    if (points != null) {
+      return {
+        status: "graded",
+        scoreDisplay: String(points),
+      };
+    }
+  }
+
+  if (submission?.submitted) {
+    return {
+      status: submission.late ? "late" : "submitted",
+    };
+  }
+
+  return { status: "missing" };
+}
+
+function buildCourseSnapshot(args: {
+  sectionId: string;
+  courseName?: string;
+  extractedAt: string;
+  enrollments: EnrollmentRecord[];
+  enrollmentIdByUid: Map<string, string>;
+  gradebookAssignments: AssignmentRecord[];
+  categoryNames: Map<string, string>;
+  gradesByAssignment: Map<string, Map<string, GradeRow>>;
+  submissionsByAssignment: Map<string, Map<string, StudentSubmissionState>>;
+}): CourseSnapshot {
+  const students = args.enrollments
+    .filter((enrollment) => enrollment.uid != null)
+    .map((enrollment) => ({
+      uid: String(enrollment.uid),
+      name: formatEnrollmentName(enrollment),
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const assignments = args.gradebookAssignments.map((assignment) => {
+    const categoryId = String(assignment.grading_category ?? "0");
+    const maxPoints = parseNumericGrade(assignment.max_points);
+    return {
+      id: String(assignment.id),
+      title: assignment.title!.trim(),
+      categoryName: args.categoryNames.get(categoryId) || "Uncategorized",
+      ...(maxPoints != null ? { maxPoints } : {}),
+      ...(assignment.due?.trim() ? { dueDate: assignment.due.trim() } : {}),
+    };
+  });
+
+  const categories = [...new Set(assignments.map((assignment) => assignment.categoryName))].sort(
+    (a, b) => a.localeCompare(b),
+  );
+
+  const cells: CourseSnapshotCell[] = [];
+
+  for (const student of students) {
+    const enrollmentId = args.enrollmentIdByUid.get(student.uid);
+
+    for (const assignment of args.gradebookAssignments) {
+      const assignmentId = String(assignment.id);
+      const submission = args.submissionsByAssignment
+        .get(assignmentId)
+        ?.get(student.uid);
+      const gradeRow = enrollmentId
+        ? args.gradesByAssignment.get(assignmentId)?.get(enrollmentId)
+        : undefined;
+      const assignmentMaxPoints = parseNumericGrade(assignment.max_points);
+      const derived = deriveCellStatus({ submission, gradeRow, assignmentMaxPoints });
+
+      cells.push({
+        studentUid: student.uid,
+        assignmentId,
+        ...derived,
+      });
+    }
+  }
+
+  return {
+    sectionId: args.sectionId,
+    courseName: args.courseName,
+    extractedAt: args.extractedAt,
+    students,
+    assignments,
+    cells,
+    categories,
+  };
+}
+
+async function resolveAssignmentSubmissionData(
   sectionId: string,
   assignments: AssignmentRecord[],
   enrollmentIdByUid: Map<string, string>,
   gradesByAssignment: Map<string, Map<string, GradeRow>>,
-): Promise<Map<string, boolean>> {
-  const statusByAssignment = new Map<string, boolean>();
+): Promise<{
+  gradingStatus: Map<string, boolean>;
+  submissionsByAssignment: Map<string, Map<string, StudentSubmissionState>>;
+}> {
+  const gradingStatus = new Map<string, boolean>();
+  const submissionsByAssignment = new Map<string, Map<string, StudentSubmissionState>>();
 
   await Promise.all(
     assignments.map(async (assignment) => {
@@ -155,23 +323,46 @@ async function resolveTeacherGradingStatus(
         `/sections/${sectionId}/submissions/${gradeItemId}`,
       );
 
-      const submitterUids = new Set<string>();
+      const submitterStates = new Map<string, StudentSubmissionState>();
+      const latestRevision = new Map<string, { late: boolean; created: number }>();
+
       for (const revision of normalizeApiArray(submissions?.revision)) {
         if (revision.draft || revision.uid == null) {
           continue;
         }
-        submitterUids.add(String(revision.uid));
+
+        const uid = String(revision.uid);
+        const created = revision.created ?? 0;
+        const existing = latestRevision.get(uid);
+
+        if (existing && created <= existing.created) {
+          continue;
+        }
+
+        latestRevision.set(uid, {
+          late: revision.late === 1,
+          created,
+        });
       }
 
-      if (submitterUids.size === 0) {
-        statusByAssignment.set(assignmentId, true);
+      for (const [uid, state] of latestRevision.entries()) {
+        submitterStates.set(uid, {
+          submitted: true,
+          late: state.late,
+        });
+      }
+
+      submissionsByAssignment.set(assignmentId, submitterStates);
+
+      if (submitterStates.size === 0) {
+        gradingStatus.set(assignmentId, true);
         return;
       }
 
       const assignmentGrades = gradesByAssignment.get(assignmentId);
       let allGraded = true;
 
-      for (const uid of submitterUids) {
+      for (const uid of submitterStates.keys()) {
         const enrollmentId = enrollmentIdByUid.get(uid);
         if (!enrollmentId) {
           allGraded = false;
@@ -185,11 +376,11 @@ async function resolveTeacherGradingStatus(
         }
       }
 
-      statusByAssignment.set(assignmentId, allGraded);
+      gradingStatus.set(assignmentId, allGraded);
     }),
   );
 
-  return statusByAssignment;
+  return { gradingStatus, submissionsByAssignment };
 }
 
 export async function fetchCourseMaterials(
@@ -235,7 +426,7 @@ export async function fetchCourseMaterials(
   const { enrollmentIdByUid } = buildEnrollmentUidMaps(enrollments);
   const allGrades = normalizeApiArray<GradeRow>(gradesData.grades?.grade);
   const gradesByAssignment = buildGradesByAssignment(allGrades);
-  const gradingStatus = await resolveTeacherGradingStatus(
+  const { gradingStatus, submissionsByAssignment } = await resolveAssignmentSubmissionData(
     trimmedSectionId,
     gradebookAssignments,
     enrollmentIdByUid,
@@ -312,11 +503,25 @@ export async function fetchCourseMaterials(
       ? `${courseTitle} — ${sectionTitle}`
       : courseTitle || sectionTitle;
 
+  const extractedAt = new Date().toISOString();
+  const snapshot = buildCourseSnapshot({
+    sectionId: trimmedSectionId,
+    courseName,
+    extractedAt,
+    enrollments,
+    enrollmentIdByUid,
+    gradebookAssignments,
+    categoryNames,
+    gradesByAssignment,
+    submissionsByAssignment,
+  });
+
   return {
     sectionId: trimmedSectionId,
     courseName,
     gradingPeriods: gradingPeriodTitles,
     groups,
-    extractedAt: new Date().toISOString(),
+    extractedAt,
+    snapshot,
   };
 }
