@@ -1,10 +1,15 @@
 import type { CourseQuestionClassification } from "@/lib/classifyCourseQuestion";
+import { filterAssignmentsByTopic } from "@/lib/topicMatching";
 import type {
   CourseSnapshot,
   CourseSnapshotAssignment,
   CourseSnapshotCell,
   CourseSnapshotSubmissionStatus,
 } from "@/types/schoology";
+
+export type BuildCourseAnalyticsOptions = {
+  topicAssignmentIds?: string[];
+};
 
 export type CourseAnalyticsResult = {
   intent: string;
@@ -107,25 +112,6 @@ function computeStudentStats(
   });
 }
 
-function filterAssignmentsByTopic(
-  assignments: CourseSnapshotAssignment[],
-  topic: string,
-): CourseSnapshotAssignment[] {
-  const tokens = topic
-    .toLowerCase()
-    .split(/\s+/)
-    .filter((token) => token.length >= 3);
-
-  if (tokens.length === 0) {
-    return [];
-  }
-
-  return assignments.filter((assignment) => {
-    const haystack = assignment.title.toLowerCase();
-    return tokens.some((token) => haystack.includes(token));
-  });
-}
-
 function averageForAssignments(
   studentUid: string,
   assignments: CourseSnapshotAssignment[],
@@ -218,6 +204,7 @@ function buildStudentProfile(
   studentUid: string,
   categoryName?: string,
   topic?: string,
+  topicAssignmentIds?: string[],
 ) {
   const student = snapshot.students.find((entry) => entry.uid === studentUid);
   if (!student) {
@@ -243,9 +230,15 @@ function buildStudentProfile(
     : snapshot.assignments;
 
   if (topic) {
-    const topicMatches = filterAssignmentsByTopic(scopedAssignments, topic);
-    if (topicMatches.length > 0) {
-      scopedAssignments = topicMatches;
+    if (topicAssignmentIds && topicAssignmentIds.length > 0) {
+      scopedAssignments = scopedAssignments.filter((assignment) =>
+        topicAssignmentIds.includes(assignment.id),
+      );
+    } else {
+      const topicMatches = filterAssignmentsByTopic(scopedAssignments, topic);
+      if (topicMatches.length > 0) {
+        scopedAssignments = topicMatches;
+      }
     }
   }
 
@@ -293,6 +286,15 @@ function buildStudentProfile(
     })
     .map((category) => category.categoryName);
 
+  const topicScores = assignmentBreakdown
+    .map((entry) => entry.scorePercent)
+    .filter((score): score is number => score != null);
+  const topicAverageScorePercent =
+    topic && topicScores.length > 0
+      ? Math.round((topicScores.reduce((sum, score) => sum + score, 0) / topicScores.length) * 10) /
+        10
+      : undefined;
+
   return {
     studentUid: student.uid,
     studentName: student.name,
@@ -303,13 +305,21 @@ function buildStudentProfile(
     missingAssignments,
     focusedCategory: categoryName,
     focusedTopic: topic,
+    topicAssignments: topic ? assignmentBreakdown : undefined,
+    topicAverageScorePercent: topic ? topicAverageScorePercent : undefined,
+    topicGradedCount: topic ? topicScores.length : undefined,
+    topicMissingCount: topic
+      ? assignmentBreakdown.filter((entry) => entry.status === "missing").length
+      : undefined,
   };
 }
 
 export function buildCourseAnalytics(
   snapshot: CourseSnapshot,
   classification: CourseQuestionClassification,
+  options: BuildCourseAnalyticsOptions = {},
 ): CourseAnalyticsResult {
+  const { topicAssignmentIds } = options;
   const cellMap = buildCellMap(snapshot.cells);
   const studentStats = computeStudentStats(snapshot, cellMap);
   const notes: string[] = [
@@ -370,6 +380,7 @@ export function buildCourseAnalytics(
           classification.studentUid,
           classification.categoryName,
           classification.topic,
+          topicAssignmentIds,
         ),
       };
     }
@@ -394,7 +405,10 @@ export function buildCourseAnalytics(
 
     case "topic_performance": {
       const topic = classification.topic ?? "";
-      const matchedAssignments = filterAssignmentsByTopic(snapshot.assignments, topic);
+      const matchedAssignments =
+        topicAssignmentIds && topicAssignmentIds.length > 0
+          ? snapshot.assignments.filter((assignment) => topicAssignmentIds.includes(assignment.id))
+          : filterAssignmentsByTopic(snapshot.assignments, topic);
 
       if (matchedAssignments.length === 0) {
         return {
@@ -471,6 +485,7 @@ export function buildCourseAnalytics(
             classification.studentUid,
             classification.categoryName,
             classification.topic,
+            topicAssignmentIds,
           ),
         };
       }

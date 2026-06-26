@@ -1,6 +1,7 @@
 import { fetchAssignmentApiDetails } from "@/lib/schoology/assignmentSubmissions";
 import { fetchAssignmentRubric } from "@/lib/schoology/assignmentRubric";
 import type { CourseQuestionClassification } from "@/lib/classifyCourseQuestion";
+import { filterAssignmentsByTopic } from "@/lib/topicMatching";
 import type { CourseSnapshot, CourseSnapshotAssignment } from "@/types/schoology";
 
 const MAX_ASSIGNMENTS = 8;
@@ -14,25 +15,6 @@ export function shouldLoadAssignmentMetadata(
     classification.intent === "topic_performance" ||
     classification.intent === "category_performance"
   );
-}
-
-function filterAssignmentsByTopic(
-  assignments: CourseSnapshotAssignment[],
-  topic: string,
-): CourseSnapshotAssignment[] {
-  const tokens = topic
-    .toLowerCase()
-    .split(/\s+/)
-    .filter((token) => token.length >= 3);
-
-  if (tokens.length === 0) {
-    return [];
-  }
-
-  return assignments.filter((assignment) => {
-    const haystack = assignment.title.toLowerCase();
-    return tokens.some((token) => haystack.includes(token));
-  });
 }
 
 function getLowestScoredAssignmentIds(
@@ -67,6 +49,7 @@ export function selectAssignmentIdsForMetadata(
   options: {
     focusedStudentUid?: string;
     focusedAssignmentId?: string;
+    topicAssignmentIds?: string[];
   } = {},
 ): string[] {
   const selected: string[] = [];
@@ -82,6 +65,13 @@ export function selectAssignmentIdsForMetadata(
 
   if (options.focusedAssignmentId) {
     add(options.focusedAssignmentId);
+  }
+
+  if (options.topicAssignmentIds && options.topicAssignmentIds.length > 0) {
+    for (const assignmentId of options.topicAssignmentIds) {
+      add(assignmentId);
+    }
+    return selected;
   }
 
   const studentUid = classification.studentUid ?? options.focusedStudentUid;
@@ -144,9 +134,12 @@ function formatRubricSummary(
 async function loadOneAssignmentMetadata(
   sectionId: string,
   assignment: CourseSnapshotAssignment,
+  prefetchedDescription?: string,
 ): Promise<string> {
   const [details, rubric] = await Promise.all([
-    fetchAssignmentApiDetails(sectionId, assignment.id).catch(() => null),
+    prefetchedDescription !== undefined
+      ? Promise.resolve({ description: prefetchedDescription })
+      : fetchAssignmentApiDetails(sectionId, assignment.id).catch(() => null),
     fetchAssignmentRubric(sectionId, assignment.id).catch(() => null),
   ]);
 
@@ -170,6 +163,7 @@ export async function loadCourseAssignmentMetadata(
   sectionId: string,
   snapshot: CourseSnapshot,
   assignmentIds: string[],
+  prefetchedDescriptions?: Map<string, string>,
 ): Promise<string> {
   if (assignmentIds.length === 0) {
     return "";
@@ -180,7 +174,13 @@ export async function loadCourseAssignmentMetadata(
     .filter((assignment): assignment is CourseSnapshotAssignment => assignment != null);
 
   const blocks = await Promise.all(
-    assignments.map((assignment) => loadOneAssignmentMetadata(sectionId, assignment)),
+    assignments.map((assignment) =>
+      loadOneAssignmentMetadata(
+        sectionId,
+        assignment,
+        prefetchedDescriptions?.get(assignment.id),
+      ),
+    ),
   );
 
   return blocks.join("\n\n");

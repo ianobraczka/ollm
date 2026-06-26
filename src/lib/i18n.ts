@@ -232,8 +232,6 @@ export const LESSON_MAP_TEXT = {
 export const ASSESSMENT_TEXT = {
   en: {
     pageTitle: "Assessment Assistant",
-    pageDescription:
-      "Browse Schoology courses and assignments via the REST API. The server signs requests with your API credentials — no browser login, Playwright, or page scraping.",
     sessionNotLoggedIn: "Not connected",
     sessionSaved: "Schoology",
     sessionSavedAt: (date: string) => `Verified ${date}`,
@@ -306,6 +304,8 @@ export const ASSESSMENT_TEXT = {
     selectedCourse: "Selected course",
     selectCourseHint: "Select a course in the sidebar to view grading periods and assignments.",
     courseMaterialsTitle: "Course materials",
+    courseMaterialsCount: (count: number, courseName: string) =>
+      `${count} assignment${count === 1 ? "" : "s"} · ${courseName}`,
     courseMaterialsLoading: "Loading assignments…",
     courseMaterialsFailed: "Failed to load course materials.",
     gradingPeriodAssignments: (count: number) =>
@@ -326,8 +326,6 @@ export const ASSESSMENT_TEXT = {
     assignmentChatFailed: "Failed to get a response.",
     assignmentChatStreamError: "No response stream received. Restart the dev server and try again.",
     courseChatTitle: "Course assistant",
-    courseChatDescription:
-      "Ask about the whole course. Answers use gradebook analytics plus BNCC and Massachusetts framework docs.",
     courseChatEmpty:
       "Try: “Which students are missing more than 3 activities?” or “How is Maria doing on quizzes?”",
     courseChatPlaceholder: "Ask about this course…",
@@ -339,8 +337,8 @@ export const ASSESSMENT_TEXT = {
     courseChatSelectCourse: "Select a course to start chatting.",
     courseChatLoadingData: "Loading course data…",
     courseChatRefresh: "Refresh course data",
-    courseChatDataUpdated: (date: string) => `Course data: ${date}`,
-    courseChatFocusedAssignment: (title: string) => `Viewing: ${title}`,
+    courseChatCourseContext: (name: string) => `Course: ${name}`,
+    courseChatFocusedAssignment: (title: string) => `Assignment: ${title}`,
     courseChatFocusedStudent: (name: string) => `Student: ${name}`,
     courseStudentsTitle: "Students",
     courseStudentsDescription: "Enrolled students in this course section.",
@@ -373,8 +371,6 @@ export const ASSESSMENT_TEXT = {
   },
   "pt-BR": {
     pageTitle: "Assistente de Avaliação",
-    pageDescription:
-      "Navegue pelos cursos e tarefas do Schoology via API REST. O servidor assina as requisições com suas credenciais — sem login no navegador, Playwright ou extração de páginas.",
     sessionNotLoggedIn: "Não conectado",
     sessionSaved: "Schoology",
     sessionSavedAt: (date: string) => `Verificada em ${date}`,
@@ -447,6 +443,8 @@ export const ASSESSMENT_TEXT = {
     selectedCourse: "Curso selecionado",
     selectCourseHint: "Selecione um curso na barra lateral para ver períodos de avaliação e tarefas.",
     courseMaterialsTitle: "Materiais do curso",
+    courseMaterialsCount: (count: number, courseName: string) =>
+      `${count} tarefa${count === 1 ? "" : "s"} · ${courseName}`,
     courseMaterialsLoading: "Carregando tarefas…",
     courseMaterialsFailed: "Falha ao carregar materiais do curso.",
     gradingPeriodAssignments: (count: number) =>
@@ -468,8 +466,6 @@ export const ASSESSMENT_TEXT = {
     assignmentChatStreamError:
       "Nenhum fluxo de resposta recebido. Reinicie o servidor de desenvolvimento e tente novamente.",
     courseChatTitle: "Assistente do curso",
-    courseChatDescription:
-      "Pergunte sobre o curso inteiro. As respostas usam análises do boletim, BNCC e Massachusetts Curriculum Framework.",
     courseChatEmpty:
       "Experimente: “Quais alunos estão com mais de 3 atividades em falta?” ou “Como está a Maria nas provas?”",
     courseChatPlaceholder: "Pergunte sobre este curso…",
@@ -482,8 +478,8 @@ export const ASSESSMENT_TEXT = {
     courseChatSelectCourse: "Selecione um curso para conversar.",
     courseChatLoadingData: "Carregando dados do curso…",
     courseChatRefresh: "Atualizar dados do curso",
-    courseChatDataUpdated: (date: string) => `Dados do curso: ${date}`,
-    courseChatFocusedAssignment: (title: string) => `Visualizando: ${title}`,
+    courseChatCourseContext: (name: string) => `Curso: ${name}`,
+    courseChatFocusedAssignment: (title: string) => `Tarefa: ${title}`,
     courseChatFocusedStudent: (name: string) => `Aluno: ${name}`,
     courseStudentsTitle: "Alunos",
     courseStudentsDescription: "Alunos matriculados nesta seção do curso.",

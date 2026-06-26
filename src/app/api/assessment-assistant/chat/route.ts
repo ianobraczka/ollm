@@ -14,6 +14,7 @@ import {
   selectAssignmentIdsForMetadata,
   shouldLoadAssignmentMetadata,
 } from "@/lib/loadCourseAssignmentMetadata";
+import { resolveTopicAssignments } from "@/lib/resolveTopicAssignments";
 import { fetchAssessmentData } from "@/lib/schoology/assessmentService";
 import { normalizeLanguage } from "@/lib/i18n";
 import type { CourseSnapshot } from "@/types/schoology";
@@ -72,7 +73,22 @@ export async function POST(req: Request) {
       focusedAssignmentId,
       focusedStudentUid,
     );
-    const analytics = buildCourseAnalytics(snapshot, classification);
+
+    let topicAssignmentIds: string[] | undefined;
+    let topicDescriptions: Map<string, string> | undefined;
+
+    if (classification.topic) {
+      const topicResolution = await resolveTopicAssignments(
+        snapshot.sectionId,
+        snapshot,
+        classification.topic,
+        classification.studentUid ?? focusedStudentUid,
+      );
+      topicAssignmentIds = topicResolution.assignmentIds;
+      topicDescriptions = topicResolution.descriptions;
+    }
+
+    const analytics = buildCourseAnalytics(snapshot, classification, { topicAssignmentIds });
 
     let focusedAssignmentContext: string | undefined;
     let assignmentMetadataContext: string | undefined;
@@ -103,6 +119,7 @@ export async function POST(req: Request) {
       const assignmentIds = selectAssignmentIdsForMetadata(snapshot, classification, {
         focusedStudentUid,
         focusedAssignmentId,
+        topicAssignmentIds,
       });
 
       if (assignmentIds.length > 0) {
@@ -111,6 +128,7 @@ export async function POST(req: Request) {
             snapshot.sectionId,
             snapshot,
             assignmentIds,
+            topicDescriptions,
           );
         } catch (error) {
           console.warn("[api/assessment-assistant/chat] assignment metadata load failed", error);

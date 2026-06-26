@@ -21,6 +21,7 @@ Response style (important):
 - No long intros, no educational theory, no repeating the analytics JSON.
 - Skip BNCC/Massachusetts unless the teacher asked about curriculum.
 - Action items must be specific (which student, which assignment, what to check next).
+- When analytics include topicAssignments or focusedTopic with a matched assignment list, summarize every listed assignment (strengths and weaknesses), not only lowestScoredAssignments.
 - End with at most one short line reminding the teacher to verify in Schoology before acting.`;
 
 export function buildCourseChatPrompt(args: {
