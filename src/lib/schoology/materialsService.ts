@@ -233,6 +233,7 @@ function buildCourseSnapshot(args: {
   sectionId: string;
   courseName?: string;
   extractedAt: string;
+  appBase: string;
   enrollments: EnrollmentRecord[];
   enrollmentIdByUid: Map<string, string>;
   gradebookAssignments: AssignmentRecord[];
@@ -255,6 +256,7 @@ function buildCourseSnapshot(args: {
       id: String(assignment.id),
       title: assignment.title!.trim(),
       categoryName: args.categoryNames.get(categoryId) || "Uncategorized",
+      url: `${args.appBase}/assignment/${String(assignment.id)}/info`,
       ...(maxPoints != null ? { maxPoints } : {}),
       ...(assignment.due?.trim() ? { dueDate: assignment.due.trim() } : {}),
     };
@@ -508,6 +510,7 @@ export async function fetchCourseMaterials(
     sectionId: trimmedSectionId,
     courseName,
     extractedAt,
+    appBase,
     enrollments,
     enrollmentIdByUid,
     gradebookAssignments,

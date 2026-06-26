@@ -38,6 +38,7 @@ export type CourseSnapshotAssignment = {
   categoryName: string;
   maxPoints?: number;
   dueDate?: string;
+  url?: string;
 };
 
 export type CourseSnapshotSubmissionStatus =

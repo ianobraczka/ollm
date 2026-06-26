@@ -22,6 +22,7 @@ type CourseChatSidebarProps = {
   courseName: string;
   focusedAssignmentId?: string | null;
   focusedAssignmentTitle?: string | null;
+  focusedStudentName?: string | null;
   materialsLoading?: boolean;
   onRefreshCourse?: () => void;
   refreshDisabled?: boolean;
@@ -33,6 +34,7 @@ export function CourseChatSidebar({
   courseName,
   focusedAssignmentId,
   focusedAssignmentTitle,
+  focusedStudentName,
   materialsLoading = false,
   onRefreshCourse,
   refreshDisabled = false,
@@ -161,6 +163,11 @@ export function CourseChatSidebar({
         </div>
         {extractedLabel && (
           <p className="text-[11px] text-muted-foreground">{extractedLabel}</p>
+        )}
+        {focusedStudentName && (
+          <p className="text-xs text-muted-foreground">
+            {t.courseChatFocusedStudent(focusedStudentName)}
+          </p>
         )}
         {focusedAssignmentTitle && (
           <p className="text-xs text-muted-foreground">

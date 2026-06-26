@@ -4,7 +4,9 @@ import * as React from "react";
 import { AlertCircle, ArrowLeft, ChevronDown, ChevronUp, ExternalLink, Loader2, Paperclip } from "lucide-react";
 
 import { CourseChatSidebar } from "@/components/CourseChatSidebar";
+import { CourseStudentsAccordion } from "@/components/CourseStudentsAccordion";
 import { AssessmentAssistantSidebar } from "@/components/AssessmentAssistantSidebar";
+import { StudentDetailView } from "@/components/StudentDetailView";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,6 +15,7 @@ import { ASSESSMENT_TEXT } from "@/lib/i18n";
 import { useAppLanguage } from "@/lib/useAppLanguage";
 import { cn } from "@/lib/utils";
 import type {
+  CourseSnapshotStudent,
   SchoologyAssessmentData,
   SchoologyAssignmentSummary,
   SchoologyCourse,
@@ -72,6 +75,7 @@ export function AssessmentAssistantPage() {
   const [selectedAssignment, setSelectedAssignment] = React.useState<SchoologyAssignmentSummary | null>(
     null,
   );
+  const [selectedStudent, setSelectedStudent] = React.useState<CourseSnapshotStudent | null>(null);
   const [assignmentFilter, setAssignmentFilter] = React.useState<"ungraded" | "graded">("ungraded");
   const [locallyDisconnected, setLocallyDisconnected] = React.useState(false);
 
@@ -139,6 +143,7 @@ export function AssessmentAssistantPage() {
       setCourseMaterials(null);
       setAssessment(null);
       setSelectedAssignment(null);
+      setSelectedStudent(null);
       setError(null);
 
       try {
@@ -238,20 +243,45 @@ export function AssessmentAssistantPage() {
     setSelectedCourse(null);
     setCourseMaterials(null);
     setSelectedAssignment(null);
+    setSelectedStudent(null);
     setAssessment(null);
     setError(null);
   }
 
   function handleSelectCourse(course: SchoologyCourse) {
     setSelectedCourse(course);
+    setSelectedStudent(null);
+    setSelectedAssignment(null);
+    setAssessment(null);
     setAssignmentFilter("ungraded");
     void loadCourseMaterials(course);
+  }
+
+  function handleBackToCourse() {
+    setSelectedStudent(null);
+    setSelectedAssignment(null);
+    setAssessment(null);
+    setError(null);
   }
 
   function handleBackToAssignments() {
     setSelectedAssignment(null);
     setAssessment(null);
     setError(null);
+  }
+
+  function handleSelectStudent(student: CourseSnapshotStudent) {
+    setSelectedStudent(student);
+    setSelectedAssignment(null);
+    setAssessment(null);
+    setError(null);
+  }
+
+  function handleSelectAssignmentFromStudent(assignmentId: string, title: string) {
+    if (!selectedCourse) {
+      return;
+    }
+    void loadAssignment({ id: assignmentId, title, url: "", isFullyGraded: false }, selectedCourse);
   }
 
   function matchesAssignmentFilter(isFullyGraded: boolean): boolean {
@@ -262,10 +292,12 @@ export function AssessmentAssistantPage() {
     if (!selectedCourse) {
       return;
     }
+    setSelectedStudent(null);
     void loadAssignment(assignment, selectedCourse);
   }
 
   const showingAssignment = selectedAssignment != null;
+  const showingStudent = selectedStudent != null && courseMaterials?.snapshot != null;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -298,6 +330,15 @@ export function AssessmentAssistantPage() {
                 {t.selectCourseHint}
               </CardContent>
             </Card>
+          ) : showingStudent && courseMaterials?.snapshot ? (
+            <StudentDetailView
+              student={selectedStudent}
+              courseName={selectedCourse.name}
+              snapshot={courseMaterials.snapshot}
+              onBack={handleBackToCourse}
+              onSelectAssignment={handleSelectAssignmentFromStudent}
+              t={t}
+            />
           ) : showingAssignment ? (
             <AssignmentDetailView
               assessment={assessment}
@@ -307,9 +348,11 @@ export function AssessmentAssistantPage() {
               loading={retrieveLoading}
               locale={locale}
               onBack={handleBackToAssignments}
+              backLabel={selectedStudent ? t.backToStudent : t.backToAssignments}
               t={t}
             />
           ) : (
+            <div className="space-y-6">
             <Card>
               <CardHeader>
                 <div className="flex flex-wrap items-start justify-between gap-3">
@@ -392,9 +435,18 @@ export function AssessmentAssistantPage() {
                 ) : null}
               </CardContent>
             </Card>
+
+            <CourseStudentsAccordion
+              language={language}
+              snapshot={courseMaterials?.snapshot ?? null}
+              loading={materialsLoading}
+              error={materialsError}
+              onSelectStudent={handleSelectStudent}
+            />
+            </div>
           )}
 
-          {error && !showingAssignment && (
+          {error && !showingAssignment && !showingStudent && (
             <Card className="border-destructive/50 bg-destructive/5">
               <CardContent className="flex items-start gap-3 pt-6 text-sm text-destructive">
                 <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
@@ -411,6 +463,7 @@ export function AssessmentAssistantPage() {
         courseName={selectedCourse?.name ?? ""}
         focusedAssignmentId={selectedAssignment?.id}
         focusedAssignmentTitle={selectedAssignment?.title ?? assessment?.title}
+        focusedStudentName={selectedStudent?.name}
         materialsLoading={materialsLoading}
         onRefreshCourse={
           selectedCourse ? () => void loadCourseMaterials(selectedCourse) : undefined
@@ -429,6 +482,7 @@ function AssignmentDetailView({
   loading,
   locale,
   onBack,
+  backLabel,
   t,
 }: {
   assessment: SchoologyAssessmentData | null;
@@ -438,6 +492,7 @@ function AssignmentDetailView({
   loading: boolean;
   locale: string;
   onBack: () => void;
+  backLabel: string;
   t: (typeof ASSESSMENT_TEXT)[keyof typeof ASSESSMENT_TEXT];
 }) {
   const [submissionsOpen, setSubmissionsOpen] = React.useState(false);
@@ -448,7 +503,7 @@ function AssignmentDetailView({
       <div className="flex flex-wrap items-center gap-3">
         <Button type="button" variant="outline" size="sm" onClick={onBack}>
           <ArrowLeft className="h-4 w-4" />
-          {t.backToAssignments}
+          {backLabel}
         </Button>
       </div>
 

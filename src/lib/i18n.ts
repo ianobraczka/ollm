@@ -341,6 +341,35 @@ export const ASSESSMENT_TEXT = {
     courseChatRefresh: "Refresh course data",
     courseChatDataUpdated: (date: string) => `Course data: ${date}`,
     courseChatFocusedAssignment: (title: string) => `Viewing: ${title}`,
+    courseChatFocusedStudent: (name: string) => `Student: ${name}`,
+    courseStudentsTitle: "Students",
+    courseStudentsDescription: "Enrolled students in this course section.",
+    courseStudentsCount: (count: number) =>
+      `${count} student${count === 1 ? "" : "s"} enrolled`,
+    courseStudentsLoading: "Loading students…",
+    noStudentsInCourse: "No students found in this course.",
+    studentListMeta: (missing: number, late: number, average?: number) => {
+      const parts = [`${missing} missing`, `${late} late`];
+      if (average != null) {
+        parts.push(`${average}% avg`);
+      }
+      return parts.join(" · ");
+    },
+    backToCourse: "Back to course",
+    backToStudent: "Back to student",
+    studentGradebookTitle: "Assignments & grades",
+    studentGradebookDescription: "Submission status and grades across all course assignments.",
+    studentMissingCountLabel: "Missing",
+    studentLateCountLabel: "Late",
+    studentAverageGradeLabel: "Average score",
+    studentFilterAll: "All",
+    studentNoRowsForFilter: "No assignments match this filter.",
+    statusMissing: "Missing",
+    statusSubmitted: "Submitted",
+    statusLate: "Late",
+    statusExcused: "Excused",
+    statusIncomplete: "Incomplete",
+    statusGraded: "Graded",
   },
   "pt-BR": {
     pageTitle: "Assistente de Avaliação",
@@ -455,6 +484,35 @@ export const ASSESSMENT_TEXT = {
     courseChatRefresh: "Atualizar dados do curso",
     courseChatDataUpdated: (date: string) => `Dados do curso: ${date}`,
     courseChatFocusedAssignment: (title: string) => `Visualizando: ${title}`,
+    courseChatFocusedStudent: (name: string) => `Aluno: ${name}`,
+    courseStudentsTitle: "Alunos",
+    courseStudentsDescription: "Alunos matriculados nesta seção do curso.",
+    courseStudentsCount: (count: number) =>
+      `${count} aluno${count === 1 ? "" : "s"} matriculado${count === 1 ? "" : "s"}`,
+    courseStudentsLoading: "Carregando alunos…",
+    noStudentsInCourse: "Nenhum aluno encontrado neste curso.",
+    studentListMeta: (missing: number, late: number, average?: number) => {
+      const parts = [`${missing} em falta`, `${late} atrasado${late === 1 ? "" : "s"}`];
+      if (average != null) {
+        parts.push(`${average}% média`);
+      }
+      return parts.join(" · ");
+    },
+    backToCourse: "Voltar ao curso",
+    backToStudent: "Voltar ao aluno",
+    studentGradebookTitle: "Tarefas e notas",
+    studentGradebookDescription: "Status de entrega e notas em todas as tarefas do curso.",
+    studentMissingCountLabel: "Em falta",
+    studentLateCountLabel: "Atrasadas",
+    studentAverageGradeLabel: "Média",
+    studentFilterAll: "Todas",
+    studentNoRowsForFilter: "Nenhuma tarefa corresponde a este filtro.",
+    statusMissing: "Em falta",
+    statusSubmitted: "Entregue",
+    statusLate: "Atrasada",
+    statusExcused: "Dispensada",
+    statusIncomplete: "Incompleta",
+    statusGraded: "Avaliada",
   },
 } as const;
 
