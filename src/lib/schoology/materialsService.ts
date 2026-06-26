@@ -59,6 +59,7 @@ type GradeRow = {
   enrollment_id?: string | number;
   assignment_id?: string | number;
   grade?: string | number | null;
+  calculated_grade?: string | number | null;
   exception?: number;
   max_points?: string | number;
 };
@@ -100,6 +101,10 @@ function countsInGradebook(assignment: AssignmentRecord): boolean {
   return Number(assignment.grading_category ?? 0) > 0;
 }
 
+function hasGradeValue(value: string | number | null | undefined): boolean {
+  return value != null && value !== "";
+}
+
 function gradeCountsAsGraded(row: GradeRow): boolean {
   if (row.exception === 1 || row.exception === 2) {
     return true;
@@ -107,7 +112,80 @@ function gradeCountsAsGraded(row: GradeRow): boolean {
   if (row.exception === 3) {
     return false;
   }
-  return row.grade != null && row.grade !== "";
+  return hasGradeValue(row.grade) || hasGradeValue(row.calculated_grade);
+}
+
+function getAssignmentGradeMap(
+  gradesByAssignment: Map<string, Map<string, GradeRow>>,
+  assignmentId: string,
+  gradeItemId: string,
+): Map<string, GradeRow> {
+  const byAssignmentId = gradesByAssignment.get(assignmentId);
+  const byGradeItemId =
+    gradeItemId !== assignmentId ? gradesByAssignment.get(gradeItemId) : undefined;
+
+  if (!byAssignmentId && !byGradeItemId) {
+    return new Map();
+  }
+
+  if (!byGradeItemId) {
+    return byAssignmentId!;
+  }
+
+  if (!byAssignmentId) {
+    return byGradeItemId;
+  }
+
+  const merged = new Map(byAssignmentId);
+  for (const [enrollmentId, row] of byGradeItemId.entries()) {
+    if (!merged.has(enrollmentId)) {
+      merged.set(enrollmentId, row);
+    }
+  }
+  return merged;
+}
+
+function resolveEnrollmentGradingStatus(
+  assignments: AssignmentRecord[],
+  enrollments: EnrollmentRecord[],
+  gradesByAssignment: Map<string, Map<string, GradeRow>>,
+): Map<string, boolean> {
+  const gradingStatus = new Map<string, boolean>();
+  const studentEnrollmentIds = enrollments
+    .filter((enrollment) => enrollment.id != null && enrollment.uid != null)
+    .map((enrollment) => String(enrollment.id));
+
+  for (const assignment of assignments) {
+    if (assignment.id == null) {
+      continue;
+    }
+
+    const assignmentId = String(assignment.id);
+    const gradeItemId = String(assignment.grade_item_id ?? assignment.id);
+    const assignmentGrades = getAssignmentGradeMap(
+      gradesByAssignment,
+      assignmentId,
+      gradeItemId,
+    );
+
+    if (studentEnrollmentIds.length === 0) {
+      gradingStatus.set(assignmentId, true);
+      continue;
+    }
+
+    let allGraded = true;
+    for (const enrollmentId of studentEnrollmentIds) {
+      const gradeRow = assignmentGrades.get(enrollmentId);
+      if (!gradeRow || !gradeCountsAsGraded(gradeRow)) {
+        allGraded = false;
+        break;
+      }
+    }
+
+    gradingStatus.set(assignmentId, allGraded);
+  }
+
+  return gradingStatus;
 }
 
 function buildEnrollmentUidMaps(enrollments: EnrollmentRecord[]) {
@@ -190,7 +268,7 @@ function deriveCellStatus(args: {
   }
 
   const rawGrade = gradeRow?.grade;
-  if (rawGrade != null && rawGrade !== "") {
+  if (hasGradeValue(rawGrade)) {
     const rawGradeString = String(rawGrade).trim();
     if (isLetterGrade(rawGradeString)) {
       return {
@@ -218,6 +296,46 @@ function deriveCellStatus(args: {
         scoreDisplay: String(points),
       };
     }
+
+    return {
+      status: "graded",
+      scoreDisplay: rawGradeString,
+    };
+  }
+
+  const calculatedGrade = gradeRow?.calculated_grade;
+  if (hasGradeValue(calculatedGrade)) {
+    const calculatedString = String(calculatedGrade).trim();
+    if (isLetterGrade(calculatedString)) {
+      return {
+        status: "graded",
+        gradeLetter: calculatedString.toUpperCase(),
+        scoreDisplay: calculatedString.toUpperCase(),
+      };
+    }
+
+    const points = parseNumericGrade(calculatedGrade);
+    if (points != null) {
+      const maxPoints =
+        parseNumericGrade(gradeRow?.max_points) ?? assignmentMaxPoints ?? points;
+      if (maxPoints != null && maxPoints > 0) {
+        const scorePercent = Math.round((points / maxPoints) * 1000) / 10;
+        return {
+          status: "graded",
+          scorePercent,
+          scoreDisplay: `${points}/${maxPoints}`,
+        };
+      }
+      return {
+        status: "graded",
+        scoreDisplay: String(points),
+      };
+    }
+
+    return {
+      status: "graded",
+      scoreDisplay: calculatedString,
+    };
   }
 
   if (submission?.submitted) {
@@ -273,12 +391,16 @@ function buildCourseSnapshot(args: {
 
     for (const assignment of args.gradebookAssignments) {
       const assignmentId = String(assignment.id);
+      const gradeItemId = String(assignment.grade_item_id ?? assignment.id);
       const submission = args.submissionsByAssignment
         .get(assignmentId)
         ?.get(student.uid);
-      const gradeRow = enrollmentId
-        ? args.gradesByAssignment.get(assignmentId)?.get(enrollmentId)
-        : undefined;
+      const assignmentGrades = getAssignmentGradeMap(
+        args.gradesByAssignment,
+        assignmentId,
+        gradeItemId,
+      );
+      const gradeRow = enrollmentId ? assignmentGrades.get(enrollmentId) : undefined;
       const assignmentMaxPoints = parseNumericGrade(assignment.max_points);
       const derived = deriveCellStatus({ submission, gradeRow, assignmentMaxPoints });
 
@@ -301,16 +423,10 @@ function buildCourseSnapshot(args: {
   };
 }
 
-async function resolveAssignmentSubmissionData(
+async function fetchSubmissionsByAssignment(
   sectionId: string,
   assignments: AssignmentRecord[],
-  enrollmentIdByUid: Map<string, string>,
-  gradesByAssignment: Map<string, Map<string, GradeRow>>,
-): Promise<{
-  gradingStatus: Map<string, boolean>;
-  submissionsByAssignment: Map<string, Map<string, StudentSubmissionState>>;
-}> {
-  const gradingStatus = new Map<string, boolean>();
+): Promise<Map<string, Map<string, StudentSubmissionState>>> {
   const submissionsByAssignment = new Map<string, Map<string, StudentSubmissionState>>();
 
   await Promise.all(
@@ -355,34 +471,10 @@ async function resolveAssignmentSubmissionData(
       }
 
       submissionsByAssignment.set(assignmentId, submitterStates);
-
-      if (submitterStates.size === 0) {
-        gradingStatus.set(assignmentId, true);
-        return;
-      }
-
-      const assignmentGrades = gradesByAssignment.get(assignmentId);
-      let allGraded = true;
-
-      for (const uid of submitterStates.keys()) {
-        const enrollmentId = enrollmentIdByUid.get(uid);
-        if (!enrollmentId) {
-          allGraded = false;
-          break;
-        }
-
-        const gradeRow = assignmentGrades?.get(enrollmentId);
-        if (!gradeRow || !gradeCountsAsGraded(gradeRow)) {
-          allGraded = false;
-          break;
-        }
-      }
-
-      gradingStatus.set(assignmentId, allGraded);
     }),
   );
 
-  return { gradingStatus, submissionsByAssignment };
+  return submissionsByAssignment;
 }
 
 export async function fetchCourseMaterials(
@@ -428,10 +520,13 @@ export async function fetchCourseMaterials(
   const { enrollmentIdByUid } = buildEnrollmentUidMaps(enrollments);
   const allGrades = normalizeApiArray<GradeRow>(gradesData.grades?.grade);
   const gradesByAssignment = buildGradesByAssignment(allGrades);
-  const { gradingStatus, submissionsByAssignment } = await resolveAssignmentSubmissionData(
+  const submissionsByAssignment = await fetchSubmissionsByAssignment(
     trimmedSectionId,
     gradebookAssignments,
-    enrollmentIdByUid,
+  );
+  const gradingStatus = resolveEnrollmentGradingStatus(
+    gradebookAssignments,
+    enrollments,
     gradesByAssignment,
   );
 
