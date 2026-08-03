@@ -164,7 +164,7 @@ export function AppShell() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="flex h-dvh flex-col overflow-hidden bg-background text-foreground">
       <Sidebar
         language={language}
         onLanguageChange={setLanguage}
@@ -179,7 +179,7 @@ export function AppShell() {
         onUpload={handleUpload}
       />
 
-      <main className="min-h-screen min-w-0 lg:ml-[calc(var(--spacing)*100)]">
+      <main className="min-h-0 min-w-0 flex-1 lg:ml-[calc(var(--spacing)*100)]">
         <ChatWindow
           language={language}
           canChat={hasSelectedSources}

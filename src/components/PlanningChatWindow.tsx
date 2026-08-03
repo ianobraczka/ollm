@@ -119,28 +119,28 @@ export function PlanningChatWindow({
   );
 
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="flex h-full min-h-0 flex-col bg-background">
       {!hasStarted ? (
-        <div className="flex min-h-screen flex-col px-2 py-6 lg:px-3">
-          <div className="mx-auto w-full max-w-6xl">
+        <div className="min-h-0 flex-1 overflow-y-auto px-2 py-4 lg:px-3">
+          <div className="mx-auto flex min-h-full w-full max-w-6xl flex-col">
             <p className="text-center text-sm text-muted-foreground">{t.planningChatEmpty}</p>
-          </div>
-          <div className="flex flex-1 items-center justify-center pb-8">
-            <div className="mx-auto w-full max-w-6xl space-y-4">
-              {errorAlerts}
-              <div className="rounded-2xl border border-border/60 bg-background/90 p-3 shadow-lg backdrop-blur-md">
-                <InterdisciplinaryPlanningForm
-                  language={language}
-                  isLoading={isLoading}
-                  onSubmit={onInitialSubmit}
-                />
+            <div className="flex flex-1 items-center justify-center py-6">
+              <div className="w-full space-y-4">
+                {errorAlerts}
+                <div className="rounded-2xl border border-border/60 bg-background/90 p-3 shadow-lg backdrop-blur-md">
+                  <InterdisciplinaryPlanningForm
+                    language={language}
+                    isLoading={isLoading}
+                    onSubmit={onInitialSubmit}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       ) : (
         <>
-          <div className="px-2 py-6 pb-56 lg:px-3">
+          <div className="min-h-0 flex-1 overflow-y-auto px-2 py-4 lg:px-3">
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-4">
               {messages.map((message) => (
                 <MessageBubble
@@ -155,56 +155,54 @@ export function PlanningChatWindow({
             </div>
           </div>
 
-          <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 lg:left-[calc(var(--spacing)*100)]">
-            <div className="pointer-events-auto bg-gradient-to-t from-background from-40% via-background/95 to-transparent px-2 pb-4 pt-10 lg:px-3">
-              <div className="mx-auto w-full max-w-6xl space-y-3">
-                {errorAlerts}
+          <div className="shrink-0 border-t border-border bg-background px-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 lg:border-t-0 lg:px-3">
+            <div className="mx-auto w-full max-w-6xl space-y-3">
+              {errorAlerts}
 
-                {lastAssistant?.content && (
-                  <div className="flex justify-end">
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="shrink-0"
-                      onClick={exportLastAssistant}
-                    >
-                      <Download className="h-4 w-4" />
-                      {t.export}
-                    </Button>
-                  </div>
-                )}
+              {lastAssistant?.content && (
+                <div className="flex justify-end">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="shrink-0"
+                    onClick={exportLastAssistant}
+                  >
+                    <Download className="h-4 w-4" />
+                    <span className="hidden sm:inline">{t.export}</span>
+                  </Button>
+                </div>
+              )}
 
-                <form
-                  className="rounded-2xl border border-border/60 bg-background/90 p-3 shadow-lg backdrop-blur-md"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    void submitFollowUp();
+              <form
+                className="rounded-2xl border border-border/60 bg-background/90 p-3 shadow-lg backdrop-blur-md"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  void submitFollowUp();
+                }}
+              >
+                <Textarea
+                  ref={textareaRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder={t.chatPlaceholderFollowUp}
+                  disabled={isLoading}
+                  rows={3}
+                  className="resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+                      e.preventDefault();
+                      void submitFollowUp();
+                    }
                   }}
-                >
-                  <Textarea
-                    ref={textareaRef}
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder={t.chatPlaceholderFollowUp}
-                    disabled={isLoading}
-                    rows={3}
-                    className="resize-none border-0 bg-transparent shadow-none focus-visible:ring-0"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-                        e.preventDefault();
-                        void submitFollowUp();
-                      }
-                    }}
-                  />
-                  <div className="flex items-center justify-end gap-2 pt-2">
-                    <Button type="submit" disabled={isLoading || !input.trim()}>
-                      <Send className="h-4 w-4" />
-                      {isLoading ? ui.sending : ui.send}
-                    </Button>
-                  </div>
-                </form>
-              </div>
+                />
+                <div className="flex items-center justify-end gap-2 pt-2">
+                  <Button type="submit" disabled={isLoading || !input.trim()}>
+                    <Send className="h-4 w-4" />
+                    {isLoading ? ui.sending : ui.send}
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         </>

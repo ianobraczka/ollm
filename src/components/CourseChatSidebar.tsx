@@ -27,6 +27,9 @@ type CourseChatSidebarProps = {
   materialsLoading?: boolean;
   onRefreshCourse?: () => void;
   refreshDisabled?: boolean;
+  /** When true, render panel body only (for mobile sheet). */
+  embedded?: boolean;
+  className?: string;
 };
 
 export function CourseChatSidebar({
@@ -40,6 +43,8 @@ export function CourseChatSidebar({
   materialsLoading = false,
   onRefreshCourse,
   refreshDisabled = false,
+  embedded = false,
+  className,
 }: CourseChatSidebarProps) {
   const t = ASSESSMENT_TEXT[language];
   const [messages, setMessages] = React.useState<ChatMessage[]>([]);
@@ -141,7 +146,14 @@ export function CourseChatSidebar({
         : null;
 
   return (
-    <aside className="flex h-auto max-h-[45vh] w-full shrink-0 flex-col gap-3 overflow-hidden border-t border-border bg-background p-4 lg:fixed lg:inset-y-0 lg:right-0 lg:z-30 lg:h-screen lg:max-h-none lg:w-[calc(var(--spacing)*100)] lg:border-l lg:border-t-0">
+    <aside
+      className={cn(
+        embedded
+          ? "flex h-full min-h-0 flex-col gap-3 overflow-hidden bg-background"
+          : "hidden h-screen w-[calc(var(--spacing)*100)] shrink-0 flex-col gap-3 overflow-hidden border-l border-border bg-background p-4 lg:fixed lg:inset-y-0 lg:right-0 lg:z-30 lg:flex",
+        className,
+      )}
+    >
       <div className="space-y-1">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 space-y-1">

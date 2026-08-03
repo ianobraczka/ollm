@@ -34,6 +34,7 @@ export function ChatWindow({
   const [visibleError, setVisibleError] = React.useState<string | null>(null);
   const [visibleUploadError, setVisibleUploadError] = React.useState<string | null>(null);
   const bottomRef = React.useRef<HTMLDivElement>(null);
+  const showQuickActions = messages.length === 0;
 
   const streamingId = isLoading
     ? messages.filter((m) => m.role === "assistant").at(-1)?.id
@@ -80,14 +81,12 @@ export function ChatWindow({
   const lastAssistant = [...messages].reverse().find((m) => m.role === "assistant");
 
   return (
-    <div className="relative min-h-screen bg-background">
-      <div className="px-2 py-6 pb-56 lg:px-3">
+    <div className="flex h-full min-h-0 flex-col bg-background">
+      <div className="min-h-0 flex-1 overflow-y-auto px-2 py-4 lg:px-3">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-4">
           {messages.length === 0 ? (
             <p className="text-center text-sm text-muted-foreground">
-              {canChat
-                ? t.chatEmptyWithSources
-                : t.chatEmptyNoSources}
+              {canChat ? t.chatEmptyWithSources : t.chatEmptyNoSources}
             </p>
           ) : (
             messages.map((message) => (
@@ -104,72 +103,84 @@ export function ChatWindow({
         </div>
       </div>
 
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 lg:left-[calc(var(--spacing)*100)]">
-        <div className="pointer-events-auto bg-gradient-to-t from-background from-40% via-background/95 to-transparent px-2 pb-4 pt-10 lg:px-3">
-          <div className="mx-auto w-full max-w-6xl space-y-3">
-            {visibleUploadError && (
-              <div className="relative rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-                <button
-                  type="button"
-                  className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
-                  aria-label={t.dismiss}
-                  onClick={() => setVisibleUploadError(null)}
-                >
-                  <X className="h-4 w-4" />
-                </button>
-                {visibleUploadError}
-              </div>
-            )}
+      <div className="shrink-0 border-t border-border bg-background px-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 lg:border-t-0 lg:px-3">
+        <div className="mx-auto w-full max-w-6xl space-y-3">
+          {visibleUploadError && (
+            <div className="relative rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+              <button
+                type="button"
+                className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
+                aria-label={t.dismiss}
+                onClick={() => setVisibleUploadError(null)}
+              >
+                <X className="h-4 w-4" />
+              </button>
+              {visibleUploadError}
+            </div>
+          )}
 
-            {visibleError && (
-              <div className="relative rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-                <button
-                  type="button"
-                  className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
-                  aria-label={t.dismiss}
-                  onClick={() => setVisibleError(null)}
-                >
-                  <X className="h-4 w-4" />
-                </button>
-                {visibleError}
-              </div>
-            )}
+          {visibleError && (
+            <div className="relative rounded-md border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
+              <button
+                type="button"
+                className="absolute right-2 top-2 rounded p-1 text-destructive/80 hover:bg-destructive/10 hover:text-destructive"
+                aria-label={t.dismiss}
+                onClick={() => setVisibleError(null)}
+              >
+                <X className="h-4 w-4" />
+              </button>
+              {visibleError}
+            </div>
+          )}
 
+          {(showQuickActions || lastAssistant?.content) && (
             <div className="flex items-center justify-between gap-2">
-              <QuickActions
-                language={language}
-                disabled={!canChat || isLoading}
-                onSelect={(prompt) => {
-                  setInput(prompt);
-                }}
-              />
+              {showQuickActions ? (
+                <QuickActions
+                  language={language}
+                  disabled={!canChat || isLoading}
+                  onSelect={(prompt) => {
+                    setInput(prompt);
+                  }}
+                />
+              ) : (
+                <div className="hidden lg:block">
+                  <QuickActions
+                    language={language}
+                    disabled={!canChat || isLoading}
+                    onSelect={(prompt) => {
+                      setInput(prompt);
+                    }}
+                  />
+                </div>
+              )}
               {lastAssistant?.content && (
                 <Button
                   type="button"
                   variant="ghost"
                   size="sm"
-                  className="shrink-0"
+                  className="ml-auto shrink-0"
                   onClick={exportLastAssistant}
                 >
                   <Download className="h-4 w-4" />
-                  {t.export}
+                  <span className="hidden sm:inline">{t.export}</span>
                 </Button>
               )}
             </div>
+          )}
 
-            <ChatComposer
-              value={input}
-              onChange={setInput}
-              onSubmit={submit}
-              placeholder={
-                canChat ? t.chatPlaceholderWithSources : t.chatPlaceholderNoSources
-              }
-              disabled={!canChat}
-              isLoading={isLoading}
-              sendLabel={t.send}
-              sendingLabel={t.sending}
-            />
-          </div>
+          <ChatComposer
+            value={input}
+            onChange={setInput}
+            onSubmit={submit}
+            placeholder={
+              canChat ? t.chatPlaceholderWithSources : t.chatPlaceholderNoSources
+            }
+            disabled={!canChat}
+            isLoading={isLoading}
+            sendLabel={t.send}
+            sendingLabel={t.sending}
+          />
         </div>
       </div>
     </div>

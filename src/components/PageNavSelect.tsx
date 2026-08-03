@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { AppSelect } from "@/components/AppSelect";
 import { UI_TEXT, type AppLanguage } from "@/lib/i18n";
+import { cn } from "@/lib/utils";
 
 const ROUTES = [
   { path: "/", labelKey: "navChat" as const, icon: MessageSquare },
@@ -14,9 +15,10 @@ const ROUTES = [
 
 type PageNavSelectProps = {
   language: AppLanguage;
+  className?: string;
 };
 
-export function PageNavSelect({ language }: PageNavSelectProps) {
+export function PageNavSelect({ language, className }: PageNavSelectProps) {
   const pathname = usePathname();
   const router = useRouter();
   const t = UI_TEXT[language];
@@ -26,7 +28,7 @@ export function PageNavSelect({ language }: PageNavSelectProps) {
 
   return (
     <AppSelect
-      className="page-nav-select"
+      className={cn("page-nav-select", className)}
       triggerClassName="px-2"
       width="fit"
       aria-label={t.navPage}

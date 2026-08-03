@@ -35,6 +35,9 @@ type AssessmentAssistantSidebarProps = {
   onLogout: () => void;
   locallyDisconnected?: boolean;
   actionsDisabled?: boolean;
+  /** When true, render panel body only (for mobile sheet). */
+  embedded?: boolean;
+  className?: string;
 };
 
 function UserAvatar({
@@ -84,6 +87,8 @@ export function AssessmentAssistantSidebar({
   onLogout,
   locallyDisconnected = false,
   actionsDisabled = false,
+  embedded = false,
+  className,
 }: AssessmentAssistantSidebarProps) {
   const t = ASSESSMENT_TEXT[language];
 
@@ -93,17 +98,19 @@ export function AssessmentAssistantSidebar({
       ? t.sessionSaved
       : t.sessionNotLoggedIn;
 
-  return (
-    <aside className="flex h-auto max-h-[45vh] w-full shrink-0 flex-col gap-4 overflow-hidden border-r border-border bg-background p-4 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:h-screen lg:max-h-none lg:w-[calc(var(--spacing)*100)]">
-      <div className="space-y-2 pb-1">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Sparkles className="h-4 w-4" />
+  const body = (
+    <>
+      {!embedded ? (
+        <div className="space-y-2 pb-1">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <Sparkles className="h-4 w-4" />
+            </div>
+            <p className="text-sm font-semibold leading-tight">{APP_NAME}</p>
           </div>
-          <p className="text-sm font-semibold leading-tight">{APP_NAME}</p>
+          <PageNavSelect language={language} />
         </div>
-        <PageNavSelect language={language} />
-      </div>
+      ) : null}
 
       <div className="space-y-3 rounded-lg border border-border bg-card/40 p-3">
         <div className="flex items-start justify-between gap-2">
@@ -237,6 +244,21 @@ export function AssessmentAssistantSidebar({
           <ModeToggle language={language} />
         </div>
       </div>
+    </>
+  );
+
+  if (embedded) {
+    return <div className={cn("flex h-full min-h-0 flex-col gap-4", className)}>{body}</div>;
+  }
+
+  return (
+    <aside
+      className={cn(
+        "hidden h-screen w-[calc(var(--spacing)*100)] shrink-0 flex-col gap-4 overflow-hidden border-r border-border bg-background p-4 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:flex",
+        className,
+      )}
+    >
+      {body}
     </aside>
   );
 }

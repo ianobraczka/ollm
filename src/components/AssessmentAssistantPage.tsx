@@ -1,19 +1,32 @@
 "use client";
 
 import * as React from "react";
-import { AlertCircle, ArrowLeft, ChevronDown, ChevronUp, ExternalLink, Loader2, Paperclip } from "lucide-react";
+import {
+  AlertCircle,
+  ArrowLeft,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  Loader2,
+  MessageSquare,
+  Paperclip,
+  Users,
+} from "lucide-react";
 
 import { CourseMaterialsAccordion } from "@/components/CourseMaterialsAccordion";
 import { CourseChatSidebar } from "@/components/CourseChatSidebar";
 import { CourseStudentsAccordion } from "@/components/CourseStudentsAccordion";
 import { AssessmentAssistantSidebar } from "@/components/AssessmentAssistantSidebar";
+import { MobileSheet } from "@/components/MobileSheet";
+import { MobileTopBar } from "@/components/MobileTopBar";
 import { StudentDetailView } from "@/components/StudentDetailView";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getErrorMessage } from "@/lib/apiClient";
-import { ASSESSMENT_TEXT } from "@/lib/i18n";
+import { ASSESSMENT_TEXT, UI_TEXT } from "@/lib/i18n";
 import { useAppLanguage } from "@/lib/useAppLanguage";
+import { useMediaQuery } from "@/lib/useMediaQuery";
 import { cn } from "@/lib/utils";
 import type {
   CourseSnapshotStudent,
@@ -293,26 +306,106 @@ export function AssessmentAssistantPage() {
 
   const showingAssignment = selectedAssignment != null;
   const showingStudent = selectedStudent != null && courseMaterials?.snapshot != null;
+  const ui = UI_TEXT[language];
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const [coursesOpen, setCoursesOpen] = React.useState(false);
+  const [chatOpen, setChatOpen] = React.useState(false);
+
+  function handleSelectCourseAndClose(course: SchoologyCourse) {
+    handleSelectCourse(course);
+    setCoursesOpen(false);
+  }
+
+  const sidebarProps = {
+    language,
+    onLanguageChange: setLanguage,
+    sessionStatus,
+    sessionLoading,
+    courses,
+    coursesLoading,
+    coursesError,
+    selectedCourseId: selectedCourse?.id ?? null,
+    onRefreshConnection: () => void handleRefreshConnection(),
+    onLogout: handleLogout,
+    locallyDisconnected,
+    actionsDisabled: retrieveLoading,
+  } as const;
+
+  const chatProps = {
+    language,
+    snapshot: courseMaterials?.snapshot ?? null,
+    courseName: selectedCourse?.name ?? "",
+    focusedAssignmentId: selectedAssignment?.id,
+    focusedAssignmentTitle: selectedAssignment?.title ?? assessment?.title,
+    focusedStudentName: selectedStudent?.name,
+    focusedStudentUid: selectedStudent?.uid,
+    materialsLoading,
+    onRefreshCourse: selectedCourse
+      ? () => void loadCourseMaterials(selectedCourse)
+      : undefined,
+    refreshDisabled: retrieveLoading,
+  } as const;
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <AssessmentAssistantSidebar
+    <div className="flex h-dvh flex-col overflow-hidden bg-background text-foreground">
+      <MobileTopBar
         language={language}
-        onLanguageChange={setLanguage}
-        sessionStatus={sessionStatus}
-        sessionLoading={sessionLoading}
-        courses={courses}
-        coursesLoading={coursesLoading}
-        coursesError={coursesError}
-        selectedCourseId={selectedCourse?.id ?? null}
-        onSelectCourse={handleSelectCourse}
-        onRefreshConnection={() => void handleRefreshConnection()}
-        onLogout={handleLogout}
-        locallyDisconnected={locallyDisconnected}
-        actionsDisabled={retrieveLoading}
+        actions={
+          <>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="gap-1.5"
+              onClick={() => setCoursesOpen(true)}
+            >
+              <Users className="h-4 w-4" />
+              <span className="max-w-[4.5rem] truncate">{ui.mobileMenuCourses}</span>
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="gap-1.5"
+              onClick={() => setChatOpen(true)}
+            >
+              <MessageSquare className="h-4 w-4" />
+              <span className="max-w-[3.5rem] truncate">{ui.mobileMenuChat}</span>
+            </Button>
+          </>
+        }
       />
 
-      <main className="min-h-screen min-w-0 px-5 py-8 lg:ml-[calc(var(--spacing)*100)] lg:mr-[calc(var(--spacing)*100)]">
+      <MobileSheet
+        open={coursesOpen}
+        onClose={() => setCoursesOpen(false)}
+        title={ui.mobileMenuCourses}
+        side="left"
+      >
+        <AssessmentAssistantSidebar
+          {...sidebarProps}
+          embedded
+          onSelectCourse={handleSelectCourseAndClose}
+        />
+      </MobileSheet>
+
+      {!isDesktop ? (
+        <MobileSheet
+          open={chatOpen}
+          onClose={() => setChatOpen(false)}
+          title={ui.mobileMenuChat}
+          side="right"
+          keepMounted
+          panelClassName="w-full max-w-md"
+          bodyClassName="flex flex-col overflow-hidden p-3"
+        >
+          <CourseChatSidebar {...chatProps} embedded className="h-full p-0" />
+        </MobileSheet>
+      ) : null}
+
+      <AssessmentAssistantSidebar {...sidebarProps} onSelectCourse={handleSelectCourse} />
+
+      <main className="min-h-0 min-w-0 flex-1 overflow-y-auto px-4 py-6 lg:ml-[calc(var(--spacing)*100)] lg:mr-[calc(var(--spacing)*100)] lg:px-5 lg:py-8">
         <div className="mx-auto max-w-5xl space-y-6">
           <header>
             <h1 className="text-2xl font-semibold tracking-tight">{t.pageTitle}</h1>
@@ -358,12 +451,12 @@ export function AssessmentAssistantPage() {
               />
 
               <CourseStudentsAccordion
-              language={language}
-              snapshot={courseMaterials?.snapshot ?? null}
-              loading={materialsLoading}
-              error={materialsError}
-              onSelectStudent={handleSelectStudent}
-            />
+                language={language}
+                snapshot={courseMaterials?.snapshot ?? null}
+                loading={materialsLoading}
+                error={materialsError}
+                onSelectStudent={handleSelectStudent}
+              />
             </div>
           )}
 
@@ -378,20 +471,7 @@ export function AssessmentAssistantPage() {
         </div>
       </main>
 
-      <CourseChatSidebar
-        language={language}
-        snapshot={courseMaterials?.snapshot ?? null}
-        courseName={selectedCourse?.name ?? ""}
-        focusedAssignmentId={selectedAssignment?.id}
-        focusedAssignmentTitle={selectedAssignment?.title ?? assessment?.title}
-        focusedStudentName={selectedStudent?.name}
-        focusedStudentUid={selectedStudent?.uid}
-        materialsLoading={materialsLoading}
-        onRefreshCourse={
-          selectedCourse ? () => void loadCourseMaterials(selectedCourse) : undefined
-        }
-        refreshDisabled={retrieveLoading}
-      />
+      {isDesktop ? <CourseChatSidebar {...chatProps} /> : null}
     </div>
   );
 }

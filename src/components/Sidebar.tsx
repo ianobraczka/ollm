@@ -1,11 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { CheckCircle2, Sparkles, Upload } from "lucide-react";
+import { CheckCircle2, FolderOpen, Sparkles, Upload } from "lucide-react";
 
 import { DocumentSelector } from "@/components/DocumentSelector";
 import { LanguageSelect } from "@/components/LanguageSelect";
 import { LessonMapLink } from "@/components/LessonMapLink";
+import { MobileSheet } from "@/components/MobileSheet";
+import { MobileTopBar } from "@/components/MobileTopBar";
 import { ModeToggle } from "@/components/ModeToggle";
 import { PageNavSelect } from "@/components/PageNavSelect";
 import { Badge } from "@/components/ui/badge";
@@ -31,8 +33,9 @@ type SidebarProps = {
   onUpload?: (files: File[]) => Promise<void>;
 };
 
-export function Sidebar({
-  variant = "full",
+type SidebarBodyProps = Omit<SidebarProps, "variant">;
+
+function SidebarBody({
   language,
   onLanguageChange,
   documents = [],
@@ -44,7 +47,7 @@ export function Sidebar({
   uploadedFileNames = [],
   isUploading = false,
   onUpload = async () => {},
-}: SidebarProps) {
+}: SidebarBodyProps) {
   const t = UI_TEXT[language];
   const displayTitle = (id: string, title: string) =>
     language === "pt-BR" && id === "bncc" ? "Base Nacional Comum Curricular" : title;
@@ -62,19 +65,7 @@ export function Sidebar({
   }
 
   return (
-    <aside className="flex h-auto max-h-[45vh] w-full shrink-0 flex-col gap-4 overflow-y-auto border-r border-border bg-background p-4 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:h-screen lg:max-h-none lg:w-[calc(var(--spacing)*100)]">
-      <div className="space-y-2 pb-1">
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Sparkles className="h-4 w-4" />
-          </div>
-          <p className="text-sm font-semibold leading-tight">{APP_NAME}</p>
-        </div>
-        <PageNavSelect language={language} />
-      </div>
-
-      {variant === "minimal" ? null : (
-        <>
+    <>
       <DocumentSelector
         language={language}
         selectedBuiltInIds={selectedBuiltInIds}
@@ -93,9 +84,7 @@ export function Sidebar({
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-2 pt-0">
-          <p className="text-xs text-muted-foreground">
-            {t.sidebarUploadHelp}
-          </p>
+          <p className="text-xs text-muted-foreground">{t.sidebarUploadHelp}</p>
           <Button
             type="button"
             variant="secondary"
@@ -155,9 +144,7 @@ export function Sidebar({
               </ul>
             </>
           ) : (
-            <p className="text-sm text-muted-foreground">
-              {t.sidebarSelectDocumentHint}
-            </p>
+            <p className="text-sm text-muted-foreground">{t.sidebarSelectDocumentHint}</p>
           )}
         </CardContent>
       </Card>
@@ -169,8 +156,95 @@ export function Sidebar({
           <ModeToggle language={language} />
         </div>
       </div>
-        </>
-      )}
-    </aside>
+    </>
+  );
+}
+
+export function Sidebar({
+  variant = "full",
+  language,
+  onLanguageChange,
+  documents = [],
+  selectedBuiltInIds = [],
+  onBuiltInChange = () => {},
+  useUploadedDocument = false,
+  onUseUploadedChange = () => {},
+  hasUploadedDocument = false,
+  uploadedFileNames = [],
+  isUploading = false,
+  onUpload = async () => {},
+}: SidebarProps) {
+  const t = UI_TEXT[language];
+  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const hasUpload = documents.length > 0;
+  const activeSourceCount =
+    BUILT_IN_DOCUMENTS.filter((d) => selectedBuiltInIds.includes(d.id)).length +
+    (useUploadedDocument && hasUpload ? 1 : 0);
+
+  const bodyProps: SidebarBodyProps = {
+    language,
+    onLanguageChange,
+    documents,
+    selectedBuiltInIds,
+    onBuiltInChange,
+    useUploadedDocument,
+    onUseUploadedChange,
+    hasUploadedDocument,
+    uploadedFileNames,
+    isUploading,
+    onUpload,
+  };
+
+  return (
+    <>
+      <MobileTopBar
+        language={language}
+        actions={
+          variant === "full" ? (
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="gap-1.5"
+              onClick={() => setMobileOpen(true)}
+            >
+              <FolderOpen className="h-4 w-4" />
+              <span className="max-w-[5.5rem] truncate">{t.mobileMenuSources}</span>
+              {activeSourceCount > 0 ? (
+                <Badge variant="secondary" className="h-5 min-w-5 px-1.5">
+                  {activeSourceCount}
+                </Badge>
+              ) : null}
+            </Button>
+          ) : null
+        }
+      />
+
+      {variant === "full" ? (
+        <MobileSheet
+          open={mobileOpen}
+          onClose={() => setMobileOpen(false)}
+          title={t.mobileMenuSources}
+          side="left"
+        >
+          <div className="flex min-h-full flex-col gap-4">
+            <SidebarBody {...bodyProps} />
+          </div>
+        </MobileSheet>
+      ) : null}
+
+      <aside className="hidden h-screen w-[calc(var(--spacing)*100)] shrink-0 flex-col gap-4 overflow-y-auto border-r border-border bg-background p-4 lg:fixed lg:inset-y-0 lg:left-0 lg:z-30 lg:flex">
+        <div className="space-y-2 pb-1">
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <Sparkles className="h-4 w-4" />
+            </div>
+            <p className="text-sm font-semibold leading-tight">{APP_NAME}</p>
+          </div>
+          <PageNavSelect language={language} />
+        </div>
+        {variant === "full" ? <SidebarBody {...bodyProps} /> : null}
+      </aside>
+    </>
   );
 }

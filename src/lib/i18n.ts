@@ -47,6 +47,9 @@ export const UI_TEXT = {
     navPlanning: "Interdisciplinary planning",
     navAssessmentAssistant: "Assessment assistant",
     navLessonMap: "Lesson map",
+    mobileMenuSources: "Sources",
+    mobileMenuCourses: "Courses",
+    mobileMenuChat: "Chat",
   },
   "pt-BR": {
     sidebarUploadTitle: "Upload (opcional)",
@@ -85,6 +88,9 @@ export const UI_TEXT = {
     navPlanning: "Planejamento interdisciplinar",
     navAssessmentAssistant: "Assistente de avaliação",
     navLessonMap: "Mapa curricular",
+    mobileMenuSources: "Fontes",
+    mobileMenuCourses: "Cursos",
+    mobileMenuChat: "Chat",
   },
 } as const;
 
