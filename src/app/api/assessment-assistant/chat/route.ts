@@ -1,5 +1,13 @@
 import { NextResponse } from "next/server";
 
+import {
+  anonymizeChatMessages,
+  anonymizeStructuredData,
+  buildStudentAliasMap,
+  isStudentNameAnonymizationEnabled,
+  redactRosterNamesInText,
+  rematerializeStudentAliases,
+} from "@/lib/anonymizeStudents";
 import { buildAssessmentContextText } from "@/lib/assessmentContext";
 import { buildCourseChatPrompt } from "@/lib/buildCoursePrompt";
 import {
@@ -67,6 +75,10 @@ export async function POST(req: Request) {
     const responseLanguage = normalizeLanguage(body.responseLanguage);
     const latestQuestion = getLatestUserMessage(body.messages);
 
+    const anonymize = isStudentNameAnonymizationEnabled();
+    const aliasMap = anonymize ? buildStudentAliasMap(snapshot.students) : null;
+
+    // Classification uses the real roster/question text server-side only.
     const classification = classifyCourseQuestion(
       latestQuestion,
       snapshot,
@@ -89,6 +101,9 @@ export async function POST(req: Request) {
     }
 
     const analytics = buildCourseAnalytics(snapshot, classification, { topicAssignmentIds });
+    const analyticsForPrompt = aliasMap
+      ? anonymizeStructuredData(analytics, aliasMap)
+      : analytics;
 
     let focusedAssignmentContext: string | undefined;
     let assignmentMetadataContext: string | undefined;
@@ -115,6 +130,10 @@ export async function POST(req: Request) {
       }
     }
 
+    if (focusedAssignmentContext && aliasMap) {
+      focusedAssignmentContext = redactRosterNamesInText(focusedAssignmentContext, aliasMap);
+    }
+
     if (shouldLoadAssignmentMetadata(classification)) {
       const assignmentIds = selectAssignmentIdsForMetadata(snapshot, classification, {
         focusedStudentUid,
@@ -138,6 +157,10 @@ export async function POST(req: Request) {
       }
     }
 
+    if (assignmentMetadataContext && aliasMap) {
+      assignmentMetadataContext = redactRosterNamesInText(assignmentMetadataContext, aliasMap);
+    }
+
     const [documentContext] = await Promise.all([
       buildDocumentContext({
         selectedBuiltInDocs: [...CURRICULUM_DOC_IDS],
@@ -152,13 +175,17 @@ export async function POST(req: Request) {
       );
     }
 
+    const messagesForPrompt = aliasMap
+      ? anonymizeChatMessages(body.messages, aliasMap)
+      : body.messages;
+
     const basePrompt = buildCourseChatPrompt({
       courseName,
-      analyticsContext: serializeCourseAnalytics(analytics),
+      analyticsContext: serializeCourseAnalytics(analyticsForPrompt),
       assignmentMetadataContext,
       focusedAssignmentContext,
       documentContext,
-      messages: body.messages,
+      messages: messagesForPrompt,
     });
 
     const prompt =
@@ -172,9 +199,20 @@ export async function POST(req: Request) {
     const stream = new ReadableStream<Uint8Array>({
       async start(controller) {
         try {
+          // Buffer the model output so we can restore real names before the teacher sees them.
+          let accumulated = "";
           for await (const chunk of result.stream) {
             const text = chunk.text();
-            if (text) controller.enqueue(encoder.encode(text));
+            if (text) accumulated += text;
+          }
+
+          const rematerialized = aliasMap
+            ? rematerializeStudentAliases(accumulated, aliasMap)
+            : accumulated;
+
+          const chunkSize = 48;
+          for (let i = 0; i < rematerialized.length; i += chunkSize) {
+            controller.enqueue(encoder.encode(rematerialized.slice(i, i + chunkSize)));
           }
           controller.close();
         } catch (error) {
@@ -188,6 +226,7 @@ export async function POST(req: Request) {
         "Content-Type": "text/plain; charset=utf-8",
         "Cache-Control": "no-cache, no-transform",
         "X-Gemini-Model": modelName,
+        ...(anonymize ? { "X-Student-Names-Anonymized": "1" } : {}),
       },
     });
   } catch (error) {

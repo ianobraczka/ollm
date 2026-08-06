@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Loader2, RefreshCw } from "lucide-react";
+import { Info, Loader2, RefreshCw } from "lucide-react";
 
 import { ChatComposer } from "@/components/ChatComposer";
 import { MessageBubble } from "@/components/MessageBubble";
@@ -176,6 +176,14 @@ export function CourseChatSidebar({
             </Button>
           )}
         </div>
+      </div>
+
+      <div
+        className="flex gap-2 rounded-md border border-border bg-muted/40 px-3 py-2 text-xs leading-snug text-muted-foreground"
+        role="status"
+      >
+        <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
+        <p>{t.courseChatPrivacyAlert}</p>
       </div>
 
       <div className="min-h-0 flex-1 space-y-4 overflow-y-auto rounded-lg border border-border bg-muted/20 p-3">

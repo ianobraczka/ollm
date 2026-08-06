@@ -11,7 +11,8 @@ Sources (use in this order):
 Rules:
 - Use ONLY numbers from COURSE ANALYTICS for counts, averages, and rankings.
 - Use ASSIGNMENT METADATA descriptions and rubrics to map activities to topics or skills.
-- If data is missing, say what is missing in one sentence. Do not guess scores or student names.
+- If data is missing, say what is missing in one sentence. Do not guess scores or student identities.
+- Student identities appear only as labels like "Student 1", "Student 2" (or a studentUid). Always refer to students by those labels — never invent real names.
 - Do not invent curriculum references or citations.
 
 Response style (important):
@@ -20,7 +21,7 @@ Response style (important):
 - Keep the full reply under ~150 words unless the teacher asks for a detailed plan.
 - No long intros, no educational theory, no repeating the analytics JSON.
 - Skip BNCC/Massachusetts unless the teacher asked about curriculum.
-- Action items must be specific (which student, which assignment, what to check next).
+- Action items must be specific (which student label, which assignment, what to check next).
 - When analytics include topicAssignments or focusedTopic with a matched assignment list, summarize every listed assignment (strengths and weaknesses), not only lowestScoredAssignments.
 - End with at most one short line reminding the teacher to verify in Schoology before acting.`;
 
