@@ -178,14 +178,6 @@ export function CourseChatSidebar({
         </div>
       </div>
 
-      <div
-        className="flex gap-2 rounded-md border border-border bg-muted/40 px-3 py-2 text-xs leading-snug text-muted-foreground"
-        role="status"
-      >
-        <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
-        <p>{t.courseChatPrivacyAlert}</p>
-      </div>
-
       <div className="min-h-0 flex-1 space-y-4 overflow-y-auto rounded-lg border border-border bg-muted/20 p-3">
         {!snapshot ? (
           <p className="text-center text-sm text-muted-foreground">{t.courseChatSelectCourse}</p>
@@ -195,7 +187,12 @@ export function CourseChatSidebar({
             {t.courseChatLoadingData}
           </div>
         ) : messages.length === 0 ? (
-          <p className="text-center text-sm text-muted-foreground">{t.courseChatEmpty}</p>
+          <div className="text-center text-sm text-muted-foreground">
+            <p className="flex items-start justify-center gap-2 leading-snug">
+              <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" aria-hidden />
+              <span>{t.courseChatPrivacyAlert}</span>
+            </p>
+          </div>
         ) : (
           messages.map((message) => (
             <MessageBubble

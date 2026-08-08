@@ -333,9 +333,7 @@ export const ASSESSMENT_TEXT = {
     assignmentChatStreamError: "No response stream received. Restart the dev server and try again.",
     courseChatTitle: "Course assistant",
     courseChatPrivacyAlert:
-      "Student names are replaced with aliases (Student 1, Student 2, …) before being sent to the AI. Real names are restored only in this chat view.",
-    courseChatEmpty:
-      "Try: “Which students are missing more than 3 activities?” or “How is Maria doing on quizzes?”",
+      "Student data is protected. The names are replaced with aliases before being sent to the model. Real names are restored only in this chat view.",
     courseChatPlaceholder: "Ask about this course…",
     courseChatSend: "Send",
     courseChatSending: "Sending…",
@@ -475,9 +473,7 @@ export const ASSESSMENT_TEXT = {
       "Nenhum fluxo de resposta recebido. Reinicie o servidor de desenvolvimento e tente novamente.",
     courseChatTitle: "Assistente do curso",
     courseChatPrivacyAlert:
-      "Os nomes dos alunos são trocados por aliases (Student 1, Student 2, …) antes de serem enviados à IA. Os nomes reais são restaurados apenas nesta conversa.",
-    courseChatEmpty:
-      "Experimente: “Quais alunos estão com mais de 3 atividades em falta?” ou “Como está a Maria nas provas?”",
+      "Os dados dos alunos são protegidos. Os nomes são trocados por aliases antes de serem enviados ao modelo. Os nomes reais são restaurados apenas nesta conversa.",
     courseChatPlaceholder: "Pergunte sobre este curso…",
     courseChatSend: "Enviar",
     courseChatSending: "Enviando…",
