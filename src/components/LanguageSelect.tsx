@@ -15,6 +15,7 @@ export function LanguageSelect({ value, onChange, "aria-label": ariaLabel }: Lan
   return (
     <AppSelect
       width="fit"
+      menuPlacement="top"
       aria-label={ariaLabel ?? "Language"}
       value={value}
       onChange={onChange}

@@ -5,6 +5,8 @@ export type SchoologyCourse = {
   courseTitle?: string;
   sectionTitle?: string;
   url: string;
+  /** True when the section is outside the current grading period (archived / past). */
+  isArchived: boolean;
 };
 
 export type SchoologyCoursesResult = {
@@ -36,6 +38,8 @@ export type CourseSnapshotAssignment = {
   id: string;
   title: string;
   categoryName: string;
+  /** Schoology grading period title when available (e.g. "3rd Quarter"). */
+  gradingPeriod?: string;
   maxPoints?: number;
   dueDate?: string;
   url?: string;
@@ -66,6 +70,8 @@ export type CourseSnapshot = {
   assignments: CourseSnapshotAssignment[];
   cells: CourseSnapshotCell[];
   categories: string[];
+  /** Section grading period titles, when Schoology provides them. */
+  gradingPeriods?: string[];
 };
 
 export type SchoologyCourseMaterialsResult = {

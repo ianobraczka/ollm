@@ -1,13 +1,14 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 /**
- * Preferred → fallback chain when a model returns 503 (capacity).
- * Starts with the lightest model; escalates only on temporary unavailability.
+ * Free-tier Flash / Flash-Lite only (AI Studio, no billing required).
+ * Preferred → fallback when a model is overloaded or retired.
+ * Do not add Pro models here — they are typically paid-only.
  */
 export const DEFAULT_MODEL_CHAIN = [
   "gemini-2.5-flash-lite",
   "gemini-2.5-flash",
-  "gemini-2.0-flash",
+  "gemini-3.6-flash",
 ] as const;
 
 export function getModelChain(): string[] {
@@ -40,9 +41,18 @@ export function isModelUnavailableError(error: unknown): boolean {
   return status === 503 || status === 529;
 }
 
-/** Network/TLS failures should also try the next model (and often succeed on retry). */
+/** Retired / unknown model IDs should fall through to the next free Flash model. */
+export function isRetiredModelError(error: unknown): boolean {
+  if (!error || typeof error !== "object") return false;
+  const status = "status" in error ? Number((error as { status: unknown }).status) : NaN;
+  const message = error instanceof Error ? error.message : String(error);
+  if (status === 404) return true;
+  return /no longer available|not found|is not found|not supported/i.test(message);
+}
+
+/** Network/TLS failures and retired models should try the next model in the chain. */
 export function isRetryableGeminiFetchError(error: unknown): boolean {
-  if (isModelUnavailableError(error)) return true;
+  if (isModelUnavailableError(error) || isRetiredModelError(error)) return true;
   const message = error instanceof Error ? error.message : String(error ?? "");
   return /fetch failed|ECONNRESET|ETIMEDOUT|ENOTFOUND|socket hang up|network/i.test(message);
 }
@@ -59,7 +69,10 @@ export async function generateContentStreamWithFallback(prompt: string) {
       return { result, modelName };
     } catch (error) {
       if (isRetryableGeminiFetchError(error)) {
-        console.warn(`[gemini] ${modelName} failed, trying next model…`, error instanceof Error ? error.message : error);
+        console.warn(
+          `[gemini] ${modelName} failed, trying next model…`,
+          error instanceof Error ? error.message : error,
+        );
         lastError = error;
         continue;
       }

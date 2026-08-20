@@ -91,6 +91,11 @@ export function AssessmentAssistantSidebar({
   className,
 }: AssessmentAssistantSidebarProps) {
   const t = ASSESSMENT_TEXT[language];
+  const [courseFilter, setCourseFilter] = React.useState<"current" | "archived">("current");
+
+  const filteredCourses = courses.filter((course) =>
+    courseFilter === "archived" ? course.isArchived : !course.isArchived,
+  );
 
   const sessionLabel = sessionLoading
     ? t.sessionChecking
@@ -162,19 +167,49 @@ export function AssessmentAssistantSidebar({
       <div className="flex min-h-0 flex-1 flex-col gap-2">
         <div className="flex items-center justify-between gap-2">
           <p className="text-sm font-medium">{t.myCourses}</p>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            className="h-8 px-2"
-            onClick={onRefreshConnection}
-            disabled={sessionLoading || coursesLoading || actionsDisabled}
-            aria-label={t.refreshCourses}
-          >
-            <RefreshCw
-              className={cn("h-4 w-4", (sessionLoading || coursesLoading) && "animate-spin")}
-            />
-          </Button>
+          <div className="flex shrink-0 items-center gap-1.5">
+            {sessionStatus?.hasSession || coursesLoading || courses.length > 0 ? (
+              <div className="inline-flex rounded-md border border-border p-0.5">
+                <button
+                  type="button"
+                  className={cn(
+                    "rounded px-2.5 py-1 text-xs font-medium transition-colors",
+                    courseFilter === "current"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                  onClick={() => setCourseFilter("current")}
+                >
+                  {t.courseFilterCurrent}
+                </button>
+                <button
+                  type="button"
+                  className={cn(
+                    "rounded px-2.5 py-1 text-xs font-medium transition-colors",
+                    courseFilter === "archived"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground",
+                  )}
+                  onClick={() => setCourseFilter("archived")}
+                >
+                  {t.courseFilterArchived}
+                </button>
+              </div>
+            ) : null}
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="h-8 px-2"
+              onClick={onRefreshConnection}
+              disabled={sessionLoading || coursesLoading || actionsDisabled}
+              aria-label={t.refreshCourses}
+            >
+              <RefreshCw
+                className={cn("h-4 w-4", (sessionLoading || coursesLoading) && "animate-spin")}
+              />
+            </Button>
+          </div>
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto rounded-lg border border-border">
@@ -200,9 +235,11 @@ export function AssessmentAssistantSidebar({
             <p className="p-3 text-xs text-destructive">{coursesError}</p>
           ) : courses.length === 0 ? (
             <p className="p-3 text-xs text-muted-foreground">{t.noCourses}</p>
+          ) : filteredCourses.length === 0 ? (
+            <p className="p-3 text-xs text-muted-foreground">{t.noCoursesForFilter}</p>
           ) : (
             <ul className="divide-y divide-border">
-              {courses.map((course) => {
+              {filteredCourses.map((course) => {
                 const selected = selectedCourseId === course.id;
                 return (
                   <li key={course.id}>

@@ -198,6 +198,119 @@ function buildCategoryPerformance(
   });
 }
 
+function buildPeriodPerformance(
+  snapshot: CourseSnapshot,
+  cellMap: Map<string, CourseSnapshotCell>,
+  studentUid: string,
+  requestedPeriods?: string[],
+) {
+  const availablePeriods = [
+    ...(snapshot.gradingPeriods ?? []),
+    ...snapshot.assignments
+      .map((assignment) => assignment.gradingPeriod)
+      .filter((period): period is string => Boolean(period)),
+  ];
+  const uniqueAvailable = [...new Set(availablePeriods)];
+
+  const periodsToReport =
+    requestedPeriods && requestedPeriods.length > 0
+      ? requestedPeriods
+      : uniqueAvailable;
+
+  if (periodsToReport.length === 0) {
+    return {
+      periodPerformance: [],
+      periodComparisonNote:
+        "No grading-period labels are available on assignments in this course snapshot, so quarter comparison cannot be computed yet.",
+    };
+  }
+
+  const periodPerformance = periodsToReport.map((period) => {
+    const periodAssignments = snapshot.assignments.filter((assignment) => {
+      if (assignment.gradingPeriod) {
+        return assignment.gradingPeriod.toLowerCase() === period.toLowerCase();
+      }
+      // Soft fallback: category name mentions the period title.
+      return assignment.categoryName.toLowerCase().includes(period.toLowerCase());
+    });
+
+    const scores: number[] = [];
+    let missingCount = 0;
+    let gradedCount = 0;
+
+    for (const assignment of periodAssignments) {
+      const cell = getCell(cellMap, studentUid, assignment.id);
+      if (!cell || isMissingStatus(cell.status)) {
+        missingCount += 1;
+        continue;
+      }
+      if (hasScore(cell)) {
+        scores.push(cell.scorePercent);
+        gradedCount += 1;
+      }
+    }
+
+    const averageScorePercent =
+      scores.length > 0
+        ? Math.round((scores.reduce((sum, score) => sum + score, 0) / scores.length) * 10) / 10
+        : undefined;
+
+    return {
+      gradingPeriod: period,
+      assignmentCount: periodAssignments.length,
+      gradedCount,
+      missingCount,
+      averageScorePercent,
+      assignments: periodAssignments.map((assignment) => {
+        const cell = getCell(cellMap, studentUid, assignment.id);
+        return {
+          assignmentId: assignment.id,
+          title: assignment.title,
+          status: cell?.status ?? "missing",
+          scorePercent: cell?.scorePercent,
+          gradeLetter: cell?.gradeLetter,
+          scoreDisplay: cell?.scoreDisplay,
+        };
+      }),
+    };
+  });
+
+  const scoredPeriods = periodPerformance.filter(
+    (period) => period.averageScorePercent != null,
+  );
+  const periodComparison =
+    scoredPeriods.length >= 2
+      ? scoredPeriods.map((period, index, list) => {
+          const previous = index > 0 ? list[index - 1] : undefined;
+          const deltaFromPrevious =
+            previous?.averageScorePercent != null && period.averageScorePercent != null
+              ? Math.round((period.averageScorePercent - previous.averageScorePercent) * 10) / 10
+              : undefined;
+          return {
+            gradingPeriod: period.gradingPeriod,
+            averageScorePercent: period.averageScorePercent,
+            deltaFromPrevious,
+          };
+        })
+      : undefined;
+
+  const matchedAssignmentCount = periodPerformance.reduce(
+    (sum, period) => sum + period.assignmentCount,
+    0,
+  );
+
+  return {
+    periodPerformance,
+    periodComparison,
+    periodComparisonNote:
+      matchedAssignmentCount === 0
+        ? "Requested grading periods were found in the question, but no assignments in this snapshot are tagged with those periods. Ask the teacher to verify Schoology grading-period setup."
+        : scoredPeriods.length >= 2
+          ? "Compare averageScorePercent across periodPerformance / periodComparison. Positive deltaFromPrevious means improvement vs the previous listed period."
+          : undefined,
+  };
+}
+
 function buildStudentProfile(
   snapshot: CourseSnapshot,
   cellMap: Map<string, CourseSnapshotCell>,
@@ -205,6 +318,7 @@ function buildStudentProfile(
   categoryName?: string,
   topic?: string,
   topicAssignmentIds?: string[],
+  gradingPeriods?: string[],
 ) {
   const student = snapshot.students.find((entry) => entry.uid === studentUid);
   if (!student) {
@@ -242,6 +356,21 @@ function buildStudentProfile(
     }
   }
 
+  // When the teacher asks about specific quarters, focus breakdown on those periods.
+  if (gradingPeriods && gradingPeriods.length > 0) {
+    const periodScoped = scopedAssignments.filter((assignment) =>
+      gradingPeriods.some((period) => {
+        if (assignment.gradingPeriod?.toLowerCase() === period.toLowerCase()) {
+          return true;
+        }
+        return assignment.categoryName.toLowerCase().includes(period.toLowerCase());
+      }),
+    );
+    if (periodScoped.length > 0) {
+      scopedAssignments = periodScoped;
+    }
+  }
+
   const assignmentBreakdown = scopedAssignments
     .map((assignment) => {
       const cell = getCell(cellMap, studentUid, assignment.id);
@@ -249,6 +378,7 @@ function buildStudentProfile(
         assignmentId: assignment.id,
         title: assignment.title,
         categoryName: assignment.categoryName,
+        gradingPeriod: assignment.gradingPeriod,
         status: cell?.status ?? "missing",
         scorePercent: cell?.scorePercent,
         gradeLetter: cell?.gradeLetter,
@@ -295,6 +425,13 @@ function buildStudentProfile(
         10
       : undefined;
 
+  const periodAnalytics = buildPeriodPerformance(
+    snapshot,
+    cellMap,
+    studentUid,
+    gradingPeriods,
+  );
+
   return {
     studentUid: student.uid,
     studentName: student.name,
@@ -305,12 +442,14 @@ function buildStudentProfile(
     missingAssignments,
     focusedCategory: categoryName,
     focusedTopic: topic,
+    focusedGradingPeriods: gradingPeriods,
     topicAssignments: topic ? assignmentBreakdown : undefined,
     topicAverageScorePercent: topic ? topicAverageScorePercent : undefined,
     topicGradedCount: topic ? topicScores.length : undefined,
     topicMissingCount: topic
       ? assignmentBreakdown.filter((entry) => entry.status === "missing").length
       : undefined,
+    ...periodAnalytics,
   };
 }
 
@@ -381,6 +520,7 @@ export function buildCourseAnalytics(
           classification.categoryName,
           classification.topic,
           topicAssignmentIds,
+          classification.gradingPeriods,
         ),
       };
     }
@@ -428,36 +568,53 @@ export function buildCourseAnalytics(
 
       const students = snapshot.students
         .map((student) => {
+          const assignmentScores = matchedAssignments.map((assignment) => {
+            const cell = getCell(cellMap, student.uid, assignment.id);
+            return {
+              assignmentId: assignment.id,
+              title: assignment.title,
+              status: cell?.status ?? "missing",
+              scorePercent: cell?.scorePercent,
+              gradeLetter: cell?.gradeLetter,
+              scoreDisplay: cell?.scoreDisplay,
+            };
+          });
           const averageScorePercent = averageForAssignments(
             student.uid,
             matchedAssignments,
             cellMap,
           );
-          const missingCount = matchedAssignments.filter((assignment) => {
-            const cell = getCell(cellMap, student.uid, assignment.id);
-            return !cell || isMissingStatus(cell.status);
-          }).length;
+          const missingCount = assignmentScores.filter(
+            (entry) => !entry.scorePercent && isMissingStatus(entry.status),
+          ).length;
 
           return {
             studentUid: student.uid,
             studentName: student.name,
             averageScorePercent,
             missingCount,
+            assignmentScores,
           };
         })
         .sort((a, b) => {
-          const scoreA = a.averageScorePercent ?? 101;
-          const scoreB = b.averageScorePercent ?? 101;
+          const scoreA = a.averageScorePercent ?? -1;
+          const scoreB = b.averageScorePercent ?? -1;
+          // Highest topic average first (best performers at the top).
           if (scoreA !== scoreB) {
-            return scoreA - scoreB;
+            return scoreB - scoreA;
           }
-          return b.missingCount - a.missingCount;
+          return a.missingCount - b.missingCount;
         });
+
+      const gradedStudents = students.filter((student) => student.averageScorePercent != null);
 
       return {
         intent: classification.intent,
         computedAt: new Date().toISOString(),
-        notes,
+        notes: [
+          ...notes,
+          "Students are ranked by average score on matched topic assignments (best first). Use assignmentScores for per-assignment evidence.",
+        ],
         data: {
           topic,
           matchedAssignments: matchedAssignments.map((assignment) => ({
@@ -465,6 +622,8 @@ export function buildCourseAnalytics(
             title: assignment.title,
             categoryName: assignment.categoryName,
           })),
+          topStudents: gradedStudents.slice(0, 5),
+          bottomStudents: [...gradedStudents].reverse().slice(0, 5),
           students,
         },
       };
@@ -486,6 +645,7 @@ export function buildCourseAnalytics(
             classification.categoryName,
             classification.topic,
             topicAssignmentIds,
+            classification.gradingPeriods,
           ),
         };
       }

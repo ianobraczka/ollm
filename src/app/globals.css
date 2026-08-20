@@ -112,6 +112,10 @@
   animation: app-select-in 0.16s ease-out;
 }
 
+.app-select-menu[data-placement="top"] {
+  animation-name: app-select-in-up;
+}
+
 @keyframes assistant-dot-bounce {
   0%,
   70%,
@@ -151,6 +155,18 @@
   from {
     opacity: 0;
     transform: translateY(-0.25rem) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes app-select-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem) scale(0.98);
   }
 
   to {

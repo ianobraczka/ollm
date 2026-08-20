@@ -320,6 +320,9 @@ export const ASSESSMENT_TEXT = {
     noAssignmentsForFilter: "No assignments match this filter.",
     assignmentFilterUngraded: "Needs grading",
     assignmentFilterGraded: "Graded",
+    courseFilterCurrent: "Current",
+    courseFilterArchived: "Archived",
+    noCoursesForFilter: "No courses match this filter.",
     assignmentChatTitle: "Assignment assistant",
     assignmentChatDescription:
       "Ask about this assignment. Context includes Schoology details, BNCC, and the Massachusetts Curriculum Framework.",
@@ -459,6 +462,9 @@ export const ASSESSMENT_TEXT = {
     noAssignmentsForFilter: "Nenhuma tarefa corresponde a este filtro.",
     assignmentFilterUngraded: "Para avaliar",
     assignmentFilterGraded: "Avaliadas",
+    courseFilterCurrent: "Atuais",
+    courseFilterArchived: "Arquivados",
+    noCoursesForFilter: "Nenhum curso corresponde a este filtro.",
     assignmentChatTitle: "Assistente da tarefa",
     assignmentChatDescription:
       "Pergunte sobre esta tarefa. O contexto inclui detalhes do Schoology, BNCC e Massachusetts Curriculum Framework.",

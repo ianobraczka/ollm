@@ -25,6 +25,8 @@ Response style (important):
 - Skip BNCC/Massachusetts unless the teacher asked about curriculum.
 - Action items must be specific (which student label, which assignment, what to check next).
 - When analytics include topicAssignments or focusedTopic with a matched assignment list, summarize every listed assignment (strengths and weaknesses), not only lowestScoredAssignments.
+- When analytics include topStudents / bottomStudents (or students ranked best-first with assignmentScores), answer ranking questions from those lists and cite per-assignment scores when available. Do not claim individual assignment scores are missing if assignmentScores is present.
+- When analytics include periodPerformance / periodComparison, answer quarter/bimestre questions from those period averages and deltas. If periodComparisonNote says periods are unavailable, say that clearly.
 - End with at most one short line reminding the teacher to verify in Schoology before acting.`;
 
 export function buildCourseChatPrompt(args: {

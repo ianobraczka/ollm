@@ -22,7 +22,12 @@ type AppSelectProps<T extends string | number> = {
   triggerClassName?: string;
   "aria-label"?: string;
   width?: "fit" | "full";
+  /** Prefer opening above when near the bottom of the viewport. Default: auto. */
+  menuPlacement?: "auto" | "top" | "bottom";
 };
+
+const MENU_GAP_PX = 6;
+const MENU_MAX_HEIGHT_PX = 240; // max-h-60
 
 export function AppSelect<T extends string | number>({
   id,
@@ -35,12 +40,39 @@ export function AppSelect<T extends string | number>({
   triggerClassName,
   "aria-label": ariaLabel,
   width = "full",
+  menuPlacement = "auto",
 }: AppSelectProps<T>) {
   const [open, setOpen] = React.useState(false);
+  const [resolvedPlacement, setResolvedPlacement] = React.useState<"top" | "bottom">(
+    menuPlacement === "top" ? "top" : "bottom",
+  );
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   const selectedOption = options.find((option) => option.value === value) ?? options[0];
   const SelectedIcon = selectedOption?.icon;
+
+  React.useLayoutEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    if (menuPlacement === "top" || menuPlacement === "bottom") {
+      setResolvedPlacement(menuPlacement);
+      return;
+    }
+
+    if (!containerRef.current) {
+      return;
+    }
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const estimatedHeight = Math.min(options.length * 44 + 8, MENU_MAX_HEIGHT_PX);
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    const needsFlip =
+      spaceBelow < estimatedHeight + MENU_GAP_PX && spaceAbove > spaceBelow;
+    setResolvedPlacement(needsFlip ? "top" : "bottom");
+  }, [open, menuPlacement, options.length]);
 
   React.useEffect(() => {
     if (!open) return;
@@ -75,7 +107,12 @@ export function AppSelect<T extends string | number>({
   return (
     <div
       ref={containerRef}
-      className={cn("relative", width === "fit" ? "w-fit" : "w-full", className)}
+      className={cn(
+        "relative",
+        open && "z-50",
+        width === "fit" ? "w-fit" : "w-full",
+        className,
+      )}
     >
       {required && (
         <input
@@ -128,7 +165,13 @@ export function AppSelect<T extends string | number>({
         <ul
           role="listbox"
           aria-label={ariaLabel}
-          className="app-select-menu absolute left-0 top-[calc(100%+0.375rem)] z-50 max-h-60 min-w-full overflow-y-auto rounded-lg border border-border/70 bg-popover/95 p-1 shadow-lg backdrop-blur-md"
+          data-placement={resolvedPlacement}
+          className={cn(
+            "app-select-menu absolute left-0 z-50 max-h-60 min-w-full overflow-y-auto rounded-lg border border-border/70 bg-popover/95 p-1 shadow-lg backdrop-blur-md",
+            resolvedPlacement === "top"
+              ? "bottom-[calc(100%+0.375rem)] top-auto"
+              : "top-[calc(100%+0.375rem)]",
+          )}
         >
           {options.map((option) => {
             const selected = option.value === value;

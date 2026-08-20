@@ -347,6 +347,30 @@ function deriveCellStatus(args: {
   return { status: "missing" };
 }
 
+function resolveAssignmentGradingPeriod(
+  assignment: AssignmentRecord,
+  categoryName: string,
+  gradingPeriods: Array<{ id: string; title: string }>,
+): string | undefined {
+  if (gradingPeriods.length === 0) {
+    return undefined;
+  }
+
+  if (assignment.grading_period != null && assignment.grading_period !== "") {
+    const periodId = String(assignment.grading_period);
+    const byId = gradingPeriods.find((period) => period.id === periodId);
+    if (byId) {
+      return byId.title;
+    }
+  }
+
+  const normalizedCategory = categoryName.toLowerCase();
+  const byCategory = gradingPeriods.find((period) =>
+    normalizedCategory.includes(period.title.toLowerCase()),
+  );
+  return byCategory?.title;
+}
+
 function buildCourseSnapshot(args: {
   sectionId: string;
   courseName?: string;
@@ -358,6 +382,7 @@ function buildCourseSnapshot(args: {
   categoryNames: Map<string, string>;
   gradesByAssignment: Map<string, Map<string, GradeRow>>;
   submissionsByAssignment: Map<string, Map<string, StudentSubmissionState>>;
+  gradingPeriods: Array<{ id: string; title: string }>;
 }): CourseSnapshot {
   const students = args.enrollments
     .filter((enrollment) => enrollment.uid != null)
@@ -370,13 +395,20 @@ function buildCourseSnapshot(args: {
   const assignments = args.gradebookAssignments.map((assignment) => {
     const categoryId = String(assignment.grading_category ?? "0");
     const maxPoints = parseNumericGrade(assignment.max_points);
+    const categoryName = args.categoryNames.get(categoryId) || "Uncategorized";
+    const gradingPeriod = resolveAssignmentGradingPeriod(
+      assignment,
+      categoryName,
+      args.gradingPeriods,
+    );
     return {
       id: String(assignment.id),
       title: assignment.title!.trim(),
-      categoryName: args.categoryNames.get(categoryId) || "Uncategorized",
+      categoryName,
       url: `${args.appBase}/assignment/${String(assignment.id)}/info`,
       ...(maxPoints != null ? { maxPoints } : {}),
       ...(assignment.due?.trim() ? { dueDate: assignment.due.trim() } : {}),
+      ...(gradingPeriod ? { gradingPeriod } : {}),
     };
   });
 
@@ -420,6 +452,9 @@ function buildCourseSnapshot(args: {
     assignments,
     cells,
     categories,
+    ...(args.gradingPeriods.length > 0
+      ? { gradingPeriods: args.gradingPeriods.map((period) => period.title) }
+      : {}),
   };
 }
 
@@ -612,6 +647,7 @@ export async function fetchCourseMaterials(
     categoryNames,
     gradesByAssignment,
     submissionsByAssignment,
+    gradingPeriods,
   });
 
   return {
