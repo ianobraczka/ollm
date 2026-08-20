@@ -40,6 +40,13 @@ export function isModelUnavailableError(error: unknown): boolean {
   return status === 503 || status === 529;
 }
 
+/** Network/TLS failures should also try the next model (and often succeed on retry). */
+export function isRetryableGeminiFetchError(error: unknown): boolean {
+  if (isModelUnavailableError(error)) return true;
+  const message = error instanceof Error ? error.message : String(error ?? "");
+  return /fetch failed|ECONNRESET|ETIMEDOUT|ENOTFOUND|socket hang up|network/i.test(message);
+}
+
 export async function generateContentStreamWithFallback(prompt: string) {
   const genAI = getGenAI();
   const chain = getModelChain();
@@ -51,7 +58,8 @@ export async function generateContentStreamWithFallback(prompt: string) {
       const result = await model.generateContentStream(prompt);
       return { result, modelName };
     } catch (error) {
-      if (isModelUnavailableError(error)) {
+      if (isRetryableGeminiFetchError(error)) {
+        console.warn(`[gemini] ${modelName} failed, trying next model…`, error instanceof Error ? error.message : error);
         lastError = error;
         continue;
       }
