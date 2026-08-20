@@ -13,6 +13,7 @@ import { buildCourseChatPrompt } from "@/lib/buildCoursePrompt";
 import {
   classifyCourseQuestion,
   needsAssignmentDeepContext,
+  needsSubmissionExtracts,
 } from "@/lib/classifyCourseQuestion";
 import { buildCourseAnalytics, serializeCourseAnalytics } from "@/lib/courseAnalytics";
 import { buildDocumentContext } from "@/lib/documentContext";
@@ -22,6 +23,10 @@ import {
   selectAssignmentIdsForMetadata,
   shouldLoadAssignmentMetadata,
 } from "@/lib/loadCourseAssignmentMetadata";
+import {
+  loadSubmissionExtracts,
+  serializeSubmissionExtracts,
+} from "@/lib/loadSubmissionExtracts";
 import { resolveTopicAssignments } from "@/lib/resolveTopicAssignments";
 import { fetchAssessmentData } from "@/lib/schoology/assessmentService";
 import { normalizeLanguage } from "@/lib/i18n";
@@ -29,7 +34,7 @@ import type { CourseSnapshot } from "@/types/schoology";
 import type { ChatMessage } from "@/types/chat";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 const CURRICULUM_DOC_IDS = ["bncc", "massachusetts-framework"] as const;
 
@@ -107,8 +112,12 @@ export async function POST(req: Request) {
 
     let focusedAssignmentContext: string | undefined;
     let assignmentMetadataContext: string | undefined;
+    let submissionExtractsContext: string | undefined;
 
-    if (needsAssignmentDeepContext(classification) && focusedAssignmentId) {
+    if (
+      (needsAssignmentDeepContext(classification) || needsSubmissionExtracts(classification)) &&
+      focusedAssignmentId
+    ) {
       try {
         const assessment = await fetchAssessmentData(
           snapshot.sectionId,
@@ -116,11 +125,36 @@ export async function POST(req: Request) {
           "assignment",
         );
         focusedAssignmentContext = buildAssessmentContextText(assessment, courseName);
+
+        if (needsSubmissionExtracts(classification)) {
+          const startedAt = Date.now();
+          const loaded = await loadSubmissionExtracts(snapshot.sectionId, focusedAssignmentId, {
+            submissions: assessment.submissions,
+            assignmentTitle: assessment.title,
+          });
+          submissionExtractsContext = serializeSubmissionExtracts(
+            loaded.extracts,
+            loaded.assignmentTitle,
+          );
+          console.log(
+            `[api/assessment-assistant/chat] submission extracts ` +
+              `${loaded.fromCache ? "cache-hit" : "loaded"} ` +
+              `students=${loaded.extracts.length} ms=${Date.now() - startedAt}`,
+          );
+        }
       } catch (error) {
-        console.warn("[api/assessment-assistant/chat] focused assignment load failed", error);
+        console.warn("[api/assessment-assistant/chat] focused assignment/extracts failed", error);
         focusedAssignmentContext =
+          focusedAssignmentContext ??
           "[Focused assignment details could not be loaded. Answer using course analytics only.]";
+        if (needsSubmissionExtracts(classification)) {
+          submissionExtractsContext =
+            "[Submission file extracts could not be loaded. Answer using grades/analytics only and say that submission text was unavailable.]";
+        }
       }
+    } else if (needsSubmissionExtracts(classification) && !focusedAssignmentId) {
+      submissionExtractsContext =
+        "[Submission extracts were requested, but no assignment is focused. Ask the teacher to open/select an assignment first, then retry comparative analysis.]";
     } else if (focusedAssignmentId) {
       const focused = snapshot.assignments.find(
         (assignment) => assignment.id === focusedAssignmentId,
@@ -132,6 +166,10 @@ export async function POST(req: Request) {
 
     if (focusedAssignmentContext && aliasMap) {
       focusedAssignmentContext = redactRosterNamesInText(focusedAssignmentContext, aliasMap);
+    }
+
+    if (submissionExtractsContext && aliasMap) {
+      submissionExtractsContext = redactRosterNamesInText(submissionExtractsContext, aliasMap);
     }
 
     if (shouldLoadAssignmentMetadata(classification)) {
@@ -184,6 +222,7 @@ export async function POST(req: Request) {
       analyticsContext: serializeCourseAnalytics(analyticsForPrompt),
       assignmentMetadataContext,
       focusedAssignmentContext,
+      submissionExtractsContext,
       documentContext,
       messages: messagesForPrompt,
     });

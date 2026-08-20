@@ -6,6 +6,7 @@ export type CourseQuestionIntent =
   | "category_performance"
   | "topic_performance"
   | "assignment_deep_dive"
+  | "submission_comparison"
   | "course_overview";
 
 export type CourseQuestionClassification = {
@@ -22,6 +23,10 @@ const MISSING_THRESHOLD_RE =
 
 const DEEP_DIVE_RE =
   /\b(rubric|feedback|grade|grading|comment|essay|submission|submissions|correction|correct)\b/i;
+
+/** Comparative / qualitative analysis across student work samples. */
+const SUBMISSION_COMPARISON_RE =
+  /\b(analy[sz]ing|analy[sz]e|compar(e|ing)|effort|depth|quality|thorough|strongest|weakest|best work|worst work|who (took|put|showed|demonstrated)|which student|submissions?\b.*\b(who|which|compar)|look(?:ing)? at (the )?submissions?)\b/i;
 
 const CATEGORY_RE =
   /\b(?:in|on|for)\s+(?:the\s+)?(.+?)\s+(?:category|assignments?|activities|work)\b/i;
@@ -178,6 +183,14 @@ export function classifyCourseQuestion(
   const topic = extractTopic(question);
   const missingThreshold = extractMissingThreshold(question);
 
+  if (SUBMISSION_COMPARISON_RE.test(question) && (focusedAssignmentId || DEEP_DIVE_RE.test(question))) {
+    return {
+      intent: "submission_comparison",
+      studentUid: student?.uid,
+      studentName: student?.name,
+    };
+  }
+
   if (DEEP_DIVE_RE.test(question) && (focusedAssignmentId || student)) {
     return {
       intent: "assignment_deep_dive",
@@ -250,5 +263,15 @@ export function classifyCourseQuestion(
 }
 
 export function needsAssignmentDeepContext(classification: CourseQuestionClassification): boolean {
-  return classification.intent === "assignment_deep_dive";
+  return (
+    classification.intent === "assignment_deep_dive" ||
+    classification.intent === "submission_comparison"
+  );
+}
+
+export function needsSubmissionExtracts(classification: CourseQuestionClassification): boolean {
+  return (
+    classification.intent === "submission_comparison" ||
+    classification.intent === "assignment_deep_dive"
+  );
 }

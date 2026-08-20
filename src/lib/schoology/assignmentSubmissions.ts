@@ -175,6 +175,7 @@ function parseSubmissionFiles(revision: SubmissionRevision): SchoologySubmission
         filename,
         title: file.title?.trim() || undefined,
         url: downloadPath ? buildProxiedFileUrl(downloadPath, filename) : undefined,
+        downloadPath,
         filesize: typeof file.filesize === "number" ? file.filesize : undefined,
         filemime: file.filemime?.trim() || undefined,
       };

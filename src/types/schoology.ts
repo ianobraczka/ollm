@@ -112,7 +112,10 @@ export type SchoologySubmissionFile = {
   id?: string;
   filename: string;
   title?: string;
+  /** Proxied app URL for browser download. */
   url?: string;
+  /** Original Schoology download URL for server-side extraction. */
+  downloadPath?: string;
   filesize?: number;
   filemime?: string;
 };
